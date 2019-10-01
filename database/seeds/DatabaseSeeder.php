@@ -12,5 +12,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+
+        DB::table('cities')->insert([
+            'name' => "Buenaventura",
+        ]);
+
+        DB::table('cities')->insert([
+            'name' => "Cali",
+        ]);
+
+        DB::table('cities')->insert([
+            'name' => "Santander de Quilichao",
+        ]);
     }
 }

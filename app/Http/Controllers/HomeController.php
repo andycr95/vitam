@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\payment;
+use App\sale;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $payment = payment::orderBy('id', 'desc')->with('sale.client')->take(5)->get();
+        $sale = sale::orderBy('id', 'desc')->with(['client', 'vehicle'])->take(5)->get();
+        return view('home', compact('payment', 'sale'));
     }
 }
