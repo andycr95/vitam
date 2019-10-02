@@ -42,14 +42,17 @@ Route::put('/vehicle','VehicleController@update')->name('updateVehicle');
 //BranchOffices
 Route::get('/branchoffices','BranchOfficeController@index')->name('branchOffices');
 Route::get('/branchoffice/{id}','BranchofficeController@show')->name('branchoffice');
+Route::put('/branchoffice/{id}','BranchofficeController@update')->name('updateBranchoffice');
 Route::post('/branchoffices','BranchOfficeController@store')->name('createBranch');
+Route::patch('/branchoffice','BranchofficeController@destroy')->name('deleteBranchoffice');
 
 //Employess
 Route::get('/employees','EmployeeController@index')->name('employees');
 Route::post('/employee','EmployeeController@store')->name('createEmployee');
 Route::get('/employee/{id}','EmployeeController@show')->name('employee');
-Route::put('/employee/{id}','EmployeeController@update')->name('updateEmployee');
-
+Route::put('/employee','EmployeeController@update')->name('updateEmployee');
+Route::patch('/employee','EmployeeController@updatePhoto')->name('updatePhoto');
+Route::patch('/employee/delete','EmployeeController@destroy')->name('deleteEmployee');
 
 
 Route::get('/loans','LoansController@index')->name('loans');

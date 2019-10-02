@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusToVehiclesTable extends Migration
+class AddLastNameToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddStatusToVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::table('vehicles', function (Blueprint $table) {
-            $table->enum('status', ['1', '0'])->default('1');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('last_name');
         });
     }
 
@@ -25,7 +25,7 @@ class AddStatusToVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::table('vehicles', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

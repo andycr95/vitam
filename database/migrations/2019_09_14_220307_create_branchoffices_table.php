@@ -17,12 +17,10 @@ class CreateBranchofficesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('address');
-            $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('city_id');
             $table->enum('state', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('city_id')->references('id')->on('cities');
         });
     }

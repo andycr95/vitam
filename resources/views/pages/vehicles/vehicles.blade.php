@@ -8,15 +8,22 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 text-nowrap">
+                    <div class="col-md-8 text-nowrap">
                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                             <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-plus"></i> Nuevo vehichulo
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                    <div class="col-md-4">
+                        <form action="{{ route('vehicles')}}">
+                            <div class="input-group md-form form-sm form-2 pl-0">
+                                <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="input-group-text" style="background-color: #1cc88a; color: white;" type="submit" ><i class="fas fa-search text-grey" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -177,7 +184,6 @@
                     </form>
                 </div>
         </div>
-
          <!-- MODAL edit -->
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

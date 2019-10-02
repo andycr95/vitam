@@ -14,12 +14,18 @@ class BranchofficeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        $branchoffices = branchoffice::OrderBy('created_at', 'DESC')->paginate(10);
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $branchoffices = branchoffice::search($buscar)->where('status', '1')->paginate(10);
+        } else {
+            $branchoffices = branchoffice::where('status', '1')->OrderBy('created_at', 'DESC')->paginate(10);
+        }
+        
         $city = city::all();
         $employee = employee::all();
-        return view('pages.branchOffice.branchoffice', compact('branchoffices', 'employee', 'city'));
+        return view('pages.branchoffice.branchoffice', compact('branchoffices', 'city', 'employee'));
     }
 
     /**
@@ -52,8 +58,10 @@ class BranchofficeController extends Controller
      */
     public function show(branchoffice $id)
     {
-        $branchoffice = branchoffice::where("id", $id->id)->with(['vehicles','sales', 'city'])->get();
-        return view('pages.branchoffice.profile', compact('branchoffice'));
+        $branchoffice = branchoffice::where("id", $id->id)->with(['vehicles','sales', 'city', 'employee', 'employees'])->get();
+        $cities = city::all();
+        $employees = employee::all();
+        return view('pages.branchoffice.profile', compact('branchoffice', 'cities', 'employees'));
     }
 
     /**
@@ -76,7 +84,13 @@ class BranchofficeController extends Controller
      */
     public function update(Request $request, branchoffice $branchoffice)
     {
-        //
+        $branchoffice = branchoffice::find($request->id);
+        $branchoffice->name = $request->first_name;
+        $branchoffice->employee_id = $request->encargado;
+        $branchoffice->address = $request->address;
+        $branchoffice->city_id = $request->city;
+        $branchoffice->save();
+        return redirect()->back()->with('success','Sucursal actualizado');
     }
 
     /**
@@ -85,8 +99,11 @@ class BranchofficeController extends Controller
      * @param  \App\branchoffice  $branchoffice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(branchoffice $branchoffice)
+    public function destroy(request $request)
     {
-        //
+        $branchoffice = branchoffice::find($request->id);
+        $branchoffice->status = '0';
+        $branchoffice->save();
+        return redirect()->back()->with('success','Sucursal eliminado');
     }
 }

@@ -4,7 +4,9 @@ $('#employeeUpdate').click(function ($event) {
     if (document.getElementsByName("first_name")[0].disabled== false) {
         document.getElementsByName("first_name")[0].disabled = true;   
         document.getElementsByName("last_name")[0].disabled = true;  
-        document.getElementsByName("password")[0].disabled = true;  
+        document.getElementsByName("password")[0].disabled = true; 
+        document.getElementsByName("address")[0].disabled = true;  
+        document.getElementsByName("branch")[0].disabled = true;  
         $('#pass').attr('type', 'password') 
         document.getElementsByName("email")[0].disabled = true;
         $("#employeeSave").attr({disabled: true});   
@@ -16,6 +18,8 @@ $('#employeeUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = false;   
         document.getElementsByName("last_name")[0].disabled = false;  
         document.getElementsByName("password")[0].disabled = false; 
+        document.getElementsByName("address")[0].disabled = false;  
+        document.getElementsByName("branch")[0].disabled = false; 
         $("#employeeSave").attr({disabled: false});
         $('#pass').attr('type', 'text') 
         document.getElementsByName("email")[0].disabled = false;
@@ -25,3 +29,8 @@ $('#employeeUpdate').click(function ($event) {
         }).append('<span>Cancelar</span>');
     }
 })
+
+$(document).on("click", "#deleteemployee", function(e) {
+    var id = $(this).data("id");
+    document.getElementById("iddelete").value = id;
+});

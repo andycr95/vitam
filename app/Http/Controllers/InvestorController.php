@@ -14,8 +14,7 @@ class InvestorController extends Controller
      */
     public function index()
     {
-        $investors = investor::with(['vehicles.payments', 'user'])->paginate(10);
-        return view('pages.investors.investors', compact('investors'));
+        return view('pages.investors.investors');
     }
 
     /**

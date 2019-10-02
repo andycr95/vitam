@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use App\employee; 
 use App\vehicle; 
@@ -10,8 +11,15 @@ use App\city;
 
 class branchoffice extends Model
 {
+    use Searchable;
+
     protected $table = 'branchoffices';
-    protected $fillable = ['employee_id','state','id', 'name', 'address', 'city_id'];
+    protected $fillable = ['state','id', 'name', 'address', 'city_id', 'employee_id'];
+
+    public function employees()
+    {
+        return $this->hasMany(employee::class);
+    }
 
     public function employee()
     {
@@ -32,5 +40,18 @@ class branchoffice extends Model
     {
         return $this->hasMany(sale::class);
     }
+
+    public function searchableAs()
+    {
+        return 'branchoffices_index';
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+     
+        return $array;
+    }
+
 
 }

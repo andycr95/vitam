@@ -9,7 +9,7 @@ use App\branchoffice;
 class employee extends Model
 {
     protected $table = 'employees';
-    protected $fillable = ['salary', 'user_id'];
+    protected $fillable = ['salary','branchoffice_id', 'user_id'];
 
     public function user()
     {
@@ -18,8 +18,12 @@ class employee extends Model
 
     public function branchoffice()
     {
+        return $this->belongsTo(branchoffice::class);
+    }
+
+    public function branch()
+    {
         return $this->hasOne(branchoffice::class);
     }
 
-    
 }

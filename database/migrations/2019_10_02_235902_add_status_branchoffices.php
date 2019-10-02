@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusToVehiclesTable extends Migration
+class AddStatusBranchoffices extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddStatusToVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::table('vehicles', function (Blueprint $table) {
+        Schema::table('branchoffices', function (Blueprint $table) {
             $table->enum('status', ['1', '0'])->default('1');
         });
     }
@@ -25,8 +25,6 @@ class AddStatusToVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::table('vehicles', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

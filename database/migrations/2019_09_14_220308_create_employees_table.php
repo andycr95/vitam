@@ -17,8 +17,10 @@ class CreateEmployeesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('salary');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('employee_id');
             $table->timestamps();
-
+            
+            $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
