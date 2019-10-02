@@ -8,15 +8,22 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 text-nowrap">
+                    <div class="col-md-8 text-nowrap">
                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                             <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-plus"></i> Nueva sucursal
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                    <div class="col-md-4">
+                        <form action="{{ route('branchOffices')}}">
+                            <div class="input-group md-form form-sm form-2 pl-0">
+                                <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="input-group-text" style="background-color: #1cc88a; color: white;" type="submit" ><i class="fas fa-search text-grey" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -25,7 +32,6 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Dirección</th>
-                                <th>Encargado</th>
                                 <th>Ciudad</th>
                             </tr>
                         </thead>
@@ -34,7 +40,6 @@
                             <tr>
                                 <td><a href="{{ route('branchoffice', $branchoffice->id )}}">{{$branchoffice->name}}</a></td>
                                 <td>{{$branchoffice->address}}</td>
-                                <td>{{$branchoffice->employee->user->name}}</td>
                                 <td>{{$branchoffice->city->name}}</td>
                             </tr>
                             @endforeach
@@ -42,16 +47,20 @@
                     </table>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$branchoffices->firstItem()}} a {{$branchoffices->lastItem()}} de {{$branchoffices->total()}}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                            <ul class="pagination">
-                                {{$branchoffices->links()}}
-                            </ul>
-                        </nav>
-                    </div>
+                    @if ($branchoffices->total() > 0)
+                        <div class="col-md-6 align-self-center">
+                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$branchoffices->firstItem()}} a {{$branchoffices->lastItem()}} de {{$branchoffices->total()}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                    {{$branchoffices->links()}}
+                                </ul>
+                            </nav>
+                        </div>
+                    @else
+                    
+                    @endif
                 </div>
             </div>
         </div>
@@ -86,15 +95,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="employee"><strong>Encargado</strong></label>
-                                <select name="employee_id" class="form-control">
-                                    <option>Seleccione una opción</option>
-                                    @foreach ($employee as $employee)
-                                        <option value="{{$employee->id}}">{{$employee->User->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -105,4 +105,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 

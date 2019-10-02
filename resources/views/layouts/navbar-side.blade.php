@@ -15,15 +15,6 @@
                             <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
                         </a>
                     @endif
-                    @if (strpos(url()->current(), "employees"))
-                        <a class="nav-link active" href="{{ route('employees') }}">
-                            <i class="fas fa-people-carry"></i><span>Empleados</span>
-                        </a>
-                    @else
-                        <a class="nav-link" href="{{ route('employees') }}">
-                            <i class="fas fa-people-carry"></i><span>Empleados</span>
-                        </a>
-                    @endif
                     @if (strpos(url()->current(), "branchoffices"))
                         <a class="nav-link active" href="{{ route('branchOffices') }}">
                             <i class="fas fa-briefcase"></i><span>Sucursales</span>
@@ -31,6 +22,15 @@
                     @else
                         <a class="nav-link" href="{{ route('branchOffices') }}">
                             <i class="fas fa-briefcase"></i><span>Sucursales</span>
+                        </a>
+                    @endif
+                    @if (strpos(url()->current(), "employees"))
+                        <a class="nav-link active" href="{{ route('employees') }}">
+                            <i class="fas fa-people-carry"></i><span>Empleados</span>
+                        </a>
+                    @else
+                        <a class="nav-link" href="{{ route('employees') }}">
+                            <i class="fas fa-people-carry"></i><span>Empleados</span>
                         </a>
                     @endif
                     @if (strpos(url()->current(), "investors"))
@@ -58,15 +58,6 @@
                     @else
                         <a class="nav-link" href="{{ route('vehicles') }}">
                             <i class="fas fa-motorcycle"></i><span>Vehículos</span>
-                        </a>
-                    @endif
-                    @if (strpos(url()->current(), "loans"))
-                        <a class="nav-link active" href="{{ route('loans') }}">
-                            <i class="fas fa-money-bill-alt"></i><span>Prestamos</span>
-                        </a>
-                    @else
-                        <a class="nav-link" href="{{ route('loans') }}">
-                            <i class="fas fa-money-bill-alt"></i><span>Prestamos</span>
                         </a>
                     @endif
                     @if (strpos(url()->current(), "expenses"))

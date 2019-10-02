@@ -102,6 +102,6 @@ class VehicleController extends Controller
         $vehicle = vehicle::find($request->id);
         $vehicle->status = 'inactivo';
         $vehicle->save();
-        return redirect()->back()->with('info','Vehiculo eliminado');
+        return redirect()->back()->with('success','Vehiculo eliminado');
     }
 }

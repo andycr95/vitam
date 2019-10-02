@@ -14,12 +14,12 @@ class BranchofficeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
         $branchoffices = branchoffice::OrderBy('created_at', 'DESC')->paginate(10);
         $city = city::all();
         $employee = employee::all();
-        return view('pages.branchOffice.branchoffice', compact('branchoffices', 'employee', 'city'));
+        return view('pages.branchoffice.branchoffice', compact('branchoffices', 'city', 'employee'));
     }
 
     /**

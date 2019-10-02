@@ -48,8 +48,9 @@ Route::post('/branchoffices','BranchOfficeController@store')->name('createBranch
 Route::get('/employees','EmployeeController@index')->name('employees');
 Route::post('/employee','EmployeeController@store')->name('createEmployee');
 Route::get('/employee/{id}','EmployeeController@show')->name('employee');
-Route::put('/employee/{id}','EmployeeController@update')->name('updateEmployee');
-
+Route::put('/employee','EmployeeController@update')->name('updateEmployee');
+Route::patch('/employee','EmployeeController@updatePhoto')->name('updatePhoto');
+Route::patch('/employee/delete','EmployeeController@destroy')->name('deleteEmployee');
 
 
 Route::get('/loans','LoansController@index')->name('loans');

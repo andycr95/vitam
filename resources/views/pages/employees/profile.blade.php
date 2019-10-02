@@ -11,7 +11,7 @@
                     @if ($employee->user->photo == '')
                         <img class="rounded-circle mb-3 mt-4" src="/img/avatars/avatar1.jpeg" width="160" height="160">                   
                     @else
-                        <img class="rounded-circle mb-3 mt-4" src="/img/avatars/avatar2.jpeg" width="160" height="160">                        
+                        <img class="rounded-circle mb-3 mt-4" src="/storage/{{$employee->user->photo}}" width="160" height="160">                        
                     @endif
                     <div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Cambiar foto</button></div>
                 </div>
@@ -58,18 +58,22 @@
                             <p class="text-primary m-0 font-weight-bold">Información de usuario</p>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form action="{{ route('updateEmployee') }}"  enctype="multipart/form-data"  method="POST">
+                                @csrf
+                                @method('PUT')               
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="first_name"><strong>Nombre</strong></label>
                                             <input disabled class="form-control" type="text" value="{{$employee->user->name}}" name="first_name">
+                                            <input type="hidden" value="{{$employee->user_id}}" name="id">
+                                            <input type="hidden" value="{{$employee->id}}" name="idemployee">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="last_name"><strong>Apellido</strong></label>
-                                            <input disabled class="form-control" type="text" value="{{$employee->user->name}}" name="last_name">
+                                            <input disabled class="form-control" type="text" value="{{$employee->user->last_name}}" name="last_name">
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +81,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="password"><strong>Contraseña</strong></label>
-                                            <input class="form-control" type="password" id="pass" disabled name="password">
+                                        <input class="form-control" type="password" id="pass" disabled name="password">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -87,28 +91,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="address"><strong>Dirección</strong></label>
+                                    <input class="form-control" type="text" disabled value="{{$employee->user->address}}" name="address">
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="city"><strong>Ciudad</strong></label>
+                                            <input name="city" class="form-control" value="{{$employee->branchoffice->city->name}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="address"><strong>Sucursal</strong></label>
+                                            <select name="branch" class="form-control" disabled>
+                                                <option value="{{$employee->branchoffice_id}}">{{$employee->branchoffice->name}}</option>
+                                                @foreach ($branchoffices as $branchoffice)
+                                                    <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div id="modal-buttons" class="form-group">
                                     <button disabled id="employeeSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
                                     <button class="btn btn-info btn-sm" id="employeeUpdate" type="button"><span>Actualizar</span></button>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 font-weight-bold">Información de sucursal</p>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                            <div class="form-group"><label for="address"><strong>Dirección</strong></label><input class="form-control" type="text" disabled value="{{$employee->branchoffice->address}}" name="address"></div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group"><label for="city"><strong>Ciudad</strong></label><input class="form-control" type="text" disabled value="{{$employee->branchoffice->city->name}}" name="city"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group"><label for="country"><strong>Nombre de sucursal</strong></label><input class="form-control" type="text" disabled value="{{$employee->branchoffice->name}}" name="country"></div>
-                                    </div>
-                                </div>
+
                             </form>
                         </div>
                     </div>
@@ -117,12 +127,12 @@
         </div>
     </div>
     @endforeach
-    <!-- MODAL NUEVO -->
+    <!-- MODAL PHOTO -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form action="{{ route('updateEmployee', $employee->user->id) }}"  enctype="multipart/form-data"  method="POST">
+            <form action="{{ route('updatePhoto') }}"  enctype="multipart/form-data"  method="POST">
                 @csrf
-                <input type="hidden" name="_method" value="PUT">                
+                @method('PATCH')               
                 <div class="modal-content">
                     <div class="modal-header  primary">
                         <h5 class="modal-title" id="exampleModalLabel">Cambiar foto</h5>
@@ -132,8 +142,11 @@
                     </div>
                     <div class="modal-body"> 
                         <div class="form-group">
-                            <label for="name"><strong>Foto</strong></label>
-                            <input type="file" name="file">
+                            <div class="custom-file">
+                                <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                <input type="file" name="photo" class="custom-file-input" id="customFileLang" lang="es">
+                            </div>
+                            <input type="hidden" name="id" value="{{$employee->user->id}}"/>
                         </div>
                     </div>
                     <div class="modal-footer">
