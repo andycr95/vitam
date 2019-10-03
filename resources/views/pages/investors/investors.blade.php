@@ -4,14 +4,14 @@
     <div class="container-fluid">
         <div class="card shadow">
             <div class="card-header py-3">
-                <p class="text-primary m-0 font-weight-bold">Empleados</p>
+                <p class="text-primary m-0 font-weight-bold">Inversionistas</p>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 text-nowrap">
                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                             <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fa fa-plus"></i> Nueva empleado
+                                <i class="fa fa-plus"></i> Nuevo Inversionista
                             </button>
                         </div>
                     </div>
@@ -22,8 +22,30 @@
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table dataTable my-0" id="dataTable">
                         <thead>
+                        <tr>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Email</th>
+                                <th>Vehículos</th>
+                               
+                            </tr>
                         </thead>
                         <tbody>
+                        @foreach ($investors as $investor)
+                            <tr>
+                                <td><a href="{{ route('investor', $investor->id )}}">{{$investor->user->name}}</a></td>
+                                <td>{{$investor->user->address}}</td>
+                                <td>{{$investor->user->phone}}</td>
+                                <td>{{$investor->user->email}}</td>
+                                <td>{{$investor->vehicles->count()}}</td>                              
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-id="{{$investor->id}}" id="deleteemployee" data-toggle="modal" data-target="#deleteModal">
+                                        <i style="color: white;" class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -47,7 +69,7 @@
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header  primary">
-                            <h5 class="modal-title" id="exampleModalLabel">Nueva empleado</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Inversionista</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -55,7 +77,11 @@
                         <div class="modal-body"> 
                             <div class="form-group">
                                 <label for="name"><strong>Nombre</strong></label>
-                                <input class="form-control" placeholder="Nueva granada" type="text" name="name" />
+                                <input class="form-control" placeholder="Ingrese Nombre Inversionista" type="text" name="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><strong>Apellido</strong></label>
+                                <input class="form-control" placeholder="Ingrese Apellido Inversionista" type="text" name="lname" />
                             </div>
                             <div class="form-group">
                                 <label for="email"><strong>Correo</strong></label>
@@ -70,9 +96,12 @@
                                 <input class="form-control" type="number" name="phone" placeholder="312569888"/>
                             </div>
                             <div class="form-group">
-                                <label for="address"><strong>Salario</strong></label>
-                                <input class="form-control" type="number" name="salary" placeholder="312569888"/>
-                            </div>
+                                        <label for="photo"><strong>Foto de perfil</strong></label>
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                            <input type="file" name="photo" class="custom-file-input" id="customFileLang" lang="es">
+                                        </div>
+                                    </div>
                             <div class="form-group">
                                 <label for="address"><strong>Contraseña</strong></label>
                                 <input class="form-control" type="password" name="password" placeholder="******"/>
