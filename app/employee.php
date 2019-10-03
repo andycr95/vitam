@@ -21,4 +21,9 @@ class employee extends Model
         return $this->belongsTo(branchoffice::class);
     }
 
+    public function branch()
+    {
+        return $this->hasOne(branchoffice::class);
+    }
+
 }

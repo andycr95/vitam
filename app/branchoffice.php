@@ -14,11 +14,16 @@ class branchoffice extends Model
     use Searchable;
 
     protected $table = 'branchoffices';
-    protected $fillable = ['state','id', 'name', 'address', 'city_id'];
+    protected $fillable = ['state','id', 'name', 'address', 'city_id', 'employee_id'];
+
+    public function employees()
+    {
+        return $this->hasMany(employee::class);
+    }
 
     public function employee()
     {
-        return $this->hasMany(employee::class);
+        return $this->belongsTo(employee::class);
     }
 
     public function city()
@@ -45,12 +50,8 @@ class branchoffice extends Model
     {
         $array = $this->toArray();
      
-        return array('id' => $array['id'],'name' => $array['name'],'address' => $array['address']);
+        return $array;
     }
 
-    public function getScoutKey()
-    {
-        return $this->name;
-    }
 
 }

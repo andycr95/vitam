@@ -22,39 +22,18 @@
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table dataTable my-0" id="dataTable">
                         <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Dirección</th>
-                                <th>Telefono</th>
-                                <th>Vehículos</th>
-                                <th>Ganancia</th>
-                            </tr>
                         </thead>
                         <tbody>
-                            @foreach ($investors as $investor)
-                            <tr>
-                                <td><a href="{{ route('investor', $investor->id )}}">{{$investor->user->name}}</a></td>
-                                <td>{{$investor->user->address}}</td>
-                                <td>{{$investor->user->phone}}</td>
-                                <td>{{$investor->vehicles->count()}}</td>
-                                @if ($investor->vehicles->payments)
-                                    <td>{{$investor->vehicles->payments->amount->sum()}}</td>    
-                                @else
-                                    <td>0</td>
-                                @endif
-                            </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="row">
                     <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$investors->firstItem()}} a {{$investors->lastItem()}} de {{$investors->total()}}</p>
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando 1 a 2 de 10</p>
                     </div>
                     <div class="col-md-6">
                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                             <ul class="pagination">
-                                {{$investors->links()}}
                             </ul>
                         </nav>
                     </div>

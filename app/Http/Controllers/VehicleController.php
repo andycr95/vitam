@@ -15,9 +15,14 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = vehicle::where('status','activo')->OrderBy('created_at', 'DESC')->paginate(10);
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $vehicles = vehicle::search($buscar)->where('status', 1)->paginate(10);
+        } else {
+            $vehicles = vehicle::where('status', 1)->OrderBy('created_at', 'DESC')->paginate(10);
+        }
         $investors = investor::all();
         $types = type::all();
         $branchoffices = branchoffice::all();
@@ -100,7 +105,7 @@ class VehicleController extends Controller
     public function destroy(Request $request)
     {
         $vehicle = vehicle::find($request->id);
-        $vehicle->status = 'inactivo';
+        $vehicle->status = 0;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo eliminado');
     }

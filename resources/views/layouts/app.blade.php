@@ -38,6 +38,7 @@
     <script src="/js/script.min.js"></script>
     <script src="/js/employees.js"></script>
     <script src="/js/vehicle.js"></script>
+    <script src="/js/branchoffice.js"></script>
     <script src="/js/app.js"></script>
     @if (session()->has('success'))
         <script>toastr.success("{{ session('success') }}")</script>

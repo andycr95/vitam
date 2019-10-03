@@ -26,6 +26,7 @@
                         </form>
                     </div>
                 </div>
+                <br/>
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table dataTable my-0" id="dataTable">
                         <thead>
@@ -33,6 +34,7 @@
                                 <th>Nombre</th>
                                 <th>Dirección</th>
                                 <th>Ciudad</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +43,11 @@
                                 <td><a href="{{ route('branchoffice', $branchoffice->id )}}">{{$branchoffice->name}}</a></td>
                                 <td>{{$branchoffice->address}}</td>
                                 <td>{{$branchoffice->city->name}}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-id="{{$branchoffice->id}}" id="deletebranch" data-toggle="modal" data-target="#deleteModal">
+                                        <i style="color: white;" class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -103,6 +110,33 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <!-- MODAL Delete -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form action="{{ route('deleteBranchoffice') }}" id="deleteform"  enctype="multipart/form-data"  method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-content">
+                            <div class="modal-header  primary">
+                                <h5 class="modal-title" id="deleteModalLabel">Eliminar sucursal</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body"> 
+                                <div class="form-group">
+                                    <h3>¿Seguro de eliminar este sucursal?<h3>
+                                    <input class="form-control" type="hidden" name="id" id="id" required/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
         </div>
     </div>
 @endsection 
