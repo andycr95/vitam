@@ -31,3 +31,16 @@ $(document).on("click", "#editvehicle", function(e) {
     document.getElementById("optionBr").value = Br;
     $('#editForm #optionBr').append(`${nameBr}`);
 });
+
+$(document).on("change", "#type_id", function(e) {
+    var type = document.getElementById("type_id").value;
+    if (type > 1) {
+        $("#groupAmount .nono").remove();
+        $("#groupAmount .form-control").remove();
+        $("#groupAmount").append(`<label class="nono" for="amount"><strong>Cantidad de dias</strong></label> <input class="form-control" type="text" id="amount" name="amount" placeholder="365" required/>`);  
+    } else {
+        $("#groupAmount .nono").remove();
+        $("#groupAmount .form-control").remove();
+        $("#groupAmount").append(`<input class="form-control" type="hidden" id="amount" value="365" name="amount" placeholder="365" required/>`);
+    }
+});

@@ -19,9 +19,9 @@ class VehicleController extends Controller
     {
         if ($request->buscar != '') {
             $buscar = $request->buscar;
-            $vehicles = vehicle::search($buscar)->where('status', 1)->paginate(10);
+            $vehicles = vehicle::search($buscar)->paginate(10);
         } else {
-            $vehicles = vehicle::where('status', 1)->OrderBy('created_at', 'DESC')->paginate(10);
+            $vehicles = vehicle::OrderBy('created_at', 'DESC')->paginate(10);
         }
         $investors = investor::all();
         $types = type::all();

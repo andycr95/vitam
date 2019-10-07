@@ -6,15 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use App\branchoffice;
 use App\vehicle;
 use App\client;
+use App\typeSale;
 
 class sale extends Model
 {
     protected $table = 'sales';
-    protected $fillable = ['client_id', 'amount', 'date', 'branchoffice_id', 'vehicle_id'];
+    protected $fillable = ['client_id', 'amount', 'date', 'branchoffice_id', 'client_id', 'typesale_id', 'vehicle_id'];
 
     public function client()
     {
         return $this->belongsTo(client::class);
+    }
+
+    public function typeSale()
+    {
+        return $this->belongsTo(typeSale::class);
     }
 
     public function branchoffice()

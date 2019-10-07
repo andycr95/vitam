@@ -34,3 +34,50 @@ $(document).on("click", "#deleteemployee", function(e) {
     var id = $(this).data("id");
     document.getElementById("iddelete").value = id;
 });
+
+$(document).on("click", "#asignBranch", function(e) {
+    var id = $(this).data("id");
+    document.getElementById("idasign").value = id;
+});
+
+$(document).on("change", "#email", function(e) {
+    email = document.getElementById("email").value;
+    url = "http://127.0.0.1:8000/validate/email";
+    if (email.indexOf(".com") > 0) {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: {'email':email},
+            success: function(res) {
+                if (res != true) {
+                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-email');
+                    var i = 0;
+                    setInterval(function() {i++
+                        if (i > 2) {
+                            $("#form-group-email .alert ").remove();
+                        }
+                    }, 1000) 
+                }
+            }
+        })
+    }
+});
+
+$(document).on("keyup", "#password", function(e) {
+    password = document.getElementById("password").value;
+    $("#form-group-password .alert ").remove();
+    if (password.length < 6) {
+        $(`<div class="alert alert-danger">La contraseña debe ser mayor a 6 digitos</div>`).appendTo('#form-group-password');
+        var i = 0;
+        setInterval(function() {i++
+            if (i > 2) {
+                $("#form-group-password .alert ").remove();
+                clearInterval()
+            }
+        }, 1000) 
+    } else if (password.length == 0) {
+        $("#form-group-password .alert ").remove();        
+    } else {
+        $("#form-group-password .alert ").remove();
+    }
+});

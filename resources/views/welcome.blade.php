@@ -68,12 +68,6 @@
                                                 </a>
                                             @endif
                                         </div>
-                                        <hr>
-                                        <hr>
-                                        <hr>
-                                        <hr>
-                                        <hr>
-                                        <hr>
                                     </form>
                                 </div>
                             </div>

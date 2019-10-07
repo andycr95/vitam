@@ -37,6 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="/js/script.min.js"></script>
     <script src="/js/employees.js"></script>
+    <script src="/js/client.js"></script>
     <script src="/js/vehicle.js"></script>
     <script src="/js/branchoffice.js"></script>
     <script src="/js/app.js"></script>
@@ -46,7 +47,15 @@
         <script>toastr.info("{{ session('info') }}")</script>
     @elseif (session()->has('warning'))
         <script>toastr.warning("{{ session('warning') }}")</script>
+    @elseif (session()->has('danger'))
+        <script>toastr.error("{{ session('danger') }}")</script>
     @endif
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }});
+    </script>
 </body>
 
 </html>

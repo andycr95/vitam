@@ -35,12 +35,12 @@
                         <tbody>
                             @foreach ($employees as $employee)
                             <tr>
-                                <td><a href="{{ route('employee', $employee->id )}}">{{$employee->user->name}}</a></td>
+                                <td><a href="{{ route('employee', $employee->id )}}">{{$employee->user->name}} {{$employee->user->last_name}}</a></td>
                                 <td>{{$employee->user->address}}</td>
                                 <td>{{$employee->user->phone}}</td>
                                 @if ($employee->branchoffice == null)
-                                    <td></td>
-                                    <td></td>
+                                    <td><a href="#" data-id="{{$employee->id}}" id="asignBranch" data-toggle="modal" data-target="#asignModal">Asignar</a></td>
+                                    <td>0</td>
                                 @else
                                     <td>{{$employee->branchoffice->name}}</td>
                                     <td>{{$employee->branchoffice->vehicles->count()}}</td>
@@ -75,9 +75,9 @@
             </div>
         </div>
         <!-- MODAL NUEVO -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form action="{{ route('createEmployee') }}"  enctype="multipart/form-data"  method="POST">
+        <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <form action="{{ route('createEmployee') }}"  enctype="multipart/form-data"  method="POST" autocomplete="off">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header  primary">
@@ -91,19 +91,24 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="name"><strong>Nombre</strong></label>
-                                        <input class="form-control" placeholder="Cosme Fulanito" type="text" name="name"  required/>
+                                        <input class="form-control"  placeholder="Cosme" type="text" name="name"  required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name"><strong>Apellido</strong></label>
+                                        <input class="form-control"  placeholder="Fulanito" type="text" name="last_name"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="email"><strong>Correo</strong></label>
-                                        <input class="form-control" type="email" name="email" placeholder="ejemplo@vitamventure.com" required/>
+                                        <input class="form-control"  type="email" id="email" name="email" placeholder="ejemplo@vitamventure.com" required/>
+                                        <div id="form-group-email"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Direccion</strong></label>
-                                        <input class="form-control" type="text" name="address" placeholder="Cr 64 #2-54" required/>
+                                        <input class="form-control"  type="text" name="address" placeholder="Cr 64 #2-54" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone"><strong>Telefono</strong></label>
-                                        <input class="form-control" type="number" name="phone" placeholder="312569888" required/>
+                                        <input class="form-control"  type="number" name="phone" placeholder="312569888" required/>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -116,12 +121,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Salario</strong></label>
-                                        <input class="form-control" type="number" name="salary" placeholder="250.000" required/>
+                                        <input class="form-control"  type="number" name="salary" placeholder="250.000" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>
-                                        <select name="branchoffice_id" class="form-control" required>
-                                            <option>Seleccione una opción</option>
+                                        <select name="branchoffice_id" class="form-control" >
+                                            <option value="#">Seleccione una opción</option>
                                             @foreach ($branchoffices as $branchoffice)
                                                 <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
                                             @endforeach
@@ -129,7 +134,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Contraseña</strong></label>
-                                        <input class="form-control" type="password" name="password" placeholder="******" required/>
+                                        <input class="form-control"  type="password" id="password" name="password" placeholder="******" required/>
+                                        <div id="form-group-password"></div>
                                     </div>
                                 </div>
                             </div>
@@ -169,5 +175,49 @@
                     </form>
                 </div>
         </div>
+        <!-- MODAL ASIGN -->
+        <div class="modal fade" id="asignModal" tabindex="-1" role="dialog" aria-labelledby="asignModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="{{ route('asignBrEmployee') }}"  enctype="multipart/form-data"  method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-content">
+                        <div class="modal-header  primary">
+                            <h5 class="modal-title" id="asignModalLabel">Asignar sucursal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="form-group">
+                                <div class="form-group">
+                                    @if ($branchoffices->count() < 1)
+                                    <label for="address"><strong>No hay sucursales</strong></label>
+                                    <a type="button" href="{{ route('branchOffices')}}" class="btn btn-primary btn-lg btn-block">Asignar una nueva</a>
+                                    @else
+                                    <label for="address"><strong>Sucursal</strong></label>
+                                    <select name="branchoffice_id" class="form-control">
+                                        <option value="#">Seleccione una opción</option>
+                                        @foreach ($branchoffices as $branchoffice)
+                                            <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @endif
+                                </div>
+                                <input class="form-control" type="hidden" name="idasign" id="idasign" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            @if ($branchoffices->count() > 0)
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            @else
+
+                            @endif
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
     </div>
 @endsection

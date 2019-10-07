@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\sale;
+use App\typeSale;
+use App\vehicle;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -35,7 +37,35 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $typeSale = typeSale::where("id", $request->typesale_id)->get();
+        $vehicle = vehicle::where("id", $request->vehicle_id)->with('type')->get();
+        $amount = $this->Calculate($typeSale, $vehicle);
+        
+        $sale = new sale();
+        $sale->branchoffice_id = $request->branchoffice_id;
+        $sale->vehicle_id = $request->vehicle_id;
+        $sale->typesale_id = $request->typesale_id;
+        $sale->client_id = $request->client_id;
+        $sale->date = now();
+        $sale->amount = $amount;
+        $sale->save();
+        $vehicle->status = '0';
+        $vehicle->save();
+        return redirect()->back()->with('success','Venta realizada');
+    }
+
+    public function Calculate($typeSale, $vehicle)
+    {
+        for ($i=0; $i < $typeSale->count(); $i++) { 
+            for ($j=0; $j < $vehicle->count() ; $j++) { 
+                if ($vehicle[$j]->amount == 0) {
+                    return round($vehicle[$j]->type->counter / $typeSale[$i]->amount);
+                } else {
+                    return round($vehicle[$j]->type->counter / $typeSale[$i]->amount);
+                }
+                
+            }
+        }
     }
 
     /**

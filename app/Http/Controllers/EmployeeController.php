@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $branchoffices = branchoffice::all();
-        $employees = employee::where('status', 'activo')->with(['branchoffice.vehicles', 'user'])->paginate(10);
+        $employees = employee::where('status', '1')->with(['branchoffice.vehicles', 'user'])->paginate(10);
         return view('pages.employees.employees', compact('employees', 'branchoffices'));
     }
 
@@ -43,17 +43,21 @@ class EmployeeController extends Controller
     {
         $user = new User();
         $user->name = $request->name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
-        $user->name = $request->name;
-        $user->photo = $request->file('photo')->store('avatars');
+        $user->last_name = $request->last_name;
+        $photo = $request->file('photo')->store('public/avatars');
+        $user->photo = str_replace('public/' , '' , $photo);
         $user->save();
         $employee = new employee();
         $employee->user_id = $user->id;
         $employee->salary = $request->salary;
-        $employee->branchoffice_id = $request->branchoffice_id;
+        if ($request->branchoffice_id != '#') {
+            $employee->branchoffice_id = $request->branchoffice_id;
+        }
         $employee->save();
         return redirect()->back()->with('success','Empleado guardado');
     }
@@ -102,7 +106,9 @@ class EmployeeController extends Controller
         $user->address = $request->address;
         $user->save();
         $employee = employee::find($request->idemployee);
-        $employee->branchoffice_id = $request->branch;
+        if ($request->branchoffice_id != '') {
+            $employee->branchoffice_id = $request->branch;
+        }
         $employee->save();
         return redirect()->back()->with('success','Empleado actualizado');
     }
@@ -128,5 +134,13 @@ class EmployeeController extends Controller
         $employee->status = 'inactivo';
         $employee->save();
         return redirect()->back()->with('success','Empleado eliminado');
+    }
+
+    public function asign(request $request)
+    {
+        $employee = employee::find($request->idasign);
+        $employee->branchoffice_id = $request->branchoffice_id;
+        $employee->save();
+        return redirect()->back()->with('success','Sucursal asignada');
     }
 }

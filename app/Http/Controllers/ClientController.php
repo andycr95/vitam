@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\client;
+use App\vehicle;
+use App\branchoffice;
+use App\typeSale;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -14,7 +17,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = client::where('status', '1')->with('sales.vehicle')->paginate(10);
+        return view('pages.clients.clients', compact('clients'));
     }
 
     /**
@@ -35,7 +39,18 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new client();
+        $client->name = $request->name;
+        $client->last_name = $request->last_name;
+        $client->documento = $request->documento;
+        $client->email = $request->email;
+        $client->address = $request->address;
+        $client->phone = $request->phone;
+        $client->celphone = $request->celphone;
+        $photo = $request->file('photo')->store('public/avatars');
+        $client->photo = str_replace('public/' , '' , $photo);
+        $client->save();
+        return redirect()->back()->with('success','Cliente guardado');
     }
 
     /**
@@ -44,9 +59,26 @@ class ClientController extends Controller
      * @param  \App\client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(client $client)
+    public function show(client $id)
     {
-        //
+        $client = client::where('id', $id->id)->with(['sales.vehicle'])->get();
+        $photos = client::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
+        $photo = $this->nullableIf($photos);
+        $branchoffices = branchoffice::where('status', '1')->get();
+        $vehicles = vehicle::where('status', '1')->get();
+        $typeSales = typeSale::all();
+        return view('pages.clients.profile', compact('client', 'photos', 'photo', 'branchoffices', 'vehicles', 'typeSales'));
+    }
+
+    public function nullableIf($photos)
+    {
+        for($i=0; $i < $photos->count(); $i++) { 
+            if ($photos[$i]->photo1 == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 
     /**
@@ -69,7 +101,37 @@ class ClientController extends Controller
      */
     public function update(Request $request, client $client)
     {
-        //
+        $client = client::find($request->id);
+        $client->name = $request->first_name;
+        $client->last_name = $request->last_name;
+        $client->documento = $request->documento;
+        $client->phone = $request->phone;
+        $client->celphone = $request->celphone;
+        $client->email = $request->email;
+        $client->address = $request->address;
+        $client->save();
+        return redirect()->back()->with('success','Cliente actualizado');
+    }
+
+    public function updatePhoto(request $request)
+    {
+        $client = client::find($request->id);
+        if ($request->photo) {
+            $photo = $request->file('photo')->store('public/avatars');
+            $client->photo = str_replace('public/' , '' , $photo);
+        } else if ($request->photo1) {
+            $photo = $request->file('photo1')->store('public/avatars');
+            $client->photo1 = str_replace('public/' , '' , $photo);
+        } elseif ($request->photo2) {
+            $photo = $request->file('photo2')->store('public/avatars');
+            $client->photo2 = str_replace('public/' , '' , $photo);
+        } elseif ($request->photo3) {
+            $photo = $request->file('photo3')->store('public/avatars');
+            $client->photo3 = str_replace('public/' , '' , $photo);
+        }
+
+        $client->save();
+        return redirect()->back()->with('success','Foto actualizada');
     }
 
     /**
@@ -78,8 +140,11 @@ class ClientController extends Controller
      * @param  \App\client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(client $client)
+    public function destroy(request $request)
     {
-        //
+        $client = client::find($request->id);
+        $client->status = '0';
+        $client->save();
+        return redirect()->back()->with('success','Cliente eliminado');
     }
 }

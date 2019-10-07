@@ -94,6 +94,15 @@
                             </div>
                             <input type="hidden" name="state" value="activo"/>
                             <div class="form-group">
+                                <label for="employee"><strong>Encargado</strong></label>
+                                <select name="employee_id" class="form-control">
+                                    <option>Seleccione una opción</option>
+                                    @foreach ($employees as $employee)
+                                        <option value="{{$employee->id}}">{{$employee->user->name}} {{$employee->user->last_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="city"><strong>Ciudad</strong></label>
                                 <select name="city_id" class="form-control">
                                     <option>Seleccione una opción</option>
@@ -104,7 +113,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>

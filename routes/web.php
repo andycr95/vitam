@@ -25,6 +25,14 @@ Route::get('/reports','ReportController@index')->name('reports');
 
 //Clients
 Route::get('/clients','ClientController@index')->name('clients');
+Route::get('/client/{id}','ClientController@show')->name('client');
+Route::post('/client','ClientController@store')->name('createclient');
+Route::put('/client/{id}','ClientController@update')->name('updateClient');
+Route::patch('/client/photo','ClientController@updatePhoto')->name('updatePhotoClient');
+Route::patch('/client','ClientController@destroy')->name('deleteclient');
+
+//Sales
+Route::post('/sale','SaleController@store')->name('salevehicleclient');
 
 //Investors
 Route::get('/investors','InvestorController@index')->name('investors');
@@ -53,6 +61,10 @@ Route::get('/employee/{id}','EmployeeController@show')->name('employee');
 Route::put('/employee','EmployeeController@update')->name('updateEmployee');
 Route::patch('/employee','EmployeeController@updatePhoto')->name('updatePhoto');
 Route::patch('/employee/delete','EmployeeController@destroy')->name('deleteEmployee');
+Route::patch('/employee/asignBranch','EmployeeController@asign')->name('asignBrEmployee');
+
+//Validates
+Route::post('/validate/email','ValidateFormsController@ValidateEmail')->name('ValidateEmail');
 
 
 Route::get('/loans','LoansController@index')->name('loans');

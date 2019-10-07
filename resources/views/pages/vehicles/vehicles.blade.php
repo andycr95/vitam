@@ -35,6 +35,7 @@
                                 <th>Color</th>
                                 <th>Motor</th>
                                 <th>Chasis</th>
+                                <th>Condición</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -47,6 +48,11 @@
                                 <td>{{$vehicle->color}}</td>
                                 <td>{{$vehicle->motor}}</td>
                                 <td>{{$vehicle->chasis}}</td>
+                                @if ($vehicle->status == 0)
+                                <td><span class="badge badge-success">Vendida</span></td>
+                                @else
+                                <td><span class="badge badge-primary">Por vender</span></td>
+                                @endif
                                 <td>{{$vehicle->type->name}}</td>
                                 <td>
                                     <a class="btn btn-sm btn-info" 
@@ -130,12 +136,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Estado</strong></label>
-                                        <select name="type_id" class="form-control" required>
+                                        <select name="type_id" id="type_id" class="form-control" required>
                                             <option>Seleccione una opción</option>
                                             @foreach ($types as $type)
                                                 <option value="{{$type->id}}">{{$type->name}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div id="groupAmount" class="form-group">
+                                        
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>

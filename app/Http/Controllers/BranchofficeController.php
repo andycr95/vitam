@@ -24,8 +24,8 @@ class BranchofficeController extends Controller
         }
         
         $city = city::all();
-        $employee = employee::all();
-        return view('pages.branchoffice.branchoffice', compact('branchoffices', 'city', 'employee'));
+        $employees = employee::all();
+        return view('pages.branchoffice.branchoffice', compact('branchoffices', 'city', 'employees'));
     }
 
     /**
