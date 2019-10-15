@@ -59,10 +59,23 @@ class VehicleController extends Controller
      */
     public function show(vehicle $id)
     {
-        $vehicle = vehicle::where('id',$id->id)->with(['investor', 'type', 'branchoffice'])->get();
-        return  view('pages.vehicles.profile', compact('vehicles'));
+
+        $photos = vehicle::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
+        $photo = $this->nullableIf($photos);
+        $vehicle = vehicle::where('id',$id->id)->with(['investor', 'type', 'payments', 'branchoffice'])->get();
+        return  view('pages.vehicles.profile', compact('vehicle', 'photos', 'photo'));
     }
 
+    public function nullableIf($photos)
+    {
+        for($i=0; $i < $photos->count(); $i++) { 
+            if ($photos[$i]->photo1 == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -94,6 +107,27 @@ class VehicleController extends Controller
         $vehicle->branchoffice_id = $request->branchoffice_id;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo actualizado');
+    }
+
+    public function updatePhoto(request $request)
+    {
+        $vehicle = vehicle::find($request->id);
+        if ($request->photo) {
+            $photo = $request->file('photo')->store('public/avatars');
+            $vehicle->photo = str_replace('public/' , '' , $photo);
+        } else if ($request->photo1) {
+            $photo = $request->file('photo1')->store('public/avatars');
+            $vehicle->photo1 = str_replace('public/' , '' , $photo);
+        } elseif ($request->photo2) {
+            $photo = $request->file('photo2')->store('public/avatars');
+            $vehicle->photo2 = str_replace('public/' , '' , $photo);
+        } elseif ($request->photo3) {
+            $photo = $request->file('photo3')->store('public/avatars');
+            $vehicle->photo3 = str_replace('public/' , '' , $photo);
+        }
+
+        $vehicle->save();
+        return redirect()->back()->with('success','Foto actualizada');
     }
 
     /**

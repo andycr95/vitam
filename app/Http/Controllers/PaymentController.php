@@ -12,9 +12,15 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $payments = payment::search($buscar)->paginate(10);
+        } else {
+            $payments = payment::OrderBy('created_at', 'DESC')->paginate(10);
+        }
+        return  view('pages.payments.payments', compact('payments'));
     }
 
     /**

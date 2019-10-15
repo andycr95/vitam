@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     @foreach ($client as $client)
-    <h3 class="text-dark mb-4">Perfil</h3>
+    {{ Breadcrumbs::render('client', $client) }}
     <div class="row mb-3">
         <div class="col-lg-5">
             <div class="card mb-3">
@@ -61,7 +61,7 @@
                             @if ($photo->photo1 == null)
                                 
                             @else
-                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo1}}" width="160" height="160">  
+                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo1}}" id="photo1" alt="{{$client->name}} {{$client->last_name}}" width="160" height="160">  
                             @endif
                             @if ($photo->photo2 == null)
                                 <form action="{{ route('updatePhotoClient') }}" id="form1" enctype="multipart/form-data"  method="POST">
@@ -71,7 +71,7 @@
                                         <input type="hidden" name="id" value="{{$client->id}}"/>
                                 </form><br>
                             @else
-                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo2}}" width="160" height="160">  
+                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo2}}" id="photo2" alt="{{$client->name}} {{$client->last_name}}" width="160" height="160">  
                             @endif
                             @if ($photo->photo3 == null)
                                 <form action="{{ route('updatePhotoClient') }}" id="form2" enctype="multipart/form-data"  method="POST">
@@ -81,7 +81,7 @@
                                         <input type="hidden" name="id" value="{{$client->id}}"/>
                                 </form>
                             @else
-                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo3}}" width="160" height="160">  
+                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo3}}" id="photo3" alt="{{$client->name}} {{$client->last_name}}" width="160" height="160">  
                             @endif
                         @endforeach
                     @else
@@ -191,6 +191,15 @@
             </form>
         </div>
     </div>
+    {{-- MODAL PHOTOS VIEW --}}
+    <div id="myModal" class="modalphoto">
+        <!-- The Close Button -->
+        <span id="close" class="close">&times;</span>
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">    
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+        </div>
     <!-- MODAL Sale -->
     <div class="modal fade" id="saleModal" tabindex="-1" role="dialog" aria-labelledby="saleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -253,3 +262,7 @@
         </div>
 </div>
 @endsection
+@push('scripts')
+    <script src="/js/client.js"></script>
+    <script src="/js/photos.js"></script>
+@endpush

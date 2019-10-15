@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
+        {{ Breadcrumbs::render('branchOffices') }}
         <div class="card shadow">
             <div class="card-header py-3">
                 <p class="text-primary m-0 font-weight-bold">Sucursales</p>
@@ -149,3 +150,6 @@
         </div>
     </div>
 @endsection 
+@push('scripts')
+    <script src="/js/branchoffice.js"></script>
+@endpush

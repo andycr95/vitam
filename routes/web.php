@@ -45,6 +45,7 @@ Route::get('/vehicles','VehicleController@index')->name('vehicles');
 Route::get('/vehicle/{id}','VehicleController@show')->name('vehicle');
 Route::post('/vehicle','VehicleController@store')->name('createVehicle');
 Route::patch('/vehicle','VehicleController@destroy')->name('deleteVehicle');
+Route::patch('/vehicle/photo','VehicleController@updatePhoto')->name('updatePhotovehicle');
 Route::put('/vehicle','VehicleController@update')->name('updateVehicle');
 
 //BranchOffices
@@ -66,6 +67,8 @@ Route::patch('/employee/asignBranch','EmployeeController@asign')->name('asignBrE
 //Validates
 Route::post('/validate/email','ValidateFormsController@ValidateEmail')->name('ValidateEmail');
 
+//Payments
+Route::get('/payments','PaymentController@index')->name('payments');
 
 Route::get('/loans','LoansController@index')->name('loans');
 Route::get('/expenses','BranchOfficeController@index')->name('expenses');

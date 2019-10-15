@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700">
     <link rel="stylesheet" href="/css/styles.min.css">
     <link rel="stylesheet" href="/css/app.css">
-
 </head>
 
 <body id="page-top">
@@ -36,11 +35,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="/js/script.min.js"></script>
-    <script src="/js/employees.js"></script>
-    <script src="/js/client.js"></script>
-    <script src="/js/vehicle.js"></script>
-    <script src="/js/branchoffice.js"></script>
     <script src="/js/app.js"></script>
+    @stack('scripts')
     @if (session()->has('success'))
         <script>toastr.success("{{ session('success') }}")</script>
     @elseif (session()->has('info'))

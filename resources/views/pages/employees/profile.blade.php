@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     @foreach ($employee as $employee)
-    <h3 class="text-dark mb-4">Perfil</h3>
+    {{ Breadcrumbs::render('employee', $employee) }}
     <div class="row mb-3">
         <div class="col-lg-4">
             <div class="card mb-3">
@@ -159,3 +159,6 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script src="/js/employees.js"></script>    
+@endpush

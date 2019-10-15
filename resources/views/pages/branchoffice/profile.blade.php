@@ -3,6 +3,7 @@
 @section('content')
 <div class="container-fluid">
     @foreach ($branchoffice as $branchoffice)
+    {{ Breadcrumbs::render('branchoffice', $branchoffice) }}
     <h3 class="text-dark mb-4">Sucursal - {{$branchoffice->name}}</h3>
     <div class="row mb-3">
         <div class="col-lg-4">
@@ -128,3 +129,6 @@
     @endforeach
 </div>
 @endsection
+@push('scripts')
+    <script src="/js/branchoffice.js"></script>
+@endpush

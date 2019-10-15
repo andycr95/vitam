@@ -69,6 +69,15 @@
                             <i class="fas fa-money-check"></i><span>Gastos</span>
                         </a>
                     @endif
+                    @if (strpos(url()->current(), "payments"))
+                        <a class="nav-link active" href="{{ route('payments') }}">
+                            <i class="fas fa-money-check"></i><span>Recaudos</span>
+                        </a>
+                    @else
+                        <a class="nav-link" href="{{ route('payments') }}">
+                            <i class="fas fa-money-check"></i><span>Recaudos</span>
+                        </a>
+                    @endif
                     @if (strpos(url()->current(), "reports"))
                         <a class="nav-link active" href="{{ route('reports') }}">
                             <i class="far fa-chart-bar"></i><span>Reportes</span>

@@ -49,8 +49,10 @@ class SaleController extends Controller
         $sale->date = now();
         $sale->amount = $amount;
         $sale->save();
-        $vehicle->status = '0';
-        $vehicle->save();
+        
+        $vh = vehicle::find($request->vehicle_id);
+        $vh->status = '0';
+        $vh->save();
         return redirect()->back()->with('success','Venta realizada');
     }
 

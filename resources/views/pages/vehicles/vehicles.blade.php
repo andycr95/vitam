@@ -2,16 +2,17 @@
 
 @section('content')
     <div class="container-fluid">
+        {{ Breadcrumbs::render('vehicles') }}
         <div class="card shadow">
             <div class="card-header py-3">
-                <p class="text-primary m-0 font-weight-bold">Vehichulos</p>
+                <p class="text-primary m-0 font-weight-bold">Vehiculos</p>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8 text-nowrap">
                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                             <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fa fa-plus"></i> Nuevo vehichulo
+                                <i class="fa fa-plus"></i> Nuevo vehiculo
                             </button>
                         </div>
                     </div>
@@ -95,7 +96,7 @@
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header  primary">
-                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehichulo</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehiculo</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -174,7 +175,7 @@
                         @method('PATCH')
                         <div class="modal-content">
                             <div class="modal-header  primary">
-                                <h5 class="modal-title" id="deleteModalLabel">Eliminar Vehichulo</h5>
+                                <h5 class="modal-title" id="deleteModalLabel">Eliminar Vehiculo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -201,7 +202,7 @@
                     @method('PUT')
                     <div class="modal-content">
                         <div class="modal-header  primary">
-                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehichulo</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehiculo</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -272,3 +273,6 @@
         </div>   
     </div>
 @endsection
+@push('scripts')
+    <script src="/js/vehicle.js"></script>
+@endpush

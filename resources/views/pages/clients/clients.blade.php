@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
+        {{ Breadcrumbs::render('clients') }}
         <div class="card shadow">
             <div class="card-header py-3">
                 <p class="text-primary m-0 font-weight-bold">Clientes</p>
@@ -163,3 +164,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="/js/client.js"></script>
+@endpush
