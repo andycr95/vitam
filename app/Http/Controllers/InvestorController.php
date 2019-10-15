@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\investor;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class InvestorController extends Controller
@@ -14,7 +16,8 @@ class InvestorController extends Controller
      */
     public function index()
     {
-        return view('pages.investors.investors');
+        $investors = investor::where('state', '1')->with(['vehicles', 'user'])->paginate(10);
+        return view('pages.investors.investors', compact('investors'));
     }
 
     /**
@@ -35,7 +38,19 @@ class InvestorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->name;
+        $user->last_name = $request->lname;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password);
+        $user->photo = $request->file('photo')->store('avatars');
+        $user->save();
+        $investor = new investor();
+        $investor->user_id = $user->id;        
+        $investor->save();
+        return redirect()->back()->with('success','Inversionista guardado');
     }
 
     /**
@@ -44,9 +59,10 @@ class InvestorController extends Controller
      * @param  \App\investor  $investor
      * @return \Illuminate\Http\Response
      */
-    public function show(investor $investor)
+    public function show(investor $id)
     {
-        //
+        $investor = investor::where("id", $id->id)->with(['vehicles','user'])->get();       
+        return view('pages.investors.profile', compact('investor'));
     }
 
     /**
