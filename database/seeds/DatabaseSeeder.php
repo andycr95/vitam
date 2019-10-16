@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 
-        /* DB::table('cities')->insert([
+        DB::table('cities')->insert([
             'name' => "Buenaventura",
         ]);
 
@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('cities')->insert([
             'name' => "Santander de Quilichao",
-        ]); */
+        ]);
 
-        /* DB::table('types')->insert([
+        DB::table('types')->insert([
             'counter' => 365,
             'name' => "Nueva",
         ]);
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         DB::table('types')->insert([
             'counter' => 0,
             'name' => "Especial",
-        ]); */
+        ]);
 
         DB::table('type_sales')->insert([
             'name' => "Diario",
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
             'name' => "Mensual",
         ]);
 
-        /* DB::table('users')->insert([
+        DB::table('users')->insert([
             'name' => "Andy",
             'last_name' => "Caicedo",
             'email' => "andycr95@icloud.com",
@@ -65,6 +65,6 @@ class DatabaseSeeder extends Seeder
             'phone' => "3128978597",
             'address' => "cr 68",
             'photo' => "avatars/PzjykoDHRh10pAYhu3gchAC6tyuc5585tsmkeXIL.jpeg",
-        ]); */
+        ]);
     }
 }
