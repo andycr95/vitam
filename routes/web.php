@@ -49,10 +49,10 @@ Route::patch('/vehicle/photo','VehicleController@updatePhoto')->name('updatePhot
 Route::put('/vehicle','VehicleController@update')->name('updateVehicle');
 
 //BranchOffices
-Route::get('/branchoffices','BranchOfficeController@index')->name('branchOffices');
+Route::get('/branchoffices','BranchofficeController@index')->name('branchOffices');
 Route::get('/branchoffice/{id}','BranchofficeController@show')->name('branchoffice');
 Route::put('/branchoffice/{id}','BranchofficeController@update')->name('updateBranchoffice');
-Route::post('/branchoffices','BranchOfficeController@store')->name('createBranch');
+Route::post('/branchoffices','BranchofficeController@store')->name('createBranch');
 Route::patch('/branchoffice','BranchofficeController@destroy')->name('deleteBranchoffice');
 
 //Employess
