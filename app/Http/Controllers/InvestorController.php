@@ -85,7 +85,21 @@ class InvestorController extends Controller
      */
     public function update(Request $request, investor $investor)
     {
-        //
+        $user = User::find($request->id);
+        $user->name = $request->first_name;
+        $user->last_name = $request->last_name;
+        if ($request->password != null) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->save();
+        $investor = investor::find($request->idinvestor);
+        if ($request->branchoffice_id != '') {
+            $investor->branchoffice_id = $request->branch;
+        }
+        $investor->save();
+        return redirect()->back()->with('success','Inversionista actualizado');
     }
 
     /**
@@ -94,8 +108,11 @@ class InvestorController extends Controller
      * @param  \App\investor  $investor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(investor $investor)
+    public function destroy(request $request)
     {
-        //
+        $investor = investor::find($request->iddelete);
+        $investor->state = '0';
+        $investor->save();
+        return redirect()->back()->with('success','Inversionista eliminado');
     }
 }

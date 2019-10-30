@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
+        {{ Breadcrumbs::render('investors') }}
         <div class="card shadow">
             <div class="card-header py-3">
                 <p class="text-primary m-0 font-weight-bold">Inversionistas</p>
@@ -15,8 +16,15 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                    <div class="col">
+                        <form action="{{ route('branchOffices')}}">
+                            <div class="input-group form-2 pl-0">
+                                <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="input-group-text" style="background-color: #1cc88a; color: white;" type="submit" ><i class="fas fa-search text-grey" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -34,13 +42,13 @@
                         <tbody>
                         @foreach ($investors as $investor)
                             <tr>
-                                <td><a href="{{ route('investor', $investor->id )}}">{{$investor->user->name}}</a></td>
+                                <td><a href="{{ route('investor', $investor->id )}}">{{$investor->user->name}} {{$investor->user->last_name}}</a></td>
                                 <td>{{$investor->user->address}}</td>
                                 <td>{{$investor->user->phone}}</td>
                                 <td>{{$investor->user->email}}</td>
                                 <td>{{$investor->vehicles->count()}}</td>                              
                                 <td>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$investor->id}}" id="deleteemployee" data-toggle="modal" data-target="#deleteModal">
+                                    <a class="btn btn-sm btn-danger" data-id="{{$investor->id}}" id="deleteinvestor" data-toggle="modal" data-target="#deleteModal">
                                         <i style="color: white;" class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -115,5 +123,35 @@
                 </form>
             </div>
         </div>
+        <!-- MODAL DELETE -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="{{ route('deleteinvestor') }}"  enctype="multipart/form-data"  method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-content">
+                        <div class="modal-header  primary">
+                            <h5 class="modal-title" id="deleteModalLabel">Eliminar Inversionista</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"> 
+                            <div class="form-group">
+                                <h3>¿Seguro de eliminar este Inversionista?<h3>
+                                <input class="form-control" type="hidden" name="iddelete" id="iddelete" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="/js/investors.js"></script>    
+@endpush

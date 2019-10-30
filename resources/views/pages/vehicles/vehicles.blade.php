@@ -61,7 +61,7 @@
                                     data-type="{{$vehicle->type_id}}" data-nametype="{{$vehicle->type->name}}" 
                                     data-investor="{{$vehicle->investor_id}}" data-nameInv="{{$vehicle->investor->user->name}}" 
                                     data-motor="{{$vehicle->motor}}" data-color="{{$vehicle->color}}" data-chasis="{{$vehicle->chasis}}" 
-                                    data-id="{{$vehicle->id}}" data-model="{{$vehicle->model}}" 
+                                    data-id="{{$vehicle->id}}" data-amount="{{$vehicle->amount}}" data-model="{{$vehicle->model}}" 
                                     data-placa="{{$vehicle->placa}}" id="editvehicle" data-toggle="modal" data-target="#editModal">
                                         <i style="color: white;" class="fas fa-pencil-alt "></i>
                                     </a>
@@ -250,6 +250,10 @@
                                                 <option value="{{$type->id}}">{{$type->name}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div id="groupAmount2" class="form-group">
+                                        <label for="phone"><strong>Dias</strong></label>
+                                        <input id="amount" class="form-control" type="number" name="amount" placeholder="365" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>

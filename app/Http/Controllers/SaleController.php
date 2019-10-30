@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\sale;
 use App\typeSale;
 use App\vehicle;
+use App\client;
+use App\branchoffice;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -16,7 +18,12 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        $sales = sale::where('status', '1')->paginate(10);
+        $clients = client::where('status', '1')->get();
+        $branchoffices = branchoffice::where('status', '1')->get();
+        $vehicles = vehicle::where('status', '1')->get();
+        $typeSales = typeSale::all();
+        return view('pages.sales.sales', compact('sales', 'clients', 'branchoffices', 'vehicles', 'typeSales'));
     }
 
     /**

@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb-4">
+            <div class="col">
                 <div class="card shadow mb-4"></div>
                 <div class="card">
                     <div class="card-header">
@@ -120,7 +120,7 @@
                 </div>
                 <div class="card shadow mb-4"></div>
             </div>
-            <div class="col mb-4">
+            <div class="col">
                     <div class="card shadow mb-4"></div>
                     <div class="card">
                         <div class="card-header">

@@ -52,6 +52,7 @@ class EmployeeController extends Controller
         $photo = $request->file('photo')->store('public/avatars');
         $user->photo = str_replace('public/' , '' , $photo);
         $user->save();
+        $user->assignRole('employee');
         $employee = new employee();
         $employee->user_id = $user->id;
         $employee->salary = $request->salary;
@@ -131,7 +132,7 @@ class EmployeeController extends Controller
     public function destroy(request $request)
     {
         $employee = employee::find($request->iddelete);
-        $employee->status = 'inactivo';
+        $employee->status = '0';
         $employee->save();
         return redirect()->back()->with('success','Empleado eliminado');
     }

@@ -15,6 +15,7 @@
                             <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
                         </a>
                     @endif
+                    @hasanyrole('Administrador')
                     @if (strpos(url()->current(), "branchoffices"))
                         <a class="nav-link active" href="{{ route('branchOffices') }}">
                             <i class="fas fa-briefcase"></i><span>Sucursales</span>
@@ -42,6 +43,8 @@
                             <i class="far fa-handshake"></i><span>Inversionistas</span>
                         </a>
                     @endif
+                    @endhasanyrole
+                    @hasanyrole('Empleado|Administrador')
                     @if (strpos(url()->current(), "clients"))
                         <a class="nav-link active" href="{{ route('clients') }}">
                             <i class="far fa-handshake"></i><span>Clientes</span>
@@ -51,6 +54,16 @@
                             <i class="fas fa-users"></i><span>Clientes</span>
                         </a>
                     @endif
+                    @if (strpos(url()->current(), "sales"))
+                        <a class="nav-link active" href="{{ route('sales') }}">
+                            <i class="fas fa-motorcycle"></i><span>Ventas</span>
+                        </a>
+                    @else
+                        <a class="nav-link" href="{{ route('sales') }}">
+                            <i class="fas fa-motorcycle"></i><span>Ventas</span>
+                        </a>
+                    @endif
+                    @endhasanyrole
                     @if (strpos(url()->current(), "vehicles"))
                         <a class="nav-link active" href="{{ route('vehicles') }}">
                             <i class="fas fa-motorcycle"></i><span>Vehículos</span>
@@ -60,6 +73,7 @@
                             <i class="fas fa-motorcycle"></i><span>Vehículos</span>
                         </a>
                     @endif
+                    @hasanyrole('Empleado|Administrador')
                     @if (strpos(url()->current(), "expenses"))
                         <a class="nav-link active" href="{{ route('expenses') }}">
                             <i class="fas fa-money-check"></i><span>Gastos</span>
@@ -78,14 +92,15 @@
                             <i class="fas fa-money-check"></i><span>Recaudos</span>
                         </a>
                     @endif
+                    @endhasanyrole
                     @if (strpos(url()->current(), "reports"))
-                        <a class="nav-link active" href="{{ route('reports') }}">
-                            <i class="far fa-chart-bar"></i><span>Reportes</span>
-                        </a>
+                    <a class="nav-link active" href="{{ route('reports') }}">
+                        <i class="far fa-chart-bar"></i><span>Reportes</span>
+                    </a>
                     @else
-                        <a class="nav-link" href="{{ route('reports') }}">
-                            <i class="far fa-chart-bar"></i><span>Reportes</span>
-                        </a>
+                    <a class="nav-link" href="{{ route('reports') }}">
+                        <i class="far fa-chart-bar"></i><span>Reportes</span>
+                    </a>
                     @endif
                 </li>
             </ul>

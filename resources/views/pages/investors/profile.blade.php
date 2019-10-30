@@ -2,16 +2,16 @@
 
 @section('content')
 <div class="container-fluid">
-    @foreach ($investor as $employee)
-    <h3 class="text-dark mb-4">Perfil</h3>
+    @foreach ($investor as $investor)
+    {{ Breadcrumbs::render('investor', $investor) }}
     <div class="row mb-3">
         <div class="col-lg-4">
             <div class="card mb-3">
                 <div class="card-body text-center shadow">
-                    @if ($employee->user->photo == '')
+                    @if ($investor->user->photo == '')
                         <img class="rounded-circle mb-3 mt-4" src="/img/avatars/avatar1.jpeg" width="160" height="160">                   
                     @else
-                        <img class="rounded-circle mb-3 mt-4" src="/storage/{{$employee->user->photo}}" width="160" height="160">                        
+                        <img class="rounded-circle mb-3 mt-4" src="/storage/{{$investor->user->photo}}" width="160" height="160">                        
                     @endif
                     <div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Cambiar foto</button></div>
                 </div>
@@ -33,22 +33,22 @@
                             <p class="text-primary m-0 font-weight-bold">Información de usuario</p>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('updateEmployee') }}"  enctype="multipart/form-data"  method="POST">
+                            <form action="{{ route('updateInvestor') }}"  enctype="multipart/form-data"  method="POST">
                                 @csrf
                                 @method('PUT')               
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="first_name"><strong>Nombre</strong></label>
-                                            <input disabled class="form-control" type="text" value="{{$employee->user->name}}" name="first_name">
-                                            <input type="hidden" value="{{$employee->user_id}}" name="id">
-                                            <input type="hidden" value="{{$employee->id}}" name="idemployee">
+                                            <input disabled class="form-control" type="text" value="{{$investor->user->name}}" name="first_name">
+                                            <input type="hidden" value="{{$investor->user_id}}" name="id">
+                                            <input type="hidden" value="{{$investor->id}}" name="idinvestor">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="last_name"><strong>Apellido</strong></label>
-                                            <input disabled class="form-control" type="text" value="{{$employee->user->last_name}}" name="last_name">
+                                            <input disabled class="form-control" type="text" value="{{$investor->user->last_name}}" name="last_name">
                                         </div>
                                     </div>
                                 </div>
@@ -62,13 +62,13 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="email"><strong>Email Address</strong></label>
-                                            <input class="form-control" disabled type="email" value="{{$employee->user->email}}" name="email">
+                                            <input class="form-control" disabled type="email" name="email" value="{{$investor->user->email}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="address"><strong>Dirección</strong></label>
-                                    <input class="form-control" type="text" disabled value="{{$employee->user->address}}" name="address">
+                                    <input class="form-control" type="text" disabled value="{{$investor->user->address}}" name="address">
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
@@ -79,8 +79,8 @@
                                     </div>
                                 </div>
                                 <div id="modal-buttons" class="form-group">
-                                    <button disabled id="employeeSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
-                                    <button class="btn btn-info btn-sm" id="employeeUpdate" type="button"><span>Actualizar</span></button>
+                                    <button disabled id="investorSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
+                                    <button class="btn btn-info btn-sm" id="investorUpdate" type="button"><span>Actualizar</span></button>
                                 </div>
 
                             </form>
@@ -110,7 +110,7 @@
                                 <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 <input type="file" name="photo" class="custom-file-input" id="customFileLang" lang="es">
                             </div>
-                            <input type="hidden" name="id" value="{{$employee->user->id}}"/>
+                            <input type="hidden" name="id" value="{{$investor->user->id}}"/>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -123,3 +123,6 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script src="/js/investors.js"></script>    
+@endpush

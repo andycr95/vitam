@@ -47,6 +47,23 @@ Breadcrumbs::for('employee', function ($trail, $employee) {
     $trail->push($name, route('employee', $employee->id));
 });
 
+Breadcrumbs::for('investors', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Inversionistas', route('investors'));
+});
+
+Breadcrumbs::for('investor', function ($trail, $investor) {
+    $trail->parent('investors');
+    $name = $investor->user->name.' '.$investor->user->last_name;
+    $trail->push($name, route('investor', $investor->id));
+});
+
+Breadcrumbs::for('sales', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Ventas', route('sales'));
+});
+
+
 Breadcrumbs::for('payments', function ($trail) {
     $trail->parent('home');
     $trail->push('Recaudos', route('payments'));
