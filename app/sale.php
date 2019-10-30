@@ -18,7 +18,7 @@ class sale extends Model
         return $this->belongsTo(client::class);
     }
 
-    public function typeSale()
+    public function typesale()
     {
         return $this->belongsTo(typeSale::class);
     }

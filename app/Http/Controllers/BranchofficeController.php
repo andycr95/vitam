@@ -24,7 +24,7 @@ class BranchofficeController extends Controller
         }
         
         $city = city::all();
-        $employees = employee::all();
+        $employees = employee::where('status', '1')->doesntHave('branch')->get();
         return view('pages.branchoffice.branchOffice', compact('branchoffices', 'city', 'employees'));
     }
 
@@ -47,7 +47,10 @@ class BranchofficeController extends Controller
     public function store(Request $request)
     {
         $branchoffice = branchoffice::create($request->all());
-        return redirect()->back()->with('info','Sucursal guardada');
+        $employee = employee::find($request->employee_id);
+        $employee->branchoffice_id = $branchoffice->id;
+        $employee->save();
+        return redirect()->back()->with('success','Sucursal guardada');
     }
 
     /**
@@ -104,6 +107,9 @@ class BranchofficeController extends Controller
         $branchoffice = branchoffice::find($request->id);
         $branchoffice->status = '0';
         $branchoffice->save();
+        $employee = employee::find($branchoffice->employee_id);
+        $employee->branchoffice_id = null;
+        $employee->save();
         return redirect()->back()->with('success','Sucursal eliminado');
     }
 }

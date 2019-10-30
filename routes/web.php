@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('login');
 
 //Auth
 Auth::routes();
@@ -24,7 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/reports','ReportController@index')->name('reports');
 
 //Clients
-Route::get('/clients','ClientController@index')->name('clients');
+Route::get('/clients','ClientController@index')->name('clients')->middleware('auth');
 Route::get('/client/{id}','ClientController@show')->name('client');
 Route::post('/client','ClientController@store')->name('createclient');
 Route::put('/client/{id}','ClientController@update')->name('updateClient');
@@ -32,13 +32,16 @@ Route::patch('/client/photo','ClientController@updatePhoto')->name('updatePhotoC
 Route::patch('/client','ClientController@destroy')->name('deleteclient');
 
 //Sales
+Route::get('/sales','SaleController@index')->name('sales');
+Route::get('/sale','SaleController@index')->name('sale');
 Route::post('/sale','SaleController@store')->name('salevehicleclient');
 
 //Investors
 Route::get('/investors','InvestorController@index')->name('investors');
 Route::post('/investor','InvestorController@store')->name('createinvestor');
 Route::get('/investor/{id}','InvestorController@show')->name('investor');
-Route::put('/investor/{id}','InvestorController@update')->name('updateinvestor');
+Route::put('/investor','InvestorController@update')->name('updateInvestor');
+Route::patch('/investor/delete','InvestorController@destroy')->name('deleteinvestor');
 
 //Vehicles
 Route::get('/vehicles','VehicleController@index')->name('vehicles');

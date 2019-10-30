@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\vehicle;
 use App\investor;
 use App\type;
+use App\sale;
 use App\branchoffice;
 use Illuminate\Http\Request;
 
@@ -25,8 +26,9 @@ class VehicleController extends Controller
         }
         $investors = investor::all();
         $types = type::all();
+        $listVehicles = sale::where('status', '1')->with("vehicle")->get();
         $branchoffices = branchoffice::all();
-        return  view('pages.vehicles.vehicles', compact('vehicles', 'investors', 'types', 'branchoffices'));
+        return  view('pages.vehicles.vehicles', compact('vehicles', 'investors', 'types', 'listvehicles', 'branchoffices'));
     }
 
     /**
@@ -47,7 +49,17 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        $vehicle = vehicle::create($request->all());
+        $vehicle = new vehicle();
+        $vehicle->placa = $request->placa;
+        $vehicle->model = $request->model;
+        $vehicle->color = $request->color;
+        $vehicle->chasis = $request->chasis;
+        $vehicle->motor = $request->motor;
+        $vehicle->investor_id = $request->investor_id;
+        $vehicle->type_id = $request->type_id;
+        $vehicle->amount = $request->amount;
+        $vehicle->branchoffice_id = $request->branchoffice_id;
+        $vehicle->save();
         return redirect()->back()->with('success','Vehiculo registrado');
     }
 

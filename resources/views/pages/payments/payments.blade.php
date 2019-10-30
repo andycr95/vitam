@@ -11,8 +11,8 @@
                 <div class="row">
                     <div class="col-md-8 text-nowrap">
                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                            <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fa fa-plus"></i> Nuevo recaudo
+                            <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#payModal">
+                                <i class="fa fa-plus"></i> Registrar pago
                             </button>
                         </div>
                     </div>
@@ -64,4 +64,36 @@
             </div>
         </div> 
     </div>
+    <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="payForm" action="{{ route('updateVehicle') }}"  enctype="multipart/form-data"  method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-content">
+                    <div class="modal-header  primary">
+                        <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehiculo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"> 
+                        <div class="form-group">
+                            <label for="amount"><strong>Monto</strong></label>
+                            <input id="amount" class="form-control" type="number" name="amount" placeholder="20000" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="address"><strong>Propietario</strong></label>
+                            <select id="investor" name="investor_id" class="form-control" required>
+                                <option style="color: red;" id="optionInv"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> 
 @endsection

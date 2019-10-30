@@ -9,16 +9,16 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-8 text-nowrap">
+                    <div class="col-6 text-nowrap">
                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                             <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-plus"></i> Nueva sucursal
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col">
                         <form action="{{ route('branchOffices')}}">
-                            <div class="input-group md-form form-sm form-2 pl-0">
+                            <div class="input-group form-2 pl-0">
                                 <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="input-group-text" style="background-color: #1cc88a; color: white;" type="submit" ><i class="fas fa-search text-grey" aria-hidden="true"></i></button>
@@ -96,12 +96,16 @@
                             <input type="hidden" name="state" value="activo"/>
                             <div class="form-group">
                                 <label for="employee"><strong>Encargado</strong></label>
-                                <select name="employee_id" class="form-control">
-                                    <option>Seleccione una opción</option>
-                                    @foreach ($employees as $employee)
-                                        <option value="{{$employee->id}}">{{$employee->user->name}} {{$employee->user->last_name}}</option>
-                                    @endforeach
-                                </select>
+                                @if ($employees->count() > 0)
+                                    <select name="employee_id" class="form-control">
+                                        <option>Seleccione una opción</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{$employee->id}}">{{$employee->user->name}} {{$employee->user->last_name}}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <a href="{{ route('employees')}}">Agregue un empleado</a>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="city"><strong>Ciudad</strong></label>

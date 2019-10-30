@@ -15,7 +15,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $clients = client::where('status', '1')->with('sales.vehicle')->paginate(10);
         return view('pages.clients.clients', compact('clients'));

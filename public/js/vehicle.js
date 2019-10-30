@@ -16,12 +16,18 @@ $(document).on("click", "#editvehicle", function(e) {
     var nametype = $(this).data("nametype");
     var Br = $(this).data("branchid");
     var nameBr = $(this).data("branchname");
+    var amount = $(this).data("amount");
     $('#editForm').append(`<input name="id" id="id" value="${id}" type="hidden"/>`);
     document.getElementById("placa").value = placa;
     document.getElementById("color").value = color;
     document.getElementById("model").value = model;
     document.getElementById("motor").value = motor;
     document.getElementById("chasis").value = chasis;
+    if (amount != '') {
+        document.getElementById("amount").value = amount;
+    }else {
+        document.getElementById("amount").value = 365;
+    }
     document.getElementById("optionInv").value = investor;
     $('#editForm #optionInv').append(`${nameinv}`);
 
