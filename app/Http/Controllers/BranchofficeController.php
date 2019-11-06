@@ -50,7 +50,7 @@ class BranchofficeController extends Controller
         $employee = employee::find($request->employee_id);
         $employee->branchoffice_id = $branchoffice->id;
         $employee->save();
-        return redirect()->back()->with('success','Sucursal guardada');
+        return redirect()->back()->with('success','Nueva sucursal creada');
     }
 
     /**
@@ -106,9 +106,10 @@ class BranchofficeController extends Controller
     {
         $branchoffice = branchoffice::find($request->id);
         $branchoffice->status = '0';
-        $branchoffice->save();
         $employee = employee::find($branchoffice->employee_id);
         $employee->branchoffice_id = null;
+        $branchoffice->employee_id = null;
+        $branchoffice->save();
         $employee->save();
         return redirect()->back()->with('success','Sucursal eliminado');
     }

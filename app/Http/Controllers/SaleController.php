@@ -85,7 +85,7 @@ class SaleController extends Controller
      */
     public function show(sale $sale)
     {
-        //
+
     }
 
     /**

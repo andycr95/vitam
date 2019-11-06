@@ -45,7 +45,8 @@ class InvestorController extends Controller
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
-        $user->photo = $request->file('photo')->store('avatars');
+        $photo = $request->file('photo')->store('public/avatars');
+        $user->photo = str_replace('public/' , '' , $photo);
         $user->save();
         $investor = new investor();
         $investor->user_id = $user->id;        

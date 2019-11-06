@@ -129,6 +129,3 @@
     @endforeach
 </div>
 @endsection
-@push('scripts')
-    <script src="/js/branchoffice.js"></script>
-@endpush

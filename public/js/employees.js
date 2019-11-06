@@ -6,10 +6,12 @@ $('#employeeUpdate').click(function ($event) {
         document.getElementsByName("last_name")[0].disabled = true;  
         document.getElementsByName("password")[0].disabled = true; 
         document.getElementsByName("address")[0].disabled = true;  
-        document.getElementsByName("branch")[0].disabled = true;  
+        if (document.getElementsByName("branch")[0]) {
+            document.getElementsByName("branch")[0].disabled = true;  
+        }
         $('#pass').attr('type', 'password') 
         document.getElementsByName("email")[0].disabled = true;
-        $("#employeeSave").attr({disabled: true});   
+        $("#employeesave").attr({disabled: true});   
         $("#employeeUpdate span").remove();   
         $("#employeeUpdate").attr({
             class:'btn btn-info btn-sm'
@@ -19,8 +21,10 @@ $('#employeeUpdate').click(function ($event) {
         document.getElementsByName("last_name")[0].disabled = false;  
         document.getElementsByName("password")[0].disabled = false; 
         document.getElementsByName("address")[0].disabled = false;  
-        document.getElementsByName("branch")[0].disabled = false; 
-        $("#employeeSave").attr({disabled: false});
+        if (document.getElementsByName("branch")[0]) {
+            document.getElementsByName("branch")[0].disabled = false; 
+        }
+        $("#employeesave").attr({disabled: false});
         $('#pass').attr('type', 'text') 
         document.getElementsByName("email")[0].disabled = false;
         $("#employeeUpdate span").remove();   
@@ -42,7 +46,7 @@ $(document).on("click", "#asignBranch", function(e) {
 
 $(document).on("change", "#email", function(e) {
     email = document.getElementById("email").value;
-    url = "http://127.0.0.1:8000/validate/email";
+    url = "http://vitamventure.com/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",

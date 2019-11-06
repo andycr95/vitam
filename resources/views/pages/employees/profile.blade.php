@@ -16,39 +16,6 @@
                     <div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Cambiar foto</button></div>
                 </div>
             </div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="text-primary font-weight-bold m-0">Vehiculos vendidos</h6>
-                </div>
-                <div class="card-body">
-                    @foreach ($employee->branchoffice->sales as $sale)
-                        <h4 class="small font-weight-bold">{{$sale->vehicle->placa}}<span class="float-right">{{$sale->vehicle->payments->count()}} pagos</span></h4>
-                        <div class="progress progress-sm mb-3">
-                            @if (($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 <= 20)
-                                <div class="progress-bar bg-danger" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 20 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 50)
-                                <div class="progress-bar bg-warning" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 50 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 70)
-                                <div class="progress-bar bg-primary" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 70 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 100)
-                                <div class="progress-bar bg-info" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 == 100)
-                                <div class="progress-bar bg-success" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
         </div>
         <div class="col-lg-8">
             <div class="row">
@@ -96,26 +63,28 @@
                                     <input class="form-control" type="text" disabled value="{{$employee->user->address}}" name="address">
                                 </div>
                                 <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="city"><strong>Ciudad</strong></label>
-                                            <input name="city" class="form-control" value="{{$employee->branchoffice->city->name}}" disabled>
+                                    @if ($employee->branchoffice != null)
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="city"><strong>Ciudad</strong></label>
+                                                <input name="city" class="form-control" value="{{$employee->branchoffice->city->name}}" disabled>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="address"><strong>Sucursal</strong></label>
-                                            <select name="branch" class="form-control" disabled>
-                                                <option value="{{$employee->branchoffice_id}}">{{$employee->branchoffice->name}}</option>
-                                                @foreach ($branchoffices as $branchoffice)
-                                                    <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="address"><strong>Sucursal</strong></label>
+                                                <select name="branch" class="form-control" disabled>
+                                                    <option value="{{$employee->branchoffice_id}}">{{$employee->branchoffice->name}}</option>
+                                                    @foreach ($branchoffices as $branchoffice)
+                                                        <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                                 <div id="modal-buttons" class="form-group">
-                                    <button disabled id="employeeSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
+                                    <button disabled id="employeesave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
                                     <button class="btn btn-info btn-sm" id="employeeUpdate" type="button"><span>Actualizar</span></button>
                                 </div>
 

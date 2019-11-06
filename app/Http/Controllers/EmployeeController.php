@@ -18,7 +18,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $branchoffices = branchoffice::all();
+        $branchoffices = branchoffice::where('status', '1')->get();
         $employees = employee::where('status', '1')->with(['branchoffice.vehicles', 'user'])->paginate(10);
         return view('pages.employees.employees', compact('employees', 'branchoffices'));
     }
@@ -52,7 +52,7 @@ class EmployeeController extends Controller
         $photo = $request->file('photo')->store('public/avatars');
         $user->photo = str_replace('public/' , '' , $photo);
         $user->save();
-        $user->assignRole('employee');
+        $user->assignRole('Empleado');
         $employee = new employee();
         $employee->user_id = $user->id;
         $employee->salary = $request->salary;

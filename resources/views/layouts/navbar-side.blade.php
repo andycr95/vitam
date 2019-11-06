@@ -74,15 +74,6 @@
                         </a>
                     @endif
                     @hasanyrole('Empleado|Administrador')
-                    @if (strpos(url()->current(), "expenses"))
-                        <a class="nav-link active" href="{{ route('expenses') }}">
-                            <i class="fas fa-money-check"></i><span>Gastos</span>
-                        </a>
-                    @else
-                        <a class="nav-link" href="{{ route('expenses') }}">
-                            <i class="fas fa-money-check"></i><span>Gastos</span>
-                        </a>
-                    @endif
                     @if (strpos(url()->current(), "payments"))
                         <a class="nav-link active" href="{{ route('payments') }}">
                             <i class="fas fa-money-check"></i><span>Recaudos</span>

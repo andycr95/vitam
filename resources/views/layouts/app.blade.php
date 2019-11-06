@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700">
     <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="stylesheet" href="/css/app.css">
 </head>
  
 <body id="page-top">
@@ -30,8 +31,8 @@
         </div>
         <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="/js/script.min.js"></script>
     <script src="/js/app.js"></script>
@@ -45,11 +46,6 @@
     @elseif (session()->has('danger'))
         <script>toastr.error("{{ session('danger') }}")</script>
     @endif
-    <script>
-            $(document).ready(function(){
-               $('.dropdown-toggle').dropdown()
-           });
-       </script>
     <script>
         $.ajaxSetup({
             headers: {
