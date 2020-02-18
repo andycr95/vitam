@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <form action="{{ route('branchOffices')}}">
+                        <form action="{{ route('clients')}}">
                             <div class="input-group form-2 pl-0">
                                 <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
                                 <div class="input-group-append">
@@ -36,7 +36,6 @@
                                 <th>Dirección</th>
                                 <th>Telefono</th>
                                 <th>Vehículos</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,11 +50,6 @@
                                 @else
                                     <td>{{$client->sales->count()}}</td>
                                 @endif
-                                <td>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$client->id}}" id="deleteclient" data-toggle="modal" data-target="#deleteModal">
-                                        <i style="color: white;" class="fas fa-trash"></i>
-                                    </a>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -74,7 +68,7 @@
                             </nav>
                         </div>
                     @else
-                        
+
                     @endif
                 </div>
             </div>
@@ -91,7 +85,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -155,7 +149,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <h3>¿Seguro de eliminar este cliente?<h3>
                                 <input class="form-control" type="hidden" name="id" id="id" required/>

@@ -47,11 +47,6 @@
                                 <td>{{$investor->user->phone}}</td>
                                 <td>{{$investor->user->email}}</td>
                                 <td>{{$investor->vehicles->count()}}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$investor->id}}" id="deleteinvestor" data-toggle="modal" data-target="#deleteModal">
-                                        <i style="color: white;" class="fas fa-trash"></i>
-                                    </a>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

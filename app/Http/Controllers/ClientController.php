@@ -17,7 +17,12 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $clients = client::where('status', '1')->with('sales.vehicle')->paginate(10);
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $clients = client::where('name', 'like', '%'.$buscar.'%')->where('status', '1')->with('sales.vehicle')->paginate(10);
+        } else {
+            $clients = client::where('status', '1')->with('sales.vehicle')->paginate(10);
+        }
         return view('pages.clients.clients', compact('clients'));
     }
 
@@ -72,7 +77,7 @@ class ClientController extends Controller
 
     public function nullableIf($photos)
     {
-        for($i=0; $i < $photos->count(); $i++) { 
+        for($i=0; $i < $photos->count(); $i++) {
             if ($photos[$i]->photo1 == null) {
                 return false;
             } else {

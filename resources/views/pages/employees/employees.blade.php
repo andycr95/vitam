@@ -37,7 +37,6 @@
                                 <th>Sucursal</th>
                                 <th>Vehículos</th>
                                 <th>Salario</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,11 +53,6 @@
                                     <td>{{$employee->branchoffice->vehicles->count()}}</td>
                                 @endif
                                 <td>{{$employee->salary}}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$employee->id}}" id="deleteemployee" data-toggle="modal" data-target="#deleteModal">
-                                        <i style="color: white;" class="fas fa-trash"></i>
-                                    </a>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

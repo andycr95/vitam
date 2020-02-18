@@ -1,6 +1,7 @@
 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
         <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
             <ul class="nav navbar-nav flex-nowrap ml-auto">
+                @hasanyrole('Empleado|Administrador|Inversionista')
                 <li class="nav-item dropdown no-arrow mx-1" role="presentation">
                     <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
@@ -46,6 +47,7 @@
                          </form>
                     </div>
                 </li>
+                @endhasanyrole
             </ul>
         </div>
     </nav>

@@ -9,9 +9,9 @@
             <div class="card mb-3">
                 <div class="card-body text-center shadow">
                     @if ($investor->user->photo == '')
-                        <img class="rounded-circle mb-3 mt-4" src="/img/avatars/avatar1.jpeg" width="160" height="160">                   
+                        <img class="rounded-circle mb-3 mt-4" src="/img/avatars/avatar1.jpeg" width="160" height="160">
                     @else
-                        <img class="rounded-circle mb-3 mt-4" src="/storage/{{$investor->user->photo}}" width="160" height="160">                        
+                        <img class="rounded-circle mb-3 mt-4" src="/storage/{{$investor->user->photo}}" width="160" height="160">
                     @endif
                     <div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Cambiar foto</button></div>
                 </div>
@@ -21,7 +21,15 @@
                     <h6 class="text-primary font-weight-bold m-0">Vehiculos vendidos</h6>
                 </div>
                 <div class="card-body">
-
+                    @foreach ($investor->vehicles as $vehicle)
+                    <h3 class="small font-weight-bold">{{$vehicle->placa}}
+                    @if ($vehicle->status == 0)
+                        <span class="badge badge-success float-right">Vendida</span>
+                    @else
+                        <span class="badge badge-primary float-right">Por vender</span>
+                    @endif
+                    </h3>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -35,7 +43,7 @@
                         <div class="card-body">
                             <form action="{{ route('updateInvestor') }}"  enctype="multipart/form-data"  method="POST">
                                 @csrf
-                                @method('PUT')               
+                                @method('PUT')
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
@@ -72,10 +80,10 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
-                                       
+
                                     </div>
                                     <div class="col">
-                                       
+
                                     </div>
                                 </div>
                                 <div id="modal-buttons" class="form-group">
@@ -96,7 +104,7 @@
         <div class="modal-dialog" role="document">
             <form action="{{ route('updatePhoto') }}"  enctype="multipart/form-data"  method="POST">
                 @csrf
-                @method('PATCH')               
+                @method('PATCH')
                 <div class="modal-content">
                     <div class="modal-header  primary">
                         <h5 class="modal-title" id="exampleModalLabel">Cambiar foto</h5>
@@ -104,7 +112,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body"> 
+                    <div class="modal-body">
                         <div class="form-group">
                             <div class="custom-file">
                                 <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
@@ -124,5 +132,5 @@
 </div>
 @endsection
 @push('scripts')
-    <script src="/js/investors.js"></script>    
+    <script src="/js/investors.js"></script>
 @endpush

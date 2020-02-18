@@ -63,6 +63,12 @@ Breadcrumbs::for('sales', function ($trail) {
     $trail->push('Ventas', route('sales'));
 });
 
+Breadcrumbs::for('sale', function ($trail, $sale) {
+    $trail->parent('sales');
+    $name = $sale->vehicle->placa;
+    $trail->push($name, route('sale', $sale->id));
+});
+
 
 Breadcrumbs::for('payments', function ($trail) {
     $trail->parent('home');

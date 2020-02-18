@@ -7,6 +7,7 @@ use App\typeSale;
 use App\vehicle;
 use App\client;
 use App\branchoffice;
+use App\payment;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -16,14 +17,21 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        $sales = sale::where('status', '1')->paginate(10);
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $sales = sale::join('vehicles', function ($join) use ($buscar) {
+                $join->on('vehicles.id', '=', 'sales.vehicle_id')
+                    ->where('vehicles.placa', 'like', '%'.$buscar.'%');
+            })->select('sales.*','vehicles.placa')->paginate(10);
+        } else {
+            $sales = sale::paginate(10);
+        }
         $clients = client::where('status', '1')->get();
-        $branchoffices = branchoffice::where('status', '1')->get();
         $vehicles = vehicle::where('status', '1')->get();
         $typeSales = typeSale::all();
-        return view('pages.sales.sales', compact('sales', 'clients', 'branchoffices', 'vehicles', 'typeSales'));
+        return view('pages.sales.sales', compact('sales', 'clients', 'vehicles', 'typeSales'));
     }
 
     /**
@@ -88,9 +96,11 @@ class SaleController extends Controller
      * @param  \App\sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function show(sale $sale)
+    public function show(sale $id)
     {
-
+        $sale = sale::where("id", $id->id)->with(['vehicle', 'client', 'branchoffice'])->get();
+        $payment = payment::where('sale_id',$id)->orderBy('id', 'desc')->get();
+        return view('pages.sales.profile', compact('sale', 'payment'));
     }
 
     /**

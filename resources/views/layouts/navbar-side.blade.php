@@ -64,6 +64,7 @@
                         </a>
                     @endif
                     @endhasanyrole
+                    @hasanyrole('Empleado|Administrador|Inversionista')
                     @if (strpos(url()->current(), "vehicles"))
                         <a class="nav-link active" href="{{ route('vehicles') }}">
                             <i class="fas fa-motorcycle"></i><span>Vehículos</span>
@@ -73,6 +74,7 @@
                             <i class="fas fa-motorcycle"></i><span>Vehículos</span>
                         </a>
                     @endif
+                    @endhasanyrole
                     @hasanyrole('Empleado|Administrador')
                     @if (strpos(url()->current(), "payments"))
                         <a class="nav-link active" href="{{ route('payments') }}">
@@ -84,6 +86,7 @@
                         </a>
                     @endif
                     @endhasanyrole
+                    @hasanyrole('Empleado|Administrador|Inversionista')
                     @if (strpos(url()->current(), "reports"))
                     <a class="nav-link active" href="{{ route('reports') }}">
                         <i class="far fa-chart-bar"></i><span>Reportes</span>
@@ -93,6 +96,7 @@
                         <i class="far fa-chart-bar"></i><span>Reportes</span>
                     </a>
                     @endif
+                    @endhasanyrole
                 </li>
             </ul>
             <hr class="sidebar-divider my-0">

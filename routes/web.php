@@ -18,6 +18,10 @@ Route::get('/', function () {
 //Auth
 Auth::routes();
 
+Route::group(['middleware' => ['auth']], function () {
+
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Reports
@@ -33,7 +37,8 @@ Route::patch('/client','ClientController@destroy')->name('deleteclient');
 
 //Sales
 Route::get('/sales','SaleController@index')->name('sales');
-Route::get('/sale','SaleController@index')->name('sale');
+Route::get('/sale/{id}','SaleController@show')->name('sale');
+Route::put('/sale','SaleController@update')->name('updatesale');
 Route::post('/sale','SaleController@store')->name('salevehicleclient');
 
 //Investors
@@ -79,3 +84,5 @@ Route::patch('/payment/delete','PaymentController@destroy')->name('deletePayment
 
 Route::get('/loans','LoansController@index')->name('loans');
 Route::get('/expenses','BranchOfficeController@index')->name('expenses');
+
+});
