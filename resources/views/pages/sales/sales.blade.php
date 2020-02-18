@@ -38,26 +38,32 @@
                                 <th>Fecha</th>
                                 <th>Tipo de venta</th>
                                 <th>Estado</th>
-                                <th>Acciones</th>
+                                <th>Cuota</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($sales as $sale)
                             <tr>
-                                <td><a href="{{ route('sale', $sale->id )}}">{{$sale->id}}</a></td>
+                                @if ($sale->id < 10)
+                                    <td><a href="{{ route('sale', $sale->id )}}">00{{$sale->id}}</a></td>
+                                @elseif ($sale->id < 100)
+                                    <td><a href="{{ route('sale', $sale->id )}}">0{{$sale->id}}</a></td>
+                                @else
+                                    <td><a href="{{ route('sale', $sale->id )}}">{{$sale->id}}</a></td>
+                                @endif
                                 <td>{{$sale->client->name}} {{$sale->client->last_name}}</td>
                                 <td>{{$sale->vehicle->placa}}</td>
                                 <td>{{$sale->branchoffice->name}}</td>
                                 <td>{{$sale->date}}</td>
                                 <td>{{$sale->typesale->name}}</td>
-                                <td>{{$sale->status}}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$sale->id}}" id="deletevehicle" data-toggle="modal" data-target="#deleteModal">
-                                        <i style="color: white;" class="fas fa-trash"></i>
-                                    </a>
-                                </td>
+                                @if ($sale->status == 1)
+                                    <td><span class="badge badge-primary">En proceso</span></td>
+                                @else
+                                    <td><span class="badge badge-success">Terminada</span></td>
+                                @endif
+                                <td class="precio">{{$sale->fee}}</td>
                             </tr>
-                            
+
                             @endforeach
                         </tbody>
                     </table>
@@ -80,7 +86,7 @@
     <div class="modal fade" id="saleModal" tabindex="-1" role="dialog" aria-labelledby="saleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <form action="{{ route('salevehicleclient') }}"  enctype="multipart/form-data"  method="POST">
-                    @csrf             
+                    @csrf
                     <div class="modal-content">
                         <div class="modal-header  primary">
                             <h5 class="modal-title" id="saleModalLabel">Vender un vehiculo</h5>
@@ -88,14 +94,14 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label for="address"><strong>Cliente</strong></label>
                                 @if ($clients->count() > 0)
                                     <select name="client_id" class="form-control" required>
                                         <option>Seleccione una opción</option>
                                         @foreach ($clients as $client)
-                                            <option value="{{$client->id}}">{{$client->name}}</option>
+                                            <option value="{{$client->id}}">{{$client->name}} {{$client->last_name}}</option>
                                         @endforeach
                                     </select>
                                 @else
@@ -124,19 +130,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="address"><strong>Sucursal</strong></label>
-                                @if ($branchoffices->count() > 0)
-                                    <select name="branchoffice_id" class="form-control" required>
-                                        <option>Seleccione una opción</option>
-                                        @foreach ($branchoffices as $branchoffice)
-                                            <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
-                                        @endforeach
-                                    </select>
-                                @else
-                                    <a href="{{ route('branchoffices')}}">Agregue una sucursal</a>
-                                @endif
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -148,3 +141,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="/js/sale.js"></script>
+@endpush

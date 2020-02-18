@@ -56,12 +56,12 @@
                                 @endif
                                 <td>{{$vehicle->type->name}}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-info" 
-                                    data-branchid="{{$vehicle->branchoffice_id}}" data-branchname="{{$vehicle->branchoffice->name}}" 
-                                    data-type="{{$vehicle->type_id}}" data-nametype="{{$vehicle->type->name}}" 
-                                    data-investor="{{$vehicle->investor_id}}" data-nameInv="{{$vehicle->investor->user->name}}" 
-                                    data-motor="{{$vehicle->motor}}" data-color="{{$vehicle->color}}" data-chasis="{{$vehicle->chasis}}" 
-                                    data-id="{{$vehicle->id}}" data-amount="{{$vehicle->amount}}" data-model="{{$vehicle->model}}" 
+                                    <a class="btn btn-sm btn-info"
+                                    data-branchid="{{$vehicle->branchoffice_id}}" data-branchname="{{$vehicle->branchoffice->name}}"
+                                    data-type="{{$vehicle->type_id}}" data-nametype="{{$vehicle->type->name}}"
+                                    data-investor="{{$vehicle->investor_id}}" data-nameInv="{{$vehicle->investor->user->name}}"
+                                    data-motor="{{$vehicle->motor}}" data-color="{{$vehicle->color}}" data-chasis="{{$vehicle->chasis}}"
+                                    data-id="{{$vehicle->id}}" data-amount="{{$vehicle->amount}}" data-model="{{$vehicle->model}}"
                                     data-placa="{{$vehicle->placa}}" id="editvehicle" data-toggle="modal" data-target="#editModal">
                                         <i style="color: white;" class="fas fa-pencil-alt "></i>
                                     </a>
@@ -70,7 +70,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            
+
                             @endforeach
                         </tbody>
                     </table>
@@ -101,7 +101,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -127,11 +127,15 @@
                                         <input class="form-control" type="number" name="motor" placeholder="258693" required/>
                                     </div>
                                     <div class="form-group">
+                                        <label for="phone"><strong>Precio</strong></label>
+                                        <input class="form-control" type="number" name="fee" placeholder="258693" required/>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="address"><strong>Propietario</strong></label>
                                         <select name="investor_id" class="form-control" required>
-                                            <option>Seleccione una opción</option>
+                                            <option value="0">Seleccione una opción</option>
                                             @foreach ($investors as $investor)
-                                                <option value="{{$investor->id}}">{{$investor->user->name}}</option>
+                                                <option value="{{$investor->id}}">{{$investor->user->name}} {{$investor->user->last_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -145,7 +149,7 @@
                                         </select>
                                     </div>
                                     <div id="groupAmount" class="form-group">
-                                        
+
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>
@@ -180,7 +184,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body"> 
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <h3>¿Seguro de eliminar este vehiculo?<h3>
                                     <input class="form-control" type="hidden" name="id" id="id" required/>
@@ -207,7 +211,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -274,7 +278,7 @@
                     </div>
                 </form>
             </div>
-        </div>   
+        </div>
     </div>
 @endsection
 @push('scripts')

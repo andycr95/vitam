@@ -72,6 +72,10 @@ Route::post('/validate/email','ValidateFormsController@ValidateEmail')->name('Va
 
 //Payments
 Route::get('/payments','PaymentController@index')->name('payments');
+Route::post('/payment','PaymentController@store')->name('createPayment');
+Route::get('/payment/{id}','PaymentController@show')->name('payment');
+Route::put('/payment','PaymentController@update')->name('updatepPayment');
+Route::patch('/payment/delete','PaymentController@destroy')->name('deletePayment');
 
 Route::get('/loans','LoansController@index')->name('loans');
 Route::get('/expenses','BranchOfficeController@index')->name('expenses');

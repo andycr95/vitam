@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTypesaleIdToSales extends Migration
+class AddFeeToSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,7 @@ class AddTypesaleIdToSales extends Migration
     public function up()
     {
         Schema::table('sales', function (Blueprint $table) {
-            $table->unsignedBigInteger('typesale_id');
-
-            $table->foreign('typesale_id')->references('id')->on('type_sales');
-            //
+            $table->integer('fee');
         });
     }
 

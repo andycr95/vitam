@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\payment;
+use App\sale;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -20,7 +21,9 @@ class PaymentController extends Controller
         } else {
             $payments = payment::OrderBy('created_at', 'DESC')->paginate(10);
         }
-        return  view('pages.payments.payments', compact('payments'));
+
+        $sales = sale::where('status','1')->get();
+        return  view('pages.payments.payments', compact('payments', 'sales'));
     }
 
     /**
@@ -41,7 +44,10 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $payment = new payment();
+        $payment->amount = $request->amount;
+        $payment->vehicle_id = $request->vehicle_id;
+        return $payment;
     }
 
     /**

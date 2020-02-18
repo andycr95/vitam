@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <form action="{{ route('branchOffices')}}">
+                        <form action="{{ route('investors')}}">
                             <div class="input-group form-2 pl-0">
                                 <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
                                 <div class="input-group-append">
@@ -36,7 +36,7 @@
                                 <th>Telefono</th>
                                 <th>Email</th>
                                 <th>Vehículos</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +46,7 @@
                                 <td>{{$investor->user->address}}</td>
                                 <td>{{$investor->user->phone}}</td>
                                 <td>{{$investor->user->email}}</td>
-                                <td>{{$investor->vehicles->count()}}</td>                              
+                                <td>{{$investor->vehicles->count()}}</td>
                                 <td>
                                     <a class="btn btn-sm btn-danger" data-id="{{$investor->id}}" id="deleteinvestor" data-toggle="modal" data-target="#deleteModal">
                                         <i style="color: white;" class="fas fa-trash"></i>
@@ -58,15 +58,20 @@
                     </table>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando 1 a 2 de 10</p>
-                    </div>
-                    <div class="col-md-6">
-                        <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                            <ul class="pagination">
-                            </ul>
-                        </nav>
-                    </div>
+                    @if ($investors->total() > 0)
+                        <div class="col-md-6 align-self-center">
+                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Mostrando {{$investors->firstItem()}} a {{$investors->lastItem()}} de {{$investors->total()}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                    {{$investors->links()}}
+                                </ul>
+                            </nav>
+                        </div>
+                    @else
+
+                    @endif
                 </div>
             </div>
         </div>
@@ -82,7 +87,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label for="name"><strong>Nombre</strong></label>
                                 <input class="form-control" placeholder="Ingrese Nombre Inversionista" type="text" name="name" />
@@ -136,7 +141,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <h3>¿Seguro de eliminar este Inversionista?<h3>
                                 <input class="form-control" type="hidden" name="iddelete" id="iddelete" required/>
@@ -153,5 +158,5 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="/js/investors.js"></script>    
+    <script src="/js/investors.js"></script>
 @endpush

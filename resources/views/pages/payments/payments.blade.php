@@ -62,29 +62,31 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form id="payForm" action="{{ route('updateVehicle') }}"  enctype="multipart/form-data"  method="POST">
+            <form action="{{ route('createPayment') }}"  enctype="multipart/form-data"  method="POST">
                 @csrf
-                @method('PUT')
                 <div class="modal-content">
                     <div class="modal-header  primary">
-                        <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehiculo</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Nuevo Pago</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body"> 
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="amount"><strong>Monto</strong></label>
                             <input id="amount" class="form-control" type="number" name="amount" placeholder="20000" required/>
                         </div>
                         <div class="form-group">
-                            <label for="address"><strong>Propietario</strong></label>
-                            <select id="investor" name="investor_id" class="form-control" required>
-                                <option style="color: red;" id="optionInv"></option>
+                            <label for="address"><strong>Vehiculo</strong></label>
+                            <select id="vehicle_id" name="vehicle_id_id" class="form-control" required>
+                                <option value="">Seleccione una opción</option>
+                                @foreach ($sales as $sale)
+                                    <option value="{{$sale->vehicle_id}}">{{$sale->vehicle->placa}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -95,5 +97,5 @@
                 </div>
             </form>
         </div>
-    </div> 
+    </div>
 @endsection

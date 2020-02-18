@@ -63,36 +63,36 @@
                         @if ($photo != false)
                             @foreach ($photos as $photo)
                                 @if ($photo->photo1 == null)
-                                    
+
                                 @else
-                                    <img class="mb-3 mt-4" src="/storage/{{$photo->photo1}}"  id="photo1" alt="{{$vehicle->placa}}" width="160" height="160">  
+                                    <img class="mb-3 mt-4" src="/storage/{{$photo->photo1}}"  id="photo1" alt="{{$vehicle->placa}}" width="160" height="160">
                                 @endif
                                 @if ($photo->photo2 == null)
                                     <form action="{{ route('updatePhotovehicle') }}" id="form1" enctype="multipart/form-data"  method="POST">
                                         @csrf
-                                        @method('PATCH')               
+                                        @method('PATCH')
                                             <input type="file" class="btn btn-primary btn-block" name="photo2" id="photo1" value="Agregar foto 2" />
                                             <input type="hidden" name="id" value="{{$vehicle->id}}"/>
                                     </form><br>
                                 @else
-                                    <img class="mb-3 mt-4" alt="{{$vehicle->placa}}" id="photo2" src="/storage/{{$photo->photo2}}" width="160" height="160">  
+                                    <img class="mb-3 mt-4" alt="{{$vehicle->placa}}" id="photo2" src="/storage/{{$photo->photo2}}" width="160" height="160">
                                 @endif
                                 @if ($photo->photo3 == null)
                                     <form action="{{ route('updatePhotovehicle') }}" id="form2" enctype="multipart/form-data"  method="POST">
                                         @csrf
-                                        @method('PATCH')               
+                                        @method('PATCH')
                                             <input type="file" class="btn btn-primary btn-block"  name="photo3" id="photo2" value="Agregar foto 3" />
                                             <input type="hidden" name="id" value="{{$vehicle->id}}"/>
                                     </form>
                                 @else
-                                    <img class="mb-3 mt-4" alt="{{$vehicle->placa}}"  id="photo3" src="/storage/{{$photo->photo3}}" width="160" height="160">  
+                                    <img class="mb-3 mt-4" alt="{{$vehicle->placa}}"  id="photo3" src="/storage/{{$photo->photo3}}" width="160" height="160">
                                 @endif
                             @endforeach
                         @else
                             <h4>No tiene fotos</h4>
                             <form action="{{ route('updatePhotovehicle') }}" id="form"  enctype="multipart/form-data"  method="POST">
                                 @csrf
-                                @method('PATCH')               
+                                @method('PATCH')
                                     <input type="file" class="btn btn-primary btn-block" value="Agregar" name="photo1" id="photo" value="Agregar foto 1"/>
                                     <input type="hidden" name="id" value="{{$vehicle->id}}"/>
                             </form>
@@ -105,18 +105,18 @@
                 <div class="col">
                     <div class="card shadow mb-3">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 font-weight-bold">Información del cliente</p>
+                            <p class="text-primary m-0 font-weight-bold">Información del vehiculo</p>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('updateClient', $vehicle->id) }}"  enctype="multipart/form-data"  method="POST">
+                            <form action="{{ route('updateVehicle', $vehicle->id) }}"  enctype="multipart/form-data"  method="POST">
                                 @csrf
-                                @method('PUT')               
+                                @method('PUT')
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="placa"><strong>Placa</strong></label>
                                             <input disabled class="form-control" type="text" value="{{$vehicle->placa}}" name="placa" required>
-                                            <input type="hidden" value="{{$vehicle->id}}" name="idclient">
+                                            <input type="hidden" value="{{$vehicle->id}}" name="id">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -126,9 +126,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="color"><strong>Color</strong></label>
-                                    <input disabled class="form-control" id="color" type="text" value="{{$vehicle->color}}" name="color" required>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="color"><strong>Color</strong></label>
+                                            <input disabled class="form-control" id="color" type="text" value="{{$vehicle->color}}" name="color" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="color"><strong>Precio</strong></label>
+                                            <input disabled class="form-control" id="fee" type="text" value="{{$vehicle->fee}}" name="fee" required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
@@ -145,8 +155,8 @@
                                     </div>
                                 </div>
                                 <div id="modal-buttons" class="form-group">
-                                    <button disabled id="clientSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
-                                    <button class="btn btn-info btn-sm" id="clientUpdate" type="button"><span>Actualizar</span></button>
+                                    <button disabled id="vehicleSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
+                                    <button class="btn btn-info btn-sm" id="vehicleUpdate" type="button"><span>Actualizar</span></button>
                                 </div>
 
                             </form>
@@ -161,13 +171,13 @@
         <!-- The Close Button -->
         <span id="close" class="close">&times;</span>
         <!-- Modal Content (The Image) -->
-        <img class="modal-content" id="img01">    
+        <img class="modal-content" id="img01">
         <!-- Modal Caption (Image Text) -->
         <div id="caption"></div>
     </div>
 </div>
 @endsection
 @push('scripts')
-    <script src="/js/photos.js"></script>
     <script src="/js/vehicle.js"></script>
+    <script src="/js/photos.js"></script>
 @endpush

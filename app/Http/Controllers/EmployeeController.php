@@ -16,10 +16,18 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $employees = employee::where('status', '1')->join('users', function ($join) use ($buscar) {
+                $join->on('users.id', '=', 'employees.user_id')
+                    ->where('users.name', 'like', '%'.$buscar.'%');
+            })->with(['branchoffice.vehicles'])->paginate(10);
+        } else {
+            $employees = employee::where('status', '1')->with(['branchoffice.vehicles', 'user'])->paginate(10);
+        }
         $branchoffices = branchoffice::where('status', '1')->get();
-        $employees = employee::where('status', '1')->with(['branchoffice.vehicles', 'user'])->paginate(10);
         return view('pages.employees.employees', compact('employees', 'branchoffices'));
     }
 
@@ -50,7 +58,7 @@ class EmployeeController extends Controller
         $user->password = Hash::make($request->password);
         $user->last_name = $request->last_name;
         $photo = $request->file('photo')->store('public/avatars');
-        $user->photo = str_replace('public/' , '' , $photo);
+        $user->photo = str_replace('public/', '', $photo);
         $user->save();
         $user->assignRole('Empleado');
         $employee = new employee();
@@ -60,7 +68,7 @@ class EmployeeController extends Controller
             $employee->branchoffice_id = $request->branchoffice_id;
         }
         $employee->save();
-        return redirect()->back()->with('success','Empleado guardado');
+        return redirect()->back()->with('success', 'Empleado guardado');
     }
 
     /**
@@ -73,7 +81,7 @@ class EmployeeController extends Controller
     {
         $branchoffices = branchoffice::all();
         $cities = city::all();
-        $employee = employee::where('id', $id->id)->with(['user','branchoffice.vehicles','branchoffice.sales'])->get();
+        $employee = employee::where('id', $id->id)->with(['user', 'branchoffice.vehicles', 'branchoffice.sales'])->get();
         return view('pages.employees.profile', compact('employee', 'cities', 'branchoffices'));
     }
 
@@ -111,16 +119,16 @@ class EmployeeController extends Controller
             $employee->branchoffice_id = $request->branch;
         }
         $employee->save();
-        return redirect()->back()->with('success','Empleado actualizado');
+        return redirect()->back()->with('success', 'Empleado actualizado');
     }
 
     public function updatePhoto(request $request)
     {
         $user = User::find($request->id);
         $photo = $request->file('photo')->store('public/avatars');
-        $user->photo = str_replace('public/' , '' , $photo);
+        $user->photo = str_replace('public/', '', $photo);
         $user->save();
-        return redirect()->back()->with('success','Foto actualizada');
+        return redirect()->back()->with('success', 'Foto actualizada');
     }
 
     /**
@@ -134,7 +142,7 @@ class EmployeeController extends Controller
         $employee = employee::find($request->iddelete);
         $employee->status = '0';
         $employee->save();
-        return redirect()->back()->with('success','Empleado eliminado');
+        return redirect()->back()->with('success', 'Empleado eliminado');
     }
 
     public function asign(request $request)
@@ -142,6 +150,6 @@ class EmployeeController extends Controller
         $employee = employee::find($request->idasign);
         $employee->branchoffice_id = $request->branchoffice_id;
         $employee->save();
-        return redirect()->back()->with('success','Sucursal asignada');
+        return redirect()->back()->with('success', 'Sucursal asignada');
     }
 }

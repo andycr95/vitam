@@ -46,17 +46,20 @@ class SaleController extends Controller
     {
         $typeSale = typeSale::where("id", $request->typesale_id)->get();
         $vehicle = vehicle::where("id", $request->vehicle_id)->with('type')->get();
+        $id = vehicle::find($request->vehicle_id);
         $amount = $this->Calculate($typeSale, $vehicle);
-        
+        $fee = round($id->fee / $amount, 0, PHP_ROUND_HALF_UP);
+
         $sale = new sale();
-        $sale->branchoffice_id = $request->branchoffice_id;
+        $sale->branchoffice_id = $id->branchoffice_id;
         $sale->vehicle_id = $request->vehicle_id;
         $sale->typesale_id = $request->typesale_id;
         $sale->client_id = $request->client_id;
+        $sale->fee = $fee;
         $sale->date = now();
         $sale->amount = $amount;
         $sale->save();
-        
+
         $vh = vehicle::find($request->vehicle_id);
         $vh->status = '0';
         $vh->save();
@@ -65,17 +68,19 @@ class SaleController extends Controller
 
     public function Calculate($typeSale, $vehicle)
     {
-        for ($i=0; $i < $typeSale->count(); $i++) { 
-            for ($j=0; $j < $vehicle->count() ; $j++) { 
+        for ($i=0; $i < $typeSale->count(); $i++) {
+            for ($j=0; $j < $vehicle->count() ; $j++) {
                 if ($vehicle[$j]->amount == 0) {
-                    return round($vehicle[$j]->type->counter / $typeSale[$i]->amount);
+                    return round($vehicle[$j]->type->counter / $typeSale[$i]->amount, 0, PHP_ROUND_HALF_UP);
                 } else {
-                    return round($vehicle[$j]->type->counter / $typeSale[$i]->amount);
+                    return round($vehicle[$j]->amount / $typeSale[$i]->amount, 0, PHP_ROUND_HALF_UP);
                 }
-                
+
             }
         }
     }
+
+
 
     /**
      * Display the specified resource.

@@ -7,39 +7,59 @@
     <h3 class="text-dark mb-4">Sucursal - {{$branchoffice->name}}</h3>
     <div class="row mb-3">
         <div class="col-lg-4">
+            @if ($branchoffice->vehicles->count() > 0)
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="text-primary font-weight-bold m-0">Vehiculos vendidos</h6>
+                    <h6 class="text-primary font-weight-bold m-0">Vehiculos</h6>
                 </div>
                 <div class="card-body">
-                    @foreach ($branchoffice->sales as $sale)
-                        <h4 class="small font-weight-bold">{{$sale->vehicle->placa}}<span class="float-right">{{$sale->vehicle->payments->count()}} pagos</span></h4>
-                        <div class="progress progress-sm mb-3">
-                            @if (($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 <= 20)
-                                <div class="progress-bar bg-danger" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 20 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 50)
-                                <div class="progress-bar bg-warning" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 50 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 70)
-                                <div class="progress-bar bg-primary" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 70 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 100)
-                                <div class="progress-bar bg-info" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 == 100)
-                                <div class="progress-bar bg-success" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                </div>
-                            @endif
-                        </div>
+                    @foreach ($branchoffice->vehicles as $vehicle)
+                        <h4 class="small font-weight-bold">{{$vehicle->placa}}
+                        @if ($vehicle->status == 0)
+                            <span class="badge badge-success float-right">Vendida</span>
+                        @else
+                            <span class="badge badge-primary float-right">Por vender</span>
+                        @endif
+                    </h4>
                     @endforeach
                 </div>
             </div>
+            @endif
+            @if ($branchoffice->sales->count() > 0)
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="text-primary font-weight-bold m-0">Vehiculos vendidos</h6>
+                    </div>
+                    <div class="card-body">
+                        @foreach ($branchoffice->sales as $sale)
+                            <h4 class="small font-weight-bold">{{$sale->vehicle->placa}}<span class="float-right">{{$sale->vehicle->payments->count()}} pagos</span></h4>
+                            <div class="progress progress-sm mb-3">
+                                @if (($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 <= 20)
+                                    <div class="progress-bar bg-danger" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
+                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
+                                    </div>
+                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 20 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 50)
+                                    <div class="progress-bar bg-warning" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
+                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
+                                    </div>
+                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 50 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 70)
+                                    <div class="progress-bar bg-primary" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
+                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
+                                    </div>
+                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 70 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 100)
+                                    <div class="progress-bar bg-info" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
+                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
+                                    </div>
+                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 == 100)
+                                    <div class="progress-bar bg-success" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
+                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
             <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="text-primary font-weight-bold m-0">Empleados</h6>
@@ -69,12 +89,12 @@
                 <div class="col">
                     <div class="card shadow mb-3">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 font-weight-bold">Información de usuario</p>
+                            <p class="text-primary m-0 font-weight-bold">Información de sucursal</p>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('updateBranchoffice', $branchoffice->id) }}"  enctype="multipart/form-data"  method="POST">
                                 @csrf
-                                @method('PUT')               
+                                @method('PUT')
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
@@ -129,3 +149,6 @@
     @endforeach
 </div>
 @endsection
+@push('scripts')
+    <script src="/js/branchoffice.js"></script>
+@endpush

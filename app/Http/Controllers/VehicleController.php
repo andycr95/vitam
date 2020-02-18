@@ -24,11 +24,11 @@ class VehicleController extends Controller
         } else {
             $vehicles = vehicle::OrderBy('created_at', 'DESC')->paginate(10);
         }
-        $investors = investor::all();
+        $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->get();
         $types = type::all();
         $listVehicles = sale::where('status', '1')->with("vehicle")->get();
         $branchoffices = branchoffice::all();
-        return  view('pages.vehicles.vehicles', compact('vehicles', 'investors', 'types', 'listvehicles', 'branchoffices'));
+        return  view('pages.vehicles.vehicles', compact('vehicles', 'investors', 'types', 'listVehicles', 'branchoffices'));
     }
 
     /**
@@ -55,7 +55,12 @@ class VehicleController extends Controller
         $vehicle->color = $request->color;
         $vehicle->chasis = $request->chasis;
         $vehicle->motor = $request->motor;
-        $vehicle->investor_id = $request->investor_id;
+        $vehicle->fee = $request->fee;
+        if ($request->investor_id == "0") {
+            $vehicle->investor_id = 1;
+        } else {
+            $vehicle->investor_id = $request->investor_id;
+        }
         $vehicle->type_id = $request->type_id;
         $vehicle->amount = $request->amount;
         $vehicle->branchoffice_id = $request->branchoffice_id;
@@ -80,7 +85,7 @@ class VehicleController extends Controller
 
     public function nullableIf($photos)
     {
-        for($i=0; $i < $photos->count(); $i++) { 
+        for($i=0; $i < $photos->count(); $i++) {
             if ($photos[$i]->photo1 == null) {
                 return false;
             } else {
@@ -114,9 +119,7 @@ class VehicleController extends Controller
         $vehicle->color = $request->color;
         $vehicle->chasis = $request->chasis;
         $vehicle->motor = $request->motor;
-        $vehicle->investor_id = $request->investor_id;
-        $vehicle->type_id = $request->type_id;
-        $vehicle->branchoffice_id = $request->branchoffice_id;
+        $vehicle->fee = $request->fee;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo actualizado');
     }

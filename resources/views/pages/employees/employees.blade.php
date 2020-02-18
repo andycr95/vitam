@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <form action="{{ route('branchOffices')}}">
+                        <form action="{{ route('employees')}}">
                             <div class="input-group form-2 pl-0">
                                 <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
                                 <div class="input-group-append">
@@ -77,7 +77,7 @@
                             </nav>
                         </div>
                     @else
-                        
+
                     @endif
                 </div>
             </div>
@@ -94,7 +94,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -169,7 +169,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body"> 
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <h3>¿Seguro de eliminar este empleado?<h3>
                                     <input class="form-control" type="hidden" name="iddelete" id="iddelete" required/>
@@ -196,7 +196,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <div class="form-group">
                                     @if ($branchoffices->count() < 1)
@@ -230,5 +230,5 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="/js/employees.js"></script>    
+    <script src="/js/employees.js"></script>
 @endpush

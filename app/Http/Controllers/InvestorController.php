@@ -14,9 +14,17 @@ class InvestorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        $investors = investor::where('state', '1')->with(['vehicles', 'user'])->paginate(10);
+        if ($request->buscar != '') {
+            $buscar = $request->buscar;
+            $investors = investor::where('state', '1')->join('users', function ($join) use ($buscar) {
+                $join->on('users.id', '=', 'investors.user_id')
+                    ->where('users.name', 'like', '%'.$buscar.'%');
+            })->with(['vehicles'])->paginate(10);
+        } else {
+            $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->paginate(10);
+        }
         return view('pages.investors.investors', compact('investors'));
     }
 
@@ -49,7 +57,7 @@ class InvestorController extends Controller
         $user->photo = str_replace('public/' , '' , $photo);
         $user->save();
         $investor = new investor();
-        $investor->user_id = $user->id;        
+        $investor->user_id = $user->id;
         $investor->save();
         return redirect()->back()->with('success','Inversionista guardado');
     }
@@ -62,7 +70,7 @@ class InvestorController extends Controller
      */
     public function show(investor $id)
     {
-        $investor = investor::where("id", $id->id)->with(['vehicles','user'])->get();       
+        $investor = investor::where("id", $id->id)->with(['vehicles','user'])->get();
         return view('pages.investors.profile', compact('investor'));
     }
 

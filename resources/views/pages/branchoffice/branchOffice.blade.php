@@ -35,6 +35,7 @@
                                 <th>Nombre</th>
                                 <th>Dirección</th>
                                 <th>Ciudad</th>
+                                <th>Encargado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -44,6 +45,7 @@
                                 <td><a href="{{ route('branchoffice', $branchoffice->id )}}">{{$branchoffice->name}}</a></td>
                                 <td>{{$branchoffice->address}}</td>
                                 <td>{{$branchoffice->city->name}}</td>
+                                <td>{{$branchoffice->employee->user->name}} {{$branchoffice->employee->user->last_name}}</td>
                                 <td>
                                     <a class="btn btn-sm btn-danger" data-id="{{$branchoffice->id}}" id="deletebranch" data-toggle="modal" data-target="#deleteModal">
                                         <i style="color: white;" class="fas fa-trash"></i>
@@ -67,7 +69,7 @@
                             </nav>
                         </div>
                     @else
-                    
+
                     @endif
                 </div>
             </div>
@@ -84,7 +86,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label for="name"><strong>Nombre</strong></label>
                                 <input class="form-control" placeholder="Nueva granada" type="text" name="name" />
@@ -138,7 +140,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body"> 
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <h3>¿Seguro de eliminar este sucursal?<h3>
                                     <input class="form-control" type="hidden" name="id" id="id" required/>
@@ -153,7 +155,7 @@
                 </div>
         </div>
     </div>
-@endsection 
+@endsection
 @push('scripts')
     <script src="/js/branchoffice.js"></script>
 @endpush

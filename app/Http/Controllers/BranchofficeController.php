@@ -18,11 +18,12 @@ class BranchofficeController extends Controller
     {
         if ($request->buscar != '') {
             $buscar = $request->buscar;
-            $branchoffices = branchoffice::search($buscar)->where('status', '1')->paginate(10);
+            $branchoffices = branchoffice::where('name', 'like', '%'.$buscar.'%')->where('status', '1')->paginate(10);
+
         } else {
             $branchoffices = branchoffice::where('status', '1')->OrderBy('created_at', 'DESC')->paginate(10);
         }
-        
+
         $city = city::all();
         $employees = employee::where('status', '1')->doesntHave('branch')->get();
         return view('pages.branchoffice.branchOffice', compact('branchoffices', 'city', 'employees'));
@@ -46,10 +47,11 @@ class BranchofficeController extends Controller
      */
     public function store(Request $request)
     {
-        $branchoffice = branchoffice::create($request->all());
         $employee = employee::find($request->employee_id);
+        $branchoffice = branchoffice::create($request->all());
         $employee->branchoffice_id = $branchoffice->id;
         $employee->save();
+
         return redirect()->back()->with('success','Nueva sucursal creada');
     }
 
