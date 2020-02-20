@@ -49,7 +49,7 @@
                                 <td>{{$vehicle->color}}</td>
                                 <td>{{$vehicle->motor}}</td>
                                 <td>{{$vehicle->chasis}}</td>
-                                @if ($vehicle->status == 0)
+                                @if ($vehicle->state == 0)
                                 <td><span class="badge badge-success">Vendida</span></td>
                                 @else
                                 <td><span class="badge badge-primary">Por vender</span></td>
@@ -132,12 +132,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Propietario</strong></label>
-                                        <select name="investor_id" class="form-control" required>
-                                            <option value="0">Seleccione una opción</option>
-                                            @foreach ($investors as $investor)
-                                                <option value="{{$investor->id}}">{{$investor->user->name}} {{$investor->user->last_name}}</option>
-                                            @endforeach
-                                        </select>
+                                        @if ($investors->count() > 0)
+                                            <select id="select-investor" name="investor_id" placeholder="Seleccione una opción..."></select>
+                                        @else
+                                            <a href="{{ route('investors')}}">Agregue un invesionista</a>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Estado</strong></label>
@@ -153,12 +152,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>
-                                        <select name="branchoffice_id" class="form-control" required>
-                                            <option>Seleccione una opción</option>
-                                            @foreach ($branchoffices as $branchoffice)
-                                                <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        @if ($branchoffices->count() > 0)
+                                            <select id="select-branch" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
+                                        @else
+                                            <a href="{{ route('branchoffices')}}">Agregue una sucursal</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -239,12 +237,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Propietario</strong></label>
-                                        <select id="investor" name="investor_id" class="form-control" required>
-                                            <option style="color: red;" id="optionInv"></option>
-                                            @foreach ($investors as $investor)
-                                                <option value="{{$investor->id}}">{{$investor->user->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        @if ($investors->count() > 0)
+                                            <select id="select-investor" name="investor_id" placeholder="Seleccione una opción..."></select>
+                                        @else
+                                            <a href="{{ route('investors')}}">Agregue un invesionista</a>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Estado</strong></label>
@@ -261,12 +258,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>
-                                        <select name="branchoffice_id" class="form-control" required>
-                                            <option style="color: red;" id="optionBr"></option>
-                                            @foreach ($branchoffices as $branchoffice)
-                                                <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        @if ($branchoffices->count() > 0)
+                                            <select id="select-branchoffice" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
+                                        @else
+                                            <a href="{{ route('branchoffices')}}">Agregue una sucursal</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

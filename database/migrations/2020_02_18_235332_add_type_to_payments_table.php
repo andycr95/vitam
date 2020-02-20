@@ -14,7 +14,7 @@ class AddTypeToPaymentsTable extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            //
+            $table->enum('type', ['pago', 'abono'])->default('pago');
         });
     }
 

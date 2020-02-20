@@ -25,7 +25,7 @@ class BranchofficeController extends Controller
         }
 
         $city = city::all();
-        $employees = employee::where('status', '1')->doesntHave('branch')->get();
+        $employees = employee::where('state', '1')->doesntHave('branch')->get();
         return view('pages.branchoffice.branchOffice', compact('branchoffices', 'city', 'employees'));
     }
 
@@ -34,9 +34,10 @@ class BranchofficeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getBranchs()
     {
-        //
+        $branchoffices = branchoffice::where('status', '1')->get();
+        return response()->json($branchoffices, 200);
     }
 
     /**

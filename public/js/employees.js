@@ -1,87 +1,104 @@
-$('#employeeUpdate').click(function ($event) { 
+$('#employeeUpdate').click(function ($event) {
     $event.preventDefault();
 
-    if (document.getElementsByName("first_name")[0].disabled== false) {
-        document.getElementsByName("first_name")[0].disabled = true;   
-        document.getElementsByName("last_name")[0].disabled = true;  
-        document.getElementsByName("password")[0].disabled = true; 
-        document.getElementsByName("address")[0].disabled = true;  
+    if (document.getElementsByName("first_name")[0].disabled == false) {
+        document.getElementsByName("first_name")[0].disabled = true;
+        document.getElementsByName("last_name")[0].disabled = true;
+        document.getElementsByName("password")[0].disabled = true;
+        document.getElementsByName("address")[0].disabled = true;
         if (document.getElementsByName("branch")[0]) {
-            document.getElementsByName("branch")[0].disabled = true;  
+            document.getElementsByName("branch")[0].disabled = true;
         }
-        $('#pass').attr('type', 'password') 
+        $('#pass').attr('type', 'password')
         document.getElementsByName("email")[0].disabled = true;
-        $("#employeesave").attr({disabled: true});   
-        $("#employeeUpdate span").remove();   
+        $("#employeesave").attr({ disabled: true });
+        $("#employeeUpdate span").remove();
         $("#employeeUpdate").attr({
-            class:'btn btn-info btn-sm'
+            class: 'btn btn-info btn-sm'
         }).append('<span>Actualizar</span>');
     } else {
-        document.getElementsByName("first_name")[0].disabled = false;   
-        document.getElementsByName("last_name")[0].disabled = false;  
-        document.getElementsByName("password")[0].disabled = false; 
-        document.getElementsByName("address")[0].disabled = false;  
+        document.getElementsByName("first_name")[0].disabled = false;
+        document.getElementsByName("last_name")[0].disabled = false;
+        document.getElementsByName("password")[0].disabled = false;
+        document.getElementsByName("address")[0].disabled = false;
         if (document.getElementsByName("branch")[0]) {
-            document.getElementsByName("branch")[0].disabled = false; 
+            document.getElementsByName("branch")[0].disabled = false;
         }
-        $("#employeesave").attr({disabled: false});
-        $('#pass').attr('type', 'text') 
+        $("#employeesave").attr({ disabled: false });
+        $('#pass').attr('type', 'text')
         document.getElementsByName("email")[0].disabled = false;
-        $("#employeeUpdate span").remove();   
+        $("#employeeUpdate span").remove();
         $("#employeeUpdate").attr({
-            class:'btn btn-danger btn-sm'
+            class: 'btn btn-danger btn-sm'
         }).append('<span>Cancelar</span>');
     }
 })
 
-$(document).on("click", "#deleteemployee", function(e) {
+$(document).on("click", "#deleteemployee", function (e) {
     var id = $(this).data("id");
     document.getElementById("iddelete").value = id;
 });
 
-$(document).on("click", "#asignBranch", function(e) {
+$(document).on("click", "#asignBranch", function (e) {
     var id = $(this).data("id");
     document.getElementById("idasign").value = id;
 });
 
-$(document).on("change", "#email", function(e) {
+$(document).on("change", "#email", function (e) {
     email = document.getElementById("email").value;
     url = "http://vitamventure.com/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
             url: url,
-            data: {'email':email},
-            success: function(res) {
+            data: { 'email': email },
+            success: function (res) {
                 if (res != true) {
                     $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-email');
                     var i = 0;
-                    setInterval(function() {i++
+                    setInterval(function () {
+                        i++
                         if (i > 2) {
                             $("#form-group-email .alert ").remove();
                         }
-                    }, 1000) 
+                    }, 1000)
                 }
             }
         })
     }
 });
 
-$(document).on("keyup", "#password", function(e) {
+$(document).on("keyup", "#password", function (e) {
     password = document.getElementById("password").value;
     $("#form-group-password .alert ").remove();
     if (password.length < 6) {
         $(`<div class="alert alert-danger">La contraseña debe ser mayor a 6 digitos</div>`).appendTo('#form-group-password');
         var i = 0;
-        setInterval(function() {i++
+        setInterval(function () {
+            i++
             if (i > 2) {
                 $("#form-group-password .alert ").remove();
                 clearInterval()
             }
-        }, 1000) 
+        }, 1000)
     } else if (password.length == 0) {
-        $("#form-group-password .alert ").remove();        
+        $("#form-group-password .alert ").remove();
     } else {
         $("#form-group-password .alert ").remove();
     }
 });
+
+$.ajax({
+    method: 'GET',
+    url: 'http://localhost:8000/api/branchoffices'
+}).done(function (params) {
+    $('#select-bran').selectize({
+        maxItems: null,
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        options: params,
+        create: false,
+        maxItems: 1
+    });
+})

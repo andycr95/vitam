@@ -127,12 +127,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Sucursal</strong></label>
-                                        <select name="branchoffice_id" class="form-control" >
-                                            <option value="#">Seleccione una opción</option>
-                                            @foreach ($branchoffices as $branchoffice)
-                                                <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <select id="select-bran" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Contraseña</strong></label>
@@ -198,12 +193,7 @@
                                     <a type="button" href="{{ route('branchOffices')}}" class="btn btn-primary btn-lg btn-block">Asignar una nueva</a>
                                     @else
                                     <label for="address"><strong>Sucursal</strong></label>
-                                    <select name="branchoffice_id" class="form-control">
-                                        <option value="#">Seleccione una opción</option>
-                                        @foreach ($branchoffices as $branchoffice)
-                                            <option value="{{$branchoffice->id}}">{{$branchoffice->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <select id="select-branch" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
                                     @endif
                                 </div>
                                 <input class="form-control" type="hidden" name="idasign" id="idasign" required/>

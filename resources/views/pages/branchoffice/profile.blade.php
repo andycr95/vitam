@@ -15,7 +15,7 @@
                 <div class="card-body">
                     @foreach ($branchoffice->vehicles as $vehicle)
                         <h4 class="small font-weight-bold">{{$vehicle->placa}}
-                        @if ($vehicle->status == 0)
+                        @if ($vehicle->state == 0)
                             <span class="badge badge-success float-right">Vendida</span>
                         @else
                             <span class="badge badge-primary float-right">Por vender</span>

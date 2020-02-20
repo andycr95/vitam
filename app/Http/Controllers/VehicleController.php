@@ -26,7 +26,7 @@ class VehicleController extends Controller
         }
         $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->get();
         $types = type::all();
-        $listVehicles = sale::where('status', '1')->with("vehicle")->get();
+        $listVehicles = sale::where('state', '1')->with("vehicle")->get();
         $branchoffices = branchoffice::all();
         return  view('pages.vehicles.vehicles', compact('vehicles', 'investors', 'types', 'listVehicles', 'branchoffices'));
     }
@@ -36,9 +36,16 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getVehicles()
     {
-        //
+        $vehicles = vehicle::where('state', '1')->OrderBy('created_at', 'DESC')->get();
+        return response()->json($vehicles, 200);
+    }
+
+    public function getsalesVehicles()
+    {
+        $vehicles = sale::where('sales.state','1')->join('vehicles', 'vehicles.id', '=', 'sales.vehicle_id')->select('vehicles.id', 'vehicles.placa')->get();
+        return response()->json($vehicles, 200);
     }
 
     /**
@@ -154,7 +161,7 @@ class VehicleController extends Controller
     public function destroy(Request $request)
     {
         $vehicle = vehicle::find($request->id);
-        $vehicle->status = 0;
+        $vehicle->state = 0;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo eliminado');
     }

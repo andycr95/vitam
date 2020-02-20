@@ -12,7 +12,7 @@
                         <div class="card-header py-3">
                             <p class="text-primary m-0 font-weight-bold">Información de venta</p>
                             <label for="fee"><strong>   Estado</strong></label>
-                            @if ($sale->status == 1)
+                            @if ($sale->state == 1)
                                 <span class="badge badge-primary">En proceso</span>
                             @else
                                 <span class="badge badge-success">Terminada</span>

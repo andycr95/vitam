@@ -33,9 +33,10 @@ class InvestorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getInvestors()
     {
-        //
+        $investors = investor::where('investors.state','1')->where('investors.id','!=','1')->join('users', 'users.id', '=', 'investors.user_id')->select('investors.id', 'users.name', 'users.last_name')->get();
+        return response()->json($investors, 200);
     }
 
     /**

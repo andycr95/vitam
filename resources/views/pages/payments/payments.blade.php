@@ -43,7 +43,7 @@
                                 <td><a href="{{ route('payments', $payment->id )}}">{{$payment->vehicle->placa}}</a></td>
                                 <td>{{$payment->sale->client->name}} {{$payment->sale->client->last_name}}</td>
                                 <td>{{$payment->amount}}</td>
-                                <td>{{($payment->sale->amount - $payment->count())}}</td>
+                                <td>{{$payment->sale->amount }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -77,17 +77,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="amount"><strong>Monto</strong></label>
-                            <input id="amount" class="form-control" type="number" name="amount" placeholder="20000" required/>
+                            <label for="type"><strong>Tipo</strong></label>
+                            <select id="type" name="type" class="form-control" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="pago">Pago</option>
+                                <option value="abono">Abono</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="address"><strong>Vehiculo</strong></label>
-                            <select id="vehicle_id" name="vehicle_id_id" class="form-control" required>
-                                <option value="">Seleccione una opción</option>
-                                @foreach ($sales as $sale)
-                                    <option value="{{$sale->vehicle_id}}">{{$sale->vehicle->placa}}</option>
-                                @endforeach
-                            </select>
+					        <select id="select-tools" name="vehicle_id" placeholder="Seleccione una opción..."></select>
+                        </div>
+                        <div id="amount" class="form-group">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -99,3 +100,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="/js/payment.js"></script>
+@endpush

@@ -82,3 +82,39 @@ $(document).on("change", "#type_id", function (e) {
         $("#groupAmount").append(`<input class="form-control" type="hidden" id="amount" value="365" name="amount" placeholder="365" required/>`);
     }
 });
+
+$.ajax({
+    method: 'GET',
+    url: 'http://localhost:8000/api/branchoffices'
+}).done(function (params) {
+    $('#select-branch').selectize({
+        maxItems: null,
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        options: params,
+        create: false,
+        maxItems: 1
+    });
+})
+
+$.ajax({
+    method: 'GET',
+    url: 'http://localhost:8000/api/investors'
+}).done(function (params) {
+    investors = []
+    for (let i = 0; i < params.length; i++) {
+        const e = params[i];
+        e.name = e.name + " " + e.last_name
+        investors.push(e)
+    }
+    $('#select-investor').selectize({
+        maxItems: null,
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        options: investors,
+        create: false,
+        maxItems: 1
+    });
+})

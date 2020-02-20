@@ -20,12 +20,12 @@ class EmployeeController extends Controller
     {
         if ($request->buscar != '') {
             $buscar = $request->buscar;
-            $employees = employee::where('status', '1')->join('users', function ($join) use ($buscar) {
+            $employees = employee::where('state', '1')->join('users', function ($join) use ($buscar) {
                 $join->on('users.id', '=', 'employees.user_id')
                     ->where('users.name', 'like', '%'.$buscar.'%');
             })->with(['branchoffice.vehicles'])->paginate(10);
         } else {
-            $employees = employee::where('status', '1')->with(['branchoffice.vehicles', 'user'])->paginate(10);
+            $employees = employee::where('state', '1')->with(['branchoffice.vehicles', 'user'])->paginate(10);
         }
         $branchoffices = branchoffice::where('status', '1')->get();
         return view('pages.employees.employees', compact('employees', 'branchoffices'));
@@ -140,7 +140,7 @@ class EmployeeController extends Controller
     public function destroy(request $request)
     {
         $employee = employee::find($request->iddelete);
-        $employee->status = '0';
+        $employee->state = '0';
         $employee->save();
         return redirect()->back()->with('success', 'Empleado eliminado');
     }

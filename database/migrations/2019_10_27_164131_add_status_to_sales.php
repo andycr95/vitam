@@ -14,7 +14,7 @@ class AddStatusToSales extends Migration
     public function up()
     {
         Schema::table('sales', function (Blueprint $table) {
-            $table->enum('status', ['1', '0'])->default('1');
+            $table->enum('state', ['1', '0'])->default('1');
         });
     }
 

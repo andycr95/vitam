@@ -22,7 +22,7 @@ class PaymentController extends Controller
             $payments = payment::OrderBy('created_at', 'DESC')->paginate(10);
         }
 
-        $sales = sale::where('status','1')->get();
+        $sales = sale::where('state','1')->get();
         return  view('pages.payments.payments', compact('payments', 'sales'));
     }
 
@@ -44,10 +44,33 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $sale = sale::where('vehicle_id', $request->vehicle_id)->get();
         $payment = new payment();
-        $payment->amount = $request->amount;
+        if (!$request->amount) {
+
+            for ($i=0; $i < $sale->count(); $i++) {
+                $payment->amount = $sale[0]->fee;
+            }
+        }else {
+            $payment->amount = $request->amount;
+        }
+        for ($i=0; $i < $sale->count(); $i++) {
+            $payment->sale_id = $sale[0]->id;
+        }
         $payment->vehicle_id = $request->vehicle_id;
-        return $payment;
+        $payment->type = $request->type;
+        $payment->save();
+        $payments = payment::where('vehicle_id', $request->vehicle_id)->count();
+        for ($i=0; $i < $sale->count(); $i++) {
+            if ($payments == $sale[0]->amount) {
+                $s = sale::find($sale[0]->id);
+                $s->state = 0;
+                $s->save();
+            }
+        }
+
+
+        return redirect()->back()->with('success', $request->type.' registrado');;
     }
 
     /**
@@ -60,6 +83,7 @@ class PaymentController extends Controller
     {
         //
     }
+
 
     /**
      * Show the form for editing the specified resource.

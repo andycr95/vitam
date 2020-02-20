@@ -28,8 +28,8 @@ class SaleController extends Controller
         } else {
             $sales = sale::paginate(10);
         }
-        $clients = client::where('status', '1')->get();
-        $vehicles = vehicle::where('status', '1')->get();
+        $clients = client::where('state', '1')->get();
+        $vehicles = vehicle::where('state', '1')->get();
         $typeSales = typeSale::all();
         return view('pages.sales.sales', compact('sales', 'clients', 'vehicles', 'typeSales'));
     }
@@ -69,7 +69,7 @@ class SaleController extends Controller
         $sale->save();
 
         $vh = vehicle::find($request->vehicle_id);
-        $vh->status = '0';
+        $vh->state = '0';
         $vh->save();
         return redirect()->back()->with('success','Venta realizada');
     }

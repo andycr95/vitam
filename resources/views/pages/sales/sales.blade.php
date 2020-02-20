@@ -56,7 +56,7 @@
                                 <td>{{$sale->branchoffice->name}}</td>
                                 <td>{{$sale->date}}</td>
                                 <td>{{$sale->typesale->name}}</td>
-                                @if ($sale->status == 1)
+                                @if ($sale->state == 1)
                                     <td><span class="badge badge-primary">En proceso</span></td>
                                 @else
                                     <td><span class="badge badge-success">Terminada</span></td>
@@ -98,12 +98,7 @@
                             <div class="form-group">
                                 <label for="address"><strong>Cliente</strong></label>
                                 @if ($clients->count() > 0)
-                                    <select name="client_id" class="form-control" required>
-                                        <option>Seleccione una opción</option>
-                                        @foreach ($clients as $client)
-                                            <option value="{{$client->id}}">{{$client->name}} {{$client->last_name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <select id="select-client" name="client_id" placeholder="Seleccione una opción..."></select>
                                 @else
                                     <a href="{{ route('clients')}}">Agregue un Cliente</a>
                                 @endif
@@ -111,12 +106,7 @@
                             <div class="form-group">
                                 <label for="address"><strong>Vehiculo</strong></label>
                                 @if ($vehicles->count() > 0)
-                                    <select name="vehicle_id" class="form-control" required>
-                                        <option>Seleccione una opción</option>
-                                        @foreach ($vehicles as $vehicle)
-                                            <option value="{{$vehicle->id}}">{{$vehicle->placa}}</option>
-                                        @endforeach
-                                    </select>
+                                    <select id="select-vehi" name="vehicle_id" placeholder="Seleccione una opción..."></select>
                                 @else
                                     <a href="{{ route('vehicles')}}">Agregue un vehiculo</a>
                                 @endif

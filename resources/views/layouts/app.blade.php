@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Dashboard - Vitam</title> 
+    <title>Dashboard - Vitam</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700">
     <link rel="stylesheet" href="/css/styles.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/css/selectize.css" />
 </head>
- 
+
 <body id="page-top">
     <div id="wrapper">
         @include('layouts.navbar-side')
@@ -36,6 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="/js/script.min.js"></script>
     <script src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/standalone/selectize.js"></script>
     @stack('scripts')
     @if (session()->has('success'))
         <script>toastr.success("{{ session('success') }}")</script>

@@ -19,9 +19,9 @@ class ClientController extends Controller
     {
         if ($request->buscar != '') {
             $buscar = $request->buscar;
-            $clients = client::where('name', 'like', '%'.$buscar.'%')->where('status', '1')->with('sales.vehicle')->paginate(10);
+            $clients = client::where('name', 'like', '%'.$buscar.'%')->where('state', '1')->with('sales.vehicle')->paginate(10);
         } else {
-            $clients = client::where('status', '1')->with('sales.vehicle')->paginate(10);
+            $clients = client::where('state', '1')->with('sales.vehicle')->paginate(10);
         }
         return view('pages.clients.clients', compact('clients'));
     }
@@ -31,9 +31,10 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getClients()
     {
-        //
+        $clients = client::where('state', '1')->get();
+        return response()->json($clients, 200);
     }
 
     /**
@@ -70,7 +71,7 @@ class ClientController extends Controller
         $photos = client::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
         $photo = $this->nullableIf($photos);
         $branchoffices = branchoffice::where('status', '1')->get();
-        $vehicles = vehicle::where('status', '1')->get();
+        $vehicles = vehicle::where('state', '1')->get();
         $typeSales = typeSale::all();
         return view('pages.clients.profile', compact('client', 'photos', 'photo', 'branchoffices', 'vehicles', 'typeSales'));
     }
@@ -148,7 +149,7 @@ class ClientController extends Controller
     public function destroy(request $request)
     {
         $client = client::find($request->id);
-        $client->status = '0';
+        $client->state = '0';
         $client->save();
         return redirect()->back()->with('success','Cliente eliminado');
     }
