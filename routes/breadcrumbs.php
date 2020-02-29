@@ -26,13 +26,13 @@ Breadcrumbs::for('vehicle', function ($trail, $vehicle) {
     $trail->push($vehicle->placa, route('vehicle', $vehicle->id));
 });
 
-Breadcrumbs::for('branchOffices', function ($trail) {
+Breadcrumbs::for('branchoffices', function ($trail) {
     $trail->parent('home');
-    $trail->push('Sucursales', route('branchOffices'));
+    $trail->push('Sucursales', route('branchoffices'));
 });
 
 Breadcrumbs::for('branchoffice', function ($trail, $branchoffice) {
-    $trail->parent('branchOffices');
+    $trail->parent('branchoffices');
     $trail->push($branchoffice->name, route('branchoffice', $branchoffice->id));
 });
 

@@ -56,8 +56,8 @@ Route::patch('/vehicle','VehicleController@destroy')->name('deleteVehicle');
 Route::patch('/vehicle/photo','VehicleController@updatePhoto')->name('updatePhotovehicle');
 Route::put('/vehicle','VehicleController@update')->name('updateVehicle');
 
-//BranchOffices
-Route::get('/branchoffices','BranchofficeController@index')->name('branchOffices');
+//branchoffices
+Route::get('/branchoffices','BranchofficeController@index')->name('branchoffices');
 Route::get('/branchoffice/{id}','BranchofficeController@show')->name('branchoffice');
 Route::put('/branchoffice/{id}','BranchofficeController@update')->name('updateBranchoffice');
 Route::post('/branchoffices','BranchofficeController@store')->name('createBranch');

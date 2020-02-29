@@ -76,6 +76,10 @@
                 </div>
             </div>
         </div>
+        <div class="container my-auto" style="padding-top: 200px;
+        color: white;">
+            <div class="text-center my-auto copyright"><span>Copyright © <a style="color: white; text-decoration: underline;" href="https://andcode.me">Andcode</a> 2020</span></div>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>

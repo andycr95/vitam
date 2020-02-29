@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        {{ Breadcrumbs::render('branchOffices') }}
+        {{ Breadcrumbs::render('branchoffices') }}
         <div class="card shadow">
             <div class="card-header py-3">
                 <p class="text-primary m-0 font-weight-bold">Sucursales</p>
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <form action="{{ route('branchOffices')}}">
+                        <form action="{{ route('branchoffices')}}">
                             <div class="input-group form-2 pl-0">
                                 <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" name="buscar" aria-label="Search">
                                 <div class="input-group-append">

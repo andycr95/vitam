@@ -190,7 +190,7 @@
                                 <div class="form-group">
                                     @if ($branchoffices->count() < 1)
                                     <label for="address"><strong>No hay sucursales</strong></label>
-                                    <a type="button" href="{{ route('branchOffices')}}" class="btn btn-primary btn-lg btn-block">Asignar una nueva</a>
+                                    <a type="button" href="{{ route('branchoffices')}}" class="btn btn-primary btn-lg btn-block">Asignar una nueva</a>
                                     @else
                                     <label for="address"><strong>Sucursal</strong></label>
                                     <select id="select-branch" name="branchoffice_id" placeholder="Seleccione una opción..."></select>

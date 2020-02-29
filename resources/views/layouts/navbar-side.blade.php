@@ -17,11 +17,11 @@
                     @endif
                     @hasanyrole('Administrador')
                     @if (strpos(url()->current(), "branchoffices"))
-                        <a class="nav-link active" href="{{ route('branchOffices') }}">
+                        <a class="nav-link active" href="{{ route('branchoffices') }}">
                             <i class="fas fa-briefcase"></i><span>Sucursales</span>
                         </a>
                     @else
-                        <a class="nav-link" href="{{ route('branchOffices') }}">
+                        <a class="nav-link" href="{{ route('branchoffices') }}">
                             <i class="fas fa-briefcase"></i><span>Sucursales</span>
                         </a>
                     @endif
