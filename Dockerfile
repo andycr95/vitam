@@ -5,6 +5,6 @@ RUN apt-get update && apt-get install -y \
 
 Run a2enmod rewrite
 
-Run cp ./.envc.example ./.env
+Run cp /root/vitam/.envc.example ./.env
 
 RUN chmod 777 -R -c /var/www
