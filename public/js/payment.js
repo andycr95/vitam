@@ -14,7 +14,7 @@ $(document).on("change", "#type", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://localhost:8000/api/salesvehicles'
+    url: 'http://127.0.0.1:8001/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,
@@ -27,3 +27,14 @@ $.ajax({
     });
 
 })
+
+const formatterPeso = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    minimumFractionDigits: 0
+})
+
+for (let i = 0; i < document.getElementsByClassName('precio').length; i++) {
+    const e = document.getElementsByClassName('precio')[i];
+    e.innerHTML = formatterPeso.format(e.innerHTML)
+}

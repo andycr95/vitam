@@ -78,7 +78,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="fee"><strong>Ultimo pago</strong></label>
-                                                <input class="form-control" type="text" disabled value="{{$payment->amount}}" name="fee">
+                                            <input class="form-control" type="text" disabled value="{{($payment->created_at)->diffForhumans()}}" name="fee">
                                             </div>
                                         </div>
                                     @endif

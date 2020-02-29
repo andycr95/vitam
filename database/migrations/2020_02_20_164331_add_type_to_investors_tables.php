@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPhotoToClients extends Migration
+class AddTypeToInvestorsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddPhotoToClients extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('photo1')->nullable();
-            $table->string('photo2')->nullable();
-            $table->string('photo3')->nullable();
+        Schema::table('investors', function (Blueprint $table) {
+            $table->enum('type', ['1', '0'])->default('1');
         });
     }
 
@@ -27,7 +25,7 @@ class AddPhotoToClients extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
+        Schema::table('investors', function (Blueprint $table) {
             //
         });
     }

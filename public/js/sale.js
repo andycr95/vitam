@@ -11,7 +11,7 @@ for (let i = 0; i < document.getElementsByClassName('precio').length; i++) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://localhost:8000/api/clients'
+    url: 'http://127.0.0.1:8001/api/clients'
 }).done(function (params) {
     clients = []
     for (let i = 0; i < params.length; i++) {
@@ -32,14 +32,20 @@ $.ajax({
 
 $.ajax({
     method: 'GET',
-    url: 'http://localhost:8000/api/vehicles'
+    url: 'http://127.0.0.1:8001/api/vehicles'
 }).done(function (params) {
+    vehicles = []
+    for (let i = 0; i < params.length; i++) {
+        const e = params[i];
+        e.placa = e.placa + " - " + e.name
+        vehicles.push(e)
+    }
     $('#select-vehi').selectize({
         maxItems: null,
         valueField: 'id',
         labelField: 'placa',
         searchField: 'placa',
-        options: params,
+        options: vehicles,
         create: false,
         maxItems: 1
     });

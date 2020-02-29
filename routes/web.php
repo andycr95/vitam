@@ -85,4 +85,7 @@ Route::patch('/payment/delete','PaymentController@destroy')->name('deletePayment
 Route::get('/loans','LoansController@index')->name('loans');
 Route::get('/expenses','BranchOfficeController@index')->name('expenses');
 
+//Reports
+Route::get('/reports','ReportController@index')->name('reports');
+
 });

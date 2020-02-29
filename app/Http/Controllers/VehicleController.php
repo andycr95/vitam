@@ -38,12 +38,14 @@ class VehicleController extends Controller
      */
     public function getVehicles()
     {
-        $vehicles = vehicle::where('state', '1')->OrderBy('created_at', 'DESC')->get();
+        $vehicles = [];
+        $vehicles = vehicle::where('vehicles.state', '1')->join('branchoffices', 'branchoffices.id', '=', 'vehicles.branchoffice_id')->OrderBy('vehicles.created_at', 'DESC')->select('branchoffices.name', 'vehicles.id', 'vehicles.placa')->get();
         return response()->json($vehicles, 200);
     }
 
     public function getsalesVehicles()
     {
+        $vehicles = [];
         $vehicles = sale::where('sales.state','1')->join('vehicles', 'vehicles.id', '=', 'sales.vehicle_id')->select('vehicles.id', 'vehicles.placa')->get();
         return response()->json($vehicles, 200);
     }
@@ -63,14 +65,18 @@ class VehicleController extends Controller
         $vehicle->chasis = $request->chasis;
         $vehicle->motor = $request->motor;
         $vehicle->fee = $request->fee;
-        if ($request->investor_id == "0") {
+        if ($request->investor_id == null) {
             $vehicle->investor_id = 1;
         } else {
             $vehicle->investor_id = $request->investor_id;
         }
+        if ($request->investor_id == null) {
+            $vehicle->branchoffice_id = 1;
+        } else {
+            $vehicle->branchoffice_id = $request->branchoffice_id;
+        }
         $vehicle->type_id = $request->type_id;
         $vehicle->amount = $request->amount;
-        $vehicle->branchoffice_id = $request->branchoffice_id;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo registrado');
     }

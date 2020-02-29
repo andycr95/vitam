@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusBranchoffices extends Migration
+class AddCounterToPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddStatusBranchoffices extends Migration
      */
     public function up()
     {
-        Schema::table('branchoffices', function (Blueprint $table) {
-            $table->enum('status', ['1', '0'])->default('1');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->integer('counter')->nullable();
         });
     }
 
@@ -25,6 +25,8 @@ class AddStatusBranchoffices extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('payments', function (Blueprint $table) {
+            //
+        });
     }
 }

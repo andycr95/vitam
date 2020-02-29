@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusBranchoffices extends Migration
+class CreateReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddStatusBranchoffices extends Migration
      */
     public function up()
     {
-        Schema::table('branchoffices', function (Blueprint $table) {
-            $table->enum('status', ['1', '0'])->default('1');
+        Schema::create('reports', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('description', 225);
+            $table->timestamps();
         });
     }
 
@@ -25,6 +27,6 @@ class AddStatusBranchoffices extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('reports');
     }
 }

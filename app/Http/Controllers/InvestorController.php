@@ -59,6 +59,7 @@ class InvestorController extends Controller
         $user->save();
         $investor = new investor();
         $investor->user_id = $user->id;
+        $investor->type = $request->type;
         $investor->save();
         return redirect()->back()->with('success','Inversionista guardado');
     }

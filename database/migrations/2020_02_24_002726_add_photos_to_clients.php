@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPhotoToClients extends Migration
+class AddPhotosToClients extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,9 @@ class AddPhotoToClients extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->string('photo');
+            $table->string('photo1')->nullable();
+            $table->string('photo2')->nullable();
+            $table->string('photo3')->nullable();
         });
     }
 
@@ -26,7 +28,7 @@ class AddPhotoToClients extends Migration
     public function down()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('photo');
+            //
         });
     }
 }

@@ -74,3 +74,8 @@ Breadcrumbs::for('payments', function ($trail) {
     $trail->parent('home');
     $trail->push('Recaudos', route('payments'));
 });
+
+Breadcrumbs::for('reports', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Reportes', route('reports'));
+});

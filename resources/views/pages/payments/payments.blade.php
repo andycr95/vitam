@@ -34,16 +34,20 @@
                                 <th>Vehiculo</th>
                                 <th>Cliente</th>
                                 <th>Monto</th>
+                                <th>Tipo</th>
                                 <th>Faltantes</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($payments as $payment)
                             <tr>
-                                <td><a href="{{ route('payments', $payment->id )}}">{{$payment->vehicle->placa}}</a></td>
+                                <td>{{$payment->vehicle->placa}}</td>
                                 <td>{{$payment->sale->client->name}} {{$payment->sale->client->last_name}}</td>
-                                <td>{{$payment->amount}}</td>
-                                <td>{{$payment->sale->amount }}</td>
+                                <td class="precio">{{$payment->amount}}</td>
+                                <td>{{$payment->type}}</td>
+                                <td>{{$payment->counter}}</td>
+                                <td>{{($payment->created_at)->diffForhumans()}}</td>
                             </tr>
                             @endforeach
                         </tbody>

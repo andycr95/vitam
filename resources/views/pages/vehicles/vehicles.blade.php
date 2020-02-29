@@ -140,8 +140,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Estado</strong></label>
-                                        <select name="type_id" id="type_id" class="form-control" required>
-                                            <option>Seleccione una opción</option>
+                                        <select name="type_id" id="type_id" class="form-control" placeholder="Seleccione una opción" required>
                                             @foreach ($types as $type)
                                                 <option value="{{$type->id}}">{{$type->name}}</option>
                                             @endforeach

@@ -1,27 +1,27 @@
-$('#investorUpdate').click(function ($event) { 
+$('#investorUpdate').click(function ($event) {
     $event.preventDefault();
 
     if (document.getElementsByName("first_name")[0].disabled== false) {
-        document.getElementsByName("first_name")[0].disabled = true;   
-        document.getElementsByName("last_name")[0].disabled = true;  
-        document.getElementsByName("password")[0].disabled = true; 
-        document.getElementsByName("address")[0].disabled = true;  
-        $('#pass').attr('type', 'password') 
+        document.getElementsByName("first_name")[0].disabled = true;
+        document.getElementsByName("last_name")[0].disabled = true;
+        document.getElementsByName("password")[0].disabled = true;
+        document.getElementsByName("address")[0].disabled = true;
+        $('#pass').attr('type', 'password')
         document.getElementsByName("email")[0].disabled = true;
-        $("#investorSave").attr({disabled: true});   
-        $("#investorUpdate span").remove();   
+        $("#investorSave").attr({disabled: true});
+        $("#investorUpdate span").remove();
         $("#investorUpdate").attr({
             class:'btn btn-info btn-sm'
         }).append('<span>Actualizar</span>');
     } else {
-        document.getElementsByName("first_name")[0].disabled = false;   
-        document.getElementsByName("last_name")[0].disabled = false;  
-        document.getElementsByName("password")[0].disabled = false; 
-        document.getElementsByName("address")[0].disabled = false;  
+        document.getElementsByName("first_name")[0].disabled = false;
+        document.getElementsByName("last_name")[0].disabled = false;
+        document.getElementsByName("password")[0].disabled = false;
+        document.getElementsByName("address")[0].disabled = false;
         $("#investorSave").attr({disabled: false});
-        $('#pass').attr('type', 'text') 
+        $('#pass').attr('type', 'text')
         document.getElementsByName("email")[0].disabled = false;
-        $("#investorUpdate span").remove();   
+        $("#investorUpdate span").remove();
         $("#investorUpdate").attr({
             class:'btn btn-danger btn-sm'
         }).append('<span>Cancelar</span>');
@@ -35,7 +35,7 @@ $(document).on("click", "#deleteinvestor", function(e) {
 
 $(document).on("change", "#email", function(e) {
     email = document.getElementById("email").value;
-    url = "http://127.0.0.1:8000/validate/email";
+    url = "http://127.0.0.1:8001/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -49,7 +49,7 @@ $(document).on("change", "#email", function(e) {
                         if (i > 2) {
                             $("#form-group-email .alert ").remove();
                         }
-                    }, 1000) 
+                    }, 1000)
                 }
             }
         })
@@ -67,9 +67,9 @@ $(document).on("keyup", "#password", function(e) {
                 $("#form-group-password .alert ").remove();
                 clearInterval()
             }
-        }, 1000) 
+        }, 1000)
     } else if (password.length == 0) {
-        $("#form-group-password .alert ").remove();        
+        $("#form-group-password .alert ").remove();
     } else {
         $("#form-group-password .alert ").remove();
     }

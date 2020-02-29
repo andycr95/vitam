@@ -85,7 +85,7 @@ $(document).on("change", "#type_id", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://localhost:8000/api/branchoffices'
+    url: 'http://127.0.0.1:8001/api/branchoffices'
 }).done(function (params) {
     $('#select-branch').selectize({
         maxItems: null,
@@ -100,7 +100,7 @@ $.ajax({
 
 $.ajax({
     method: 'GET',
-    url: 'http://localhost:8000/api/investors'
+    url: 'http://127.0.0.1:8001/api/investors'
 }).done(function (params) {
     investors = []
     for (let i = 0; i < params.length; i++) {

@@ -35,6 +35,7 @@
                                 <th>Dirección</th>
                                 <th>Telefono</th>
                                 <th>Email</th>
+                                <th>Tipo</th>
                                 <th>Vehículos</th>
 
                             </tr>
@@ -46,6 +47,11 @@
                                 <td>{{$investor->user->address}}</td>
                                 <td>{{$investor->user->phone}}</td>
                                 <td>{{$investor->user->email}}</td>
+                                @if ($investor->type == 1)
+                                    <td>Participante</td>
+                                @else
+                                    <td>Inversionista simple</td>
+                                @endif
                                 <td>{{$investor->vehicles->count()}}</td>
                             </tr>
                             @endforeach
@@ -98,6 +104,14 @@
                             <div class="form-group">
                                 <label for="address"><strong>Direccion</strong></label>
                                 <input class="form-control" type="text" name="address" placeholder="Cr 64 #2-54"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone"><strong>¿Participante?</strong></label>
+                                  <select class="form-control" name="type" id="">
+                                    <option value="#">Selecione una opción</option>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
+                                  </select>
                             </div>
                             <div class="form-group">
                                 <label for="phone"><strong>Telefono</strong></label>
