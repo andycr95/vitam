@@ -35,7 +35,7 @@ $(document).on("click", "#deleteinvestor", function(e) {
 
 $(document).on("change", "#email", function(e) {
     email = document.getElementById("email").value;
-    url = "http://127.0.0.1:8001/validate/email";
+    url = "http://www.vitamventure.com/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",

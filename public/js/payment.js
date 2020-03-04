@@ -14,7 +14,7 @@ $(document).on("change", "#type", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8001/api/salesvehicles'
+    url: 'http://www.vitamventure.com/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,

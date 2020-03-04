@@ -90,7 +90,7 @@ $(document).on("keyup", "#password", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8001/api/branchoffices'
+    url: 'http://www.vitamventure.com/api/branchoffices'
 }).done(function (params) {
     $('#select-bran').selectize({
         maxItems: null,
