@@ -20,4 +20,9 @@ class investor extends Model
     {
         return $this->hasMany(vehicle::class);
     }
+
+    public function titular()
+    {
+        return $this->hasOne(investor::class);
+    }
 }

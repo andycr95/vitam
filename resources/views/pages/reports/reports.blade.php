@@ -45,9 +45,8 @@
         <!-- MODAL PHOTO -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form action="{{ route('updatePhoto') }}"  enctype="multipart/form-data"  method="POST">
+            <form action="{{ route('routesReport') }}"  enctype="multipart/form-data"  method="POST">
                 @csrf
-                @method('PATCH')
                 <div class="modal-content">
                     <div class="modal-header  primary">
                         <h5 class="modal-title" id="exampleModalLabel">Generar reporte</h5>
@@ -58,13 +57,23 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="form-group">
-                                <label>Tipo de reporte</label>
-                                <select class="form-control" name="type_report" id="type_report">
+                                <label>Tipo de reporte - Interesado</label>
+                                <select class="form-control" name="type_report_c_i" id="type_report_c_i">
+                                    <option value="#">Seleccione una opcion</option>
+                                    <option value="1">Clientes</option>
+                                    <option value="2">Inversionista</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de reporte - Tiempo</label>
+                                <select class="form-control" name="type_report_t" id="type_report_t">
                                     <option value="#">Seleccione una opcion</option>
                                     <option value="1">Semanal</option>
                                     <option value="2">Mensual</option>
                                 </select>
                             </div>
+                            <div class="form-group" id="form-control-i-c"></div>
+                            <div class="form-group" id="form-control-t"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -78,5 +87,5 @@
 
 @endsection
 @push('scripts')
-    <script src="/js/payment.js"></script>
+    <script src="/js/reports.js"></script>
 @endpush

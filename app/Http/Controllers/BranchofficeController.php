@@ -25,7 +25,7 @@ class BranchofficeController extends Controller
         }
 
         $city = city::all();
-        $employees = employee::where('state', '1')->doesntHave('branch')->get();
+        $employees = employee::where('state', '1')->where('branchoffice_id', null)->doesntHave('branch')->get();
         return view('pages.branchoffice.branchOffice', compact('branchoffices', 'city', 'employees'));
     }
 
@@ -66,7 +66,7 @@ class BranchofficeController extends Controller
     {
         $branchoffice = branchoffice::where("id", $id->id)->with(['vehicles','sales', 'city', 'employee', 'employees'])->get();
         $cities = city::all();
-        $employees = employee::all();
+        $employees = employee::where('state', '1')->doesntHave('branch')->get();
         return view('pages.branchoffice.profile', compact('branchoffice', 'cities', 'employees'));
     }
 
@@ -88,7 +88,7 @@ class BranchofficeController extends Controller
      * @param  \App\branchoffice  $branchoffice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, branchoffice $branchoffice)
+    public function update(Request $request)
     {
         $branchoffice = branchoffice::find($request->id);
         $branchoffice->name = $request->first_name;
@@ -96,6 +96,14 @@ class BranchofficeController extends Controller
         $branchoffice->address = $request->address;
         $branchoffice->city_id = $request->city;
         $branchoffice->save();
+        $encargado = employee::find($request->encargado);
+        $encargado->branchoffice_id = $branchoffice->id;
+        $encargado->save();
+        if ($request->change) {
+            $employee = employee::find($request->last_e);
+            $employee->branchoffice_id = null;
+            $employee->save();
+        }
         return redirect()->back()->with('success','Sucursal actualizado');
     }
 

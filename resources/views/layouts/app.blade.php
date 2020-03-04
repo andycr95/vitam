@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/css/styles.min.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" type="text/css" href="/css/selectize.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 </head>
 
 <body id="page-top">
@@ -38,6 +40,8 @@
     <script src="/js/script.min.js"></script>
     <script src="/js/app.js"></script>
     <script type="text/javascript" src="/js/standalone/selectize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     @stack('scripts')
     @if (session()->has('success'))
         <script>toastr.success("{{ session('success') }}")</script>

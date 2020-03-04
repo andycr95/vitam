@@ -33,25 +33,84 @@ $(document).on("click", "#deleteinvestor", function(e) {
     document.getElementById("iddelete").value = id;
 });
 
-$(document).on("change", "#email", function(e) {
+$(document).on("click", "#investorSave", function(e) {
+    var vali = document.getElementById('vali').value
+    if (vali == true) {
+        toastr.error('Verifica la información digitada.', 'Registro de invesionista')
+    } else {
+        $('#createinvestorFrom').submit()
+    }
+});
+
+$(document).on("click", '#investorDelete', function(e) {
+    e.preventDefault()
+    id = document.getElementById('iddelete').value
+    $.ajax({
+        method: 'GET',
+        data: {'id':id},
+        url: 'http://127.0.0.1:8000/api/validate/investor/vehicles'
+    }).done(function(params) {
+        for (let i = 0; i < params.length; i++) {
+            const e = params[i];
+            if (e.vehicles.length > 0) {
+                toastr.error('Este inversionista tiene vehiculos asociados')
+            } else {
+                $('#deleteinvestor').submit()
+            }
+        }
+    })
+})
+
+$(document).on("change", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://127.0.0.1:8001/validate/email";
+    url = "http://127.0.0.1:8000/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
             url: url,
-            data: {'email':email},
-            success: function(res) {
+            data: { 'email': email },
+            success: function (res) {
                 if (res != true) {
-                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-email');
+                    $(`<div class="alert alert-danger">${res}</div> <input id="vali" value="true" type="hidden"/>`).appendTo('#form-group-email');
+                    $('#investorSave').attr({disabled: true});
                     var i = 0;
-                    setInterval(function() {i++
+                    setInterval(function () {
+                        i++
                         if (i > 2) {
                             $("#form-group-email .alert ").remove();
                         }
                     }, 1000)
+
+                } else {
+                    $(`<input id="vali" value="false" type="hidden"/>`).appendTo('#form-group-email');
+                    document.getElementById('vali').value = false
+                    $('#investorSave').attr({disabled: false});
                 }
             }
+        })
+    }
+});
+
+$(document).on("change", "#type", function (e) {
+    if (e.target.value == 1) {
+        $.ajax({
+            method: 'GET',
+            url: 'http://127.0.0.1:8000/api/titulares'
+        }).done(function (params) {
+            $(`
+        <div class="form-group">
+            <label for="address"><strong>Titular</strong></label>
+            <select id="select-tit" name="titular_id" placeholder="Seleccione una opción..."></select>
+        </div>`).appendTo('#form-group-tit');
+            $('#select-tit').selectize({
+                maxItems: null,
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                options: params,
+                create: false,
+                maxItems: 1
+            });
         })
     }
 });

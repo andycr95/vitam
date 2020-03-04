@@ -71,7 +71,7 @@ class ClientController extends Controller
         $photos = client::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
         $photo = $this->nullableIf($photos);
         $branchoffices = branchoffice::where('status', '1')->get();
-        $vehicles = vehicle::where('state', '1')->get();
+        $vehicles = vehicle::where('state', '1')->where('status', '1')->get();
         $typeSales = typeSale::all();
         return view('pages.clients.profile', compact('client', 'photos', 'photo', 'branchoffices', 'vehicles', 'typeSales'));
     }

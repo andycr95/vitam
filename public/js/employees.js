@@ -44,9 +44,9 @@ $(document).on("click", "#asignBranch", function (e) {
     document.getElementById("idasign").value = id;
 });
 
-$(document).on("change", "#email", function (e) {
+$(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://vitamventure.com/validate/email";
+    url = "http://127.0.0.1:8000/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -88,11 +88,40 @@ $(document).on("keyup", "#password", function (e) {
     }
 });
 
+$(document).on("click", "#deleteButton", function (e) {
+    e.preventDefault()
+    id = document.getElementById('iddelete').value
+    $.ajax({
+        method: 'GET',
+        data: {'id':id},
+        url: 'http://127.0.0.1:8000/api/validate/employee/branchs'
+    }).done(function(params) {
+        for (let i = 0; i < params.length; i++) {
+            const e = params[i];
+            if (e.branch != null) {
+                toastr.error('Este empleado administrada una sucursal')
+            } else {
+                $('#deleteForm').submit()
+            }
+        }
+
+    })
+})
+
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8001/api/branchoffices'
+    url: 'http://127.0.0.1:8000/api/branchoffices'
 }).done(function (params) {
     $('#select-bran').selectize({
+        maxItems: null,
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        options: params,
+        create: false,
+        maxItems: 1
+    });
+    $('#select-branch2').selectize({
         maxItems: null,
         valueField: 'id',
         labelField: 'name',

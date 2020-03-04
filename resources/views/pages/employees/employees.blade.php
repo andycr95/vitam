@@ -37,6 +37,7 @@
                                 <th>Sucursal</th>
                                 <th>Vehículos</th>
                                 <th>Salario</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +54,11 @@
                                     <td>{{$employee->branchoffice->vehicles->count()}}</td>
                                 @endif
                                 <td>{{$employee->salary}}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-id="{{$employee->id}}" id="deleteemployee" data-toggle="modal" data-target="#deleteModal">
+                                        <i style="color: white;" class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -93,24 +99,24 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="name"><strong>Nombre</strong></label>
-                                        <input class="form-control"  placeholder="Cosme" type="text" name="name"  required/>
+                                        <input class="form-control"  placeholder="Cosme" type="text" name="name" autocomplete="nope"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="last_name"><strong>Apellido</strong></label>
-                                        <input class="form-control"  placeholder="Fulanito" type="text" name="last_name"  required/>
+                                        <input class="form-control"  placeholder="Fulanito" type="text" name="last_name" autocomplete="nope"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="email"><strong>Correo</strong></label>
-                                        <input class="form-control"  type="email" id="email" name="email" placeholder="ejemplo@vitamventure.com" required/>
+                                        <input class="form-control"  type="email" id="email" name="email" autocomplete="nope"  placeholder="ejemplo@vitamventure.com" required/>
                                         <div id="form-group-email"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Direccion</strong></label>
-                                        <input class="form-control"  type="text" name="address" placeholder="Cr 64 #2-54" required/>
+                                        <input class="form-control"  type="text" name="address" autocomplete="nope" placeholder="Cr 64 #2-54" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone"><strong>Telefono</strong></label>
-                                        <input class="form-control"  type="number" name="phone" placeholder="312569888" required/>
+                                        <input class="form-control"  type="text" name="phone" placeholder="312569888" required/>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -148,7 +154,7 @@
         <!-- MODAL DELETE -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form action="{{ route('deleteEmployee') }}"  enctype="multipart/form-data"  method="POST">
+                    <form action="{{ route('deleteEmployee') }}" id="deleteForm" enctype="multipart/form-data"  method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="modal-content">
@@ -161,12 +167,12 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <h3>¿Seguro de eliminar este empleado?<h3>
-                                    <input class="form-control" type="hidden" name="iddelete" id="iddelete" required/>
+                                    <input class="form-control" type="hidden" name="iddelete" id="iddelete"/>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Guardar</button>
+                                <button type="button" id="deleteButton" class="btn btn-success">Guardar</button>
                             </div>
                         </div>
                     </form>
@@ -193,7 +199,7 @@
                                     <a type="button" href="{{ route('branchoffices')}}" class="btn btn-primary btn-lg btn-block">Asignar una nueva</a>
                                     @else
                                     <label for="address"><strong>Sucursal</strong></label>
-                                    <select id="select-branch" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
+                                    <select id="select-branch2" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
                                     @endif
                                 </div>
                                 <input class="form-control" type="hidden" name="idasign" id="idasign" required/>

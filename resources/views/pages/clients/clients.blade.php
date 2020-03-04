@@ -36,6 +36,7 @@
                                 <th>Dirección</th>
                                 <th>Telefono</th>
                                 <th>Vehículos</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,11 @@
                                 @else
                                     <td>{{$client->sales->count()}}</td>
                                 @endif
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-id="{{$client->id}}" id="deleteclient" data-toggle="modal" data-target="#deleteModal">
+                                        <i style="color: white;" class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -76,7 +82,7 @@
         <!-- MODAL NUEVO -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-            <form action="{{ route('createclient') }}"  enctype="multipart/form-data"  method="POST">
+            <form action="{{ route('createclient') }}" id="createclientForm"  enctype="multipart/form-data"  method="POST">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header  primary">
@@ -90,29 +96,30 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="name"><strong>Nombre</strong></label>
-                                        <input class="form-control" placeholder="Cosme" type="text" name="name"  required/>
+                                        <input class="form-control" placeholder="Cosme" type="text" autocomplete="nope" name="name"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="last_name"><strong>Apellido</strong></label>
-                                        <input class="form-control" placeholder="Fulanito" type="text" name="last_name"  required/>
+                                        <input class="form-control" placeholder="Fulanito" type="text" autocomplete="nope" name="last_name"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="documento"><strong>Documento</strong></label>
-                                        <input class="form-control" placeholder="1.111.258.369" type="text" name="documento"  required/>
+                                        <input class="form-control" placeholder="1.111.258.369" type="text" autocomplete="nope" name="documento"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="email"><strong>Correo</strong></label>
-                                        <input class="form-control" type="email" name="email" placeholder="ejemplo@vitamventure.com" required/>
+                                        <input class="form-control" type="email" name="email" id="email" autocomplete="nope" placeholder="ejemplo@vitamventure.com" required/>
+                                        <div id="form-group-email"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Direccion</strong></label>
-                                        <input class="form-control" type="text" name="address" placeholder="Cr 64 #2-54" required/>
+                                        <input class="form-control" type="text" name="address" autocomplete="nope" placeholder="Cr 64 #2-54" required/>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="phone"><strong>Telefono fijo</strong></label>
-                                        <input class="form-control" type="number" name="phone" placeholder="2422222" required/>
+                                        <input class="form-control" type="number" name="phone"  placeholder="2422222" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone"><strong>Celular</strong></label>
@@ -130,7 +137,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="submit" id="clientSave" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
                 </form>
@@ -152,12 +159,12 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <h3>¿Seguro de eliminar este cliente?<h3>
-                                <input class="form-control" type="hidden" name="id" id="id" required/>
+                                <input class="form-control" type="hidden" name="id" id="iddelete" required/>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="button" id="deleteButton" class="btn btn-success">Eliminar</button>
                         </div>
                     </div>
                 </form>

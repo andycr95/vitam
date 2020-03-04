@@ -49,10 +49,17 @@
                                 <td>{{$investor->user->email}}</td>
                                 @if ($investor->type == 1)
                                     <td>Participante</td>
+                                @elseif($investor->type == 2)
+                                    <td>Titular</td>
                                 @else
                                     <td>Inversionista simple</td>
                                 @endif
                                 <td>{{$investor->vehicles->count()}}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-id="{{$investor->id}}" id="deleteinvestor" data-toggle="modal" data-target="#deleteModal">
+                                        <i style="color: white;" class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -79,7 +86,7 @@
         <!-- MODAL NUEVO -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('createinvestor') }}"  enctype="multipart/form-data"  method="POST">
+                <form action="{{ route('createinvestor') }}" id="createinvestorFrom"  enctype="multipart/form-data"  method="POST">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header  primary">
@@ -91,31 +98,34 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="name"><strong>Nombre</strong></label>
-                                <input class="form-control" placeholder="Ingrese Nombre Inversionista" type="text" name="name" />
+                                <input class="form-control" placeholder="Ingrese Nombre Inversionista" autocomplete="nope" type="text" name="name"  required/>
                             </div>
                             <div class="form-group">
                                 <label for="name"><strong>Apellido</strong></label>
-                                <input class="form-control" placeholder="Ingrese Apellido Inversionista" type="text" name="lname" />
+                                <input class="form-control" placeholder="Ingrese Apellido Inversionista" autocomplete="nope" type="text" name="lname"  required/>
                             </div>
                             <div class="form-group">
                                 <label for="email"><strong>Correo</strong></label>
-                                <input class="form-control" type="email" name="email" placeholder="ejemplo@vitamventure.com"/>
+                                <input class="form-control" type="email" name="email" id="email" autocomplete="nope" placeholder="ejemplo@vitamventure.com" required/>
+                                <div id="form-group-email"></div>
                             </div>
                             <div class="form-group">
                                 <label for="address"><strong>Direccion</strong></label>
-                                <input class="form-control" type="text" name="address" placeholder="Cr 64 #2-54"/>
+                                <input class="form-control" type="text" name="address" autocomplete="nope" placeholder="Cr 64 #2-54" required/>
                             </div>
                             <div class="form-group">
-                                <label for="phone"><strong>¿Participante?</strong></label>
-                                  <select class="form-control" name="type" id="">
+                                <label for="phone"><strong>Tipo</strong></label>
+                                  <select class="form-control" name="type" id="type">
                                     <option value="#">Selecione una opción</option>
-                                    <option value="1">Si</option>
-                                    <option value="0">No</option>
+                                    <option value="2">Titular</option>
+                                    <option value="1">Participante</option>
+                                    <option value="0">Invercionista</option>
                                   </select>
                             </div>
+                            <div id="form-group-tit"></div>
                             <div class="form-group">
                                 <label for="phone"><strong>Telefono</strong></label>
-                                <input class="form-control" type="number" name="phone" placeholder="312569888"/>
+                                <input class="form-control" type="number" name="phone" placeholder="312569888" required/>
                             </div>
                             <div class="form-group">
                                         <label for="photo"><strong>Foto de perfil</strong></label>
@@ -126,12 +136,13 @@
                                     </div>
                             <div class="form-group">
                                 <label for="address"><strong>Contraseña</strong></label>
-                                <input class="form-control" type="password" name="password" placeholder="******"/>
+                                <input class="form-control"  type="password" id="password" name="password" placeholder="******" required/>
+                                <div id="form-group-password"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="button" id="investorSave" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
                 </form>
@@ -140,7 +151,7 @@
         <!-- MODAL DELETE -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('deleteinvestor') }}"  enctype="multipart/form-data"  method="POST">
+                <form action="{{ route('deleteinvestor') }}" id="deleteinvestor"  enctype="multipart/form-data"  method="POST">
                     @csrf
                     @method('PATCH')
                     <div class="modal-content">
@@ -153,12 +164,12 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <h3>¿Seguro de eliminar este Inversionista?<h3>
-                                <input class="form-control" type="hidden" name="iddelete" id="iddelete" required/>
+                                <input class="form-control" type="hidden" name="iddelete" id="iddelete"/>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="button" id="investorDelete" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
                 </form>

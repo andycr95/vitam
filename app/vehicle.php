@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use App\branchoffice;
 use App\type;
@@ -12,7 +11,6 @@ use App\payment;
 
 class vehicle extends Model
 {
-    use Searchable;
 
     protected $table = 'vehicles';
     protected $fillable = ['placa', 'model', 'motor', 'chasis', 'color', 'branchoffice_id', 'investor_id', 'type_id'];
@@ -31,7 +29,7 @@ class vehicle extends Model
     {
         return $this->hasMany(payment::class);
     }
-    
+
     public function investor()
     {
         return $this->belongsTo(investor::class);
@@ -40,17 +38,5 @@ class vehicle extends Model
     public function sales()
     {
         return $this->hasOne(sale::class);
-    }
-
-    public function searchableAs()
-    {
-        return 'vehicles_index';
-    }
-
-    public function toSearchableArray()
-    {
-        $array = $this->toArray();
-     
-        return $array;
     }
 }

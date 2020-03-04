@@ -29,7 +29,7 @@ class SaleController extends Controller
             $sales = sale::paginate(10);
         }
         $clients = client::where('state', '1')->get();
-        $vehicles = vehicle::where('state', '1')->get();
+        $vehicles = vehicle::where('state', '1')->where('status', '1')->get();
         $typeSales = typeSale::all();
         return view('pages.sales.sales', compact('sales', 'clients', 'vehicles', 'typeSales'));
     }
@@ -83,7 +83,6 @@ class SaleController extends Controller
                 } else {
                     return round($vehicle[$j]->amount / $typeSale[$i]->amount, 0, PHP_ROUND_HALF_UP);
                 }
-
             }
         }
     }

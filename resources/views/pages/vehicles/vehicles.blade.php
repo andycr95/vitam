@@ -56,16 +56,7 @@
                                 @endif
                                 <td>{{$vehicle->type->name}}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-info"
-                                    data-branchid="{{$vehicle->branchoffice_id}}" data-branchname="{{$vehicle->branchoffice->name}}"
-                                    data-type="{{$vehicle->type_id}}" data-nametype="{{$vehicle->type->name}}"
-                                    data-investor="{{$vehicle->investor_id}}" data-nameInv="{{$vehicle->investor->user->name}}"
-                                    data-motor="{{$vehicle->motor}}" data-color="{{$vehicle->color}}" data-chasis="{{$vehicle->chasis}}"
-                                    data-id="{{$vehicle->id}}" data-amount="{{$vehicle->amount}}" data-model="{{$vehicle->model}}"
-                                    data-placa="{{$vehicle->placa}}" id="editvehicle" data-toggle="modal" data-target="#editModal">
-                                        <i style="color: white;" class="fas fa-pencil-alt "></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$vehicle->id}}" id="deletevehicle" data-toggle="modal" data-target="#deleteModal">
+                                    <a class="btn btn-sm btn-danger" data-id="{{$vehicle->id}}" data-state="{{$vehicle->state}}" id="deletevehicle" data-toggle="modal" data-target="#deleteModal">
                                         <i style="color: white;" class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -106,7 +97,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="name"><strong>Placa</strong></label>
-                                        <input class="form-control" placeholder="ABC-123" type="text" name="placa"  required/>
+                                        <input class="form-control" placeholder="ABC-123" id="placa" type="text" name="placa"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="email"><strong>Modelo</strong></label>
@@ -118,13 +109,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Chasis</strong></label>
-                                        <input class="form-control" type="text" name="chasis" placeholder="36584" required/>
+                                        <input class="form-control" type="text" id="chasis" name="chasis" placeholder="36584" required/>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="phone"><strong>Motor</strong></label>
-                                        <input class="form-control" type="number" name="motor" placeholder="258693" required/>
+                                        <input class="form-control" type="number" id="motor" name="motor" placeholder="258693" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone"><strong>Precio</strong></label>
@@ -162,7 +153,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="submit" id="vehicleSave" class="btn btn-success">Guardar</button>
                         </div>
                     </div>
                 </form>
@@ -185,94 +176,16 @@
                                 <div class="form-group">
                                     <h3>¿Seguro de eliminar este vehiculo?<h3>
                                     <input class="form-control" type="hidden" name="id" id="id" required/>
+                                    <input class="form-control" type="hidden" name="state" id="state" required/>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Guardar</button>
+                                <button type="button" id="deleteButton" class="btn btn-success">Guardar</button>
                             </div>
                         </div>
                     </form>
                 </div>
-        </div>
-         <!-- MODAL edit -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form id="editForm" action="{{ route('updateVehicle') }}"  enctype="multipart/form-data"  method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-content">
-                        <div class="modal-header  primary">
-                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Vehiculo</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="name"><strong>Placa</strong></label>
-                                        <input id="placa" class="form-control" placeholder="ABC-123" type="text" name="placa"  required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email"><strong>Modelo</strong></label>
-                                        <input id="model" class="form-control" type="number" name="model" placeholder="2018" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address"><strong>Color</strong></label>
-                                        <input id="color" class="form-control" type="text" name="color" placeholder="Azul" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address"><strong>Chasis</strong></label>
-                                        <input id="id"  type="hidden" />
-                                        <input id="chasis" class="form-control" type="text" name="chasis" placeholder="36584" required/>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="phone"><strong>Motor</strong></label>
-                                        <input id="motor" class="form-control" type="number" name="motor" placeholder="258693" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address"><strong>Propietario</strong></label>
-                                        @if ($investors->count() > 0)
-                                            <select id="select-investor" name="investor_id" placeholder="Seleccione una opción..."></select>
-                                        @else
-                                            <a href="{{ route('investors')}}">Agregue un invesionista</a>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address"><strong>Estado</strong></label>
-                                        <select name="type_id" class="form-control" required>
-                                            <option style="color: red;" id="optionTyp"></option>
-                                            @foreach ($types as $type)
-                                                <option value="{{$type->id}}">{{$type->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div id="groupAmount2" class="form-group">
-                                        <label for="phone"><strong>Dias</strong></label>
-                                        <input id="amount" class="form-control" type="number" name="amount" placeholder="365" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address"><strong>Sucursal</strong></label>
-                                        @if ($branchoffices->count() > 0)
-                                            <select id="select-branchoffice" name="branchoffice_id" placeholder="Seleccione una opción..."></select>
-                                        @else
-                                            <a href="{{ route('branchoffices')}}">Agregue una sucursal</a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 @endsection

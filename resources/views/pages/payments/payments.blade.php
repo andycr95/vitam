@@ -70,7 +70,7 @@
     </div>
     <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form action="{{ route('createPayment') }}"  enctype="multipart/form-data"  method="POST">
+            <form action="{{ route('createPayment') }}" id="paymentForm" enctype="multipart/form-data"  method="POST">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header  primary">
@@ -81,23 +81,23 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="address"><strong>Vehiculo</strong></label>
+					        <select id="select-tools" name="vehicle_id" placeholder="Seleccione una opción..."></select>
+                        </div>
+                        <div class="form-group">
                             <label for="type"><strong>Tipo</strong></label>
-                            <select id="type" name="type" class="form-control" required>
-                                <option value="">Seleccione una opción</option>
+                            <select id="type" name="type" class="form-control" disabled required>
+                                <option value="#">Seleccione una opción</option>
                                 <option value="pago">Pago</option>
                                 <option value="abono">Abono</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="address"><strong>Vehiculo</strong></label>
-					        <select id="select-tools" name="vehicle_id" placeholder="Seleccione una opción..."></select>
                         </div>
                         <div id="amount" class="form-group">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" id="saveButton" class="btn btn-success">Guardar</button>
                     </div>
                 </div>
             </form>

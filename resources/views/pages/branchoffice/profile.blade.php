@@ -25,41 +25,7 @@
                 </div>
             </div>
             @endif
-            @if ($branchoffice->sales->count() > 0)
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="text-primary font-weight-bold m-0">Vehiculos vendidos</h6>
-                    </div>
-                    <div class="card-body">
-                        @foreach ($branchoffice->sales as $sale)
-                            <h4 class="small font-weight-bold">{{$sale->vehicle->placa}}<span class="float-right">{{$sale->vehicle->payments->count()}} pagos</span></h4>
-                            <div class="progress progress-sm mb-3">
-                                @if (($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 <= 20)
-                                    <div class="progress-bar bg-danger" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                    </div>
-                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 20 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 50)
-                                    <div class="progress-bar bg-warning" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                    </div>
-                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 50 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 70)
-                                    <div class="progress-bar bg-primary" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                    </div>
-                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 70 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 100)
-                                    <div class="progress-bar bg-info" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                    </div>
-                                @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 == 100)
-                                    <div class="progress-bar bg-success" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
-                                    </div>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
+
             <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="text-primary font-weight-bold m-0">Empleados</h6>
@@ -92,7 +58,7 @@
                             <p class="text-primary m-0 font-weight-bold">Información de sucursal</p>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('updateBranchoffice', $branchoffice->id) }}"  enctype="multipart/form-data"  method="POST">
+                            <form action="{{ route('updateBranchoffice', $branchoffice->id) }}" id="updateBranchofficeForm" enctype="multipart/form-data"  method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-row">
@@ -106,7 +72,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="encargado"><strong>Encargado</strong></label>
-                                            <select name="encargado" class="form-control" disabled>
+                                            <select name="encargado" id="employee" class="form-control" disabled>
                                             <option style="color: red;" value="{{$branchoffice->employee_id}}">{{$branchoffice->employee->user->name}}</option>
                                                 @foreach ($employees as $employee)
                                                     <option value="{{$employee->id}}">{{$employee->user->name}}</option>
@@ -120,6 +86,7 @@
                                         <div class="form-group">
                                             <label for="address"><strong>Dirección</strong></label>
                                             <input class="form-control" type="text" disabled value="{{$branchoffice->address}}" name="address">
+                                            <input type="hidden" value="{{$branchoffice->employee_id}}" name="last_e">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -135,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div id="modal-buttons" class="form-group">
-                                    <button disabled id="branchSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
+                                <button disabled id="branchSave" data-id="{{$branchoffice->employee_id}}" class="btn btn-primary btn-sm" type="button">Guardar</button>
                                     <button class="btn btn-info btn-sm" id="branchUpdate" type="button"><span>Actualizar</span></button>
                                 </div>
 

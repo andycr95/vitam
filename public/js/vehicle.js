@@ -1,6 +1,8 @@
 $(document).on("click", "#deletevehicle", function (e) {
     var id = $(this).data("id");
     document.getElementById("id").value = id;
+    var state = $(this).data("state");
+    document.getElementById("state").value = state;
 });
 
 $('#vehicleUpdate').click(function ($event) {
@@ -85,7 +87,7 @@ $(document).on("change", "#type_id", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8001/api/branchoffices'
+    url: 'http://127.0.0.1:8000/api/branchoffices'
 }).done(function (params) {
     $('#select-branch').selectize({
         maxItems: null,
@@ -98,9 +100,63 @@ $.ajax({
     });
 })
 
+$(document).on("blur", "#placa", function (e) {
+    placa = document.getElementById("placa").value;
+    url = "http://127.0.0.1:8000/api/validate/vehicle";
+        $.ajax({
+            method: "GET",
+            url: url,
+            data: { 'placa': placa },
+            success: function (res) {
+                if (res != true) {
+                    toastr.error(res.placa)
+                    $('#vehicleSave').attr({disabled: true});
+                } else {
+                    $('#vehicleSave').attr({disabled: false});
+                }
+            }
+        })
+});
+
+$(document).on("blur", "#chasis", function (e) {
+    chasis = document.getElementById("chasis").value;
+    url = "http://127.0.0.1:8000/api/validate/vehicle";
+        $.ajax({
+            method: "GET",
+            url: url,
+            data: { 'chasis': chasis },
+            success: function (res) {
+                if (res != true) {
+                    toastr.error(res.chasis)
+                    $('#vehicleSave').attr({disabled: true});
+                } else {
+                    $('#vehicleSave').attr({disabled: false});
+                }
+            }
+        })
+});
+
+$(document).on("blur", "#motor", function (e) {
+    motor = document.getElementById("motor").value;
+    url = "http://127.0.0.1:8000/api/validate/vehicle";
+        $.ajax({
+            method: "GET",
+            url: url,
+            data: { 'motor': motor },
+            success: function (res) {
+                if (res != true) {
+                    toastr.error(res.motor)
+                    $('#vehicleSave').attr({disabled: true});
+                } else {
+                    $('#vehicleSave').attr({disabled: false});
+                }
+            }
+        })
+});
+
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8001/api/investors'
+    url: 'http://127.0.0.1:8000/api/investors'
 }).done(function (params) {
     investors = []
     for (let i = 0; i < params.length; i++) {
@@ -117,4 +173,15 @@ $.ajax({
         create: false,
         maxItems: 1
     });
+})
+
+$(document).on("click", "#deleteButton", function (e) {
+    e.preventDefault()
+    id = document.getElementById('id').value
+    state = document.getElementById("state").value;
+    if (state == 0) {
+        toastr.info('Este vehiculo se encuentra en proceso de venta')
+    } else {
+        $('#deleteform').submit()
+    }
 })
