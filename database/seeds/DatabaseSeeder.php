@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $user = DB::table('users')->insert([
+            'id' => 1,
             'name' => "Vitam",
             'last_name' => "Venture",
             'email' => "admin@vitamventure.com",
@@ -91,5 +92,8 @@ class DatabaseSeeder extends Seeder
             'name' => "Especial",
             'counter' => 0,
         ]);
+
+        $user = User::find(1);
+        $user->assignRole('Administrador');
     }
 }
