@@ -16,15 +16,6 @@
                         </a>
                     @endif
                     @hasanyrole('Administrador')
-                    @if (strpos(url()->current(), "branchoffices"))
-                        <a class="nav-link active" href="{{ route('branchoffices') }}">
-                            <i class="fas fa-briefcase"></i><span>Sucursales</span>
-                        </a>
-                    @else
-                        <a class="nav-link" href="{{ route('branchoffices') }}">
-                            <i class="fas fa-briefcase"></i><span>Sucursales</span>
-                        </a>
-                    @endif
                     @if (strpos(url()->current(), "employees"))
                         <a class="nav-link active" href="{{ route('employees') }}">
                             <i class="fas fa-people-carry"></i><span>Empleados</span>
@@ -32,6 +23,15 @@
                     @else
                         <a class="nav-link" href="{{ route('employees') }}">
                             <i class="fas fa-people-carry"></i><span>Empleados</span>
+                        </a>
+                    @endif
+                    @if (strpos(url()->current(), "branchoffices"))
+                        <a class="nav-link active" href="{{ route('branchoffices') }}">
+                            <i class="fas fa-briefcase"></i><span>Sucursales</span>
+                        </a>
+                    @else
+                        <a class="nav-link" href="{{ route('branchoffices') }}">
+                            <i class="fas fa-briefcase"></i><span>Sucursales</span>
                         </a>
                     @endif
                     @if (strpos(url()->current(), "investors"))

@@ -39,6 +39,12 @@ class InvestorController extends Controller
         return response()->json($investors, 200);
     }
 
+    public function getTitulares()
+    {
+        $titulares = investor::where('investors.state','1')->where('investors.id','!=','1')->where('investors.type','2')->join('users', 'users.id', '=', 'investors.user_id')->select('investors.id', 'users.name', 'users.last_name')->get();
+        return response()->json($titulares, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -60,6 +66,9 @@ class InvestorController extends Controller
         $investor = new investor();
         $investor->user_id = $user->id;
         $investor->type = $request->type;
+        if ($request->titular_id) {
+            $investor->titular_id = $request->titular_id;
+        }
         $investor->save();
         return redirect()->back()->with('success','Inversionista guardado');
     }
@@ -72,8 +81,18 @@ class InvestorController extends Controller
      */
     public function show(investor $id)
     {
-        $investor = investor::where("id", $id->id)->with(['vehicles','user'])->get();
-        return view('pages.investors.profile', compact('investor'));
+        $in = investor::find($id->id);
+        if ($in->titular_id == null) {
+            $investor = investor::where("id", $id->id)->with(['vehicles','user'])->get();
+        } else {
+            $investor = investor::where("investors.id", $id->id)
+            ->join('investors as superior', 'superior.id', '=', 'investors.titular_id')
+            ->join('users as titu', 'titu.id', '=', 'superior.user_id')
+            ->join('users as invest', 'invest.id', '=', 'investors.user_id')->with(['vehicles'])
+            ->select('invest.photo as i_photo','invest.id as i_id', 'investors.id','investors.type','invest.address as i_address', 'invest.email as i_email','invest.name as i_name', 'invest.last_name as i_lastN','titu.name as t_name', 'titu.last_name as t_lastN')->get();
+        }
+
+        return view('pages.investors.profile', compact('investor', 'in'));
     }
 
     /**

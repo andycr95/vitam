@@ -72,8 +72,6 @@ Route::patch('/employee','EmployeeController@updatePhoto')->name('updatePhoto');
 Route::patch('/employee/delete','EmployeeController@destroy')->name('deleteEmployee');
 Route::patch('/employee/asignBranch','EmployeeController@asign')->name('asignBrEmployee');
 
-//Validates
-Route::post('/validate/email','ValidateFormsController@ValidateEmail')->name('ValidateEmail');
 
 //Payments
 Route::get('/payments','PaymentController@index')->name('payments');
@@ -82,10 +80,8 @@ Route::get('/payment/{id}','PaymentController@show')->name('payment');
 Route::put('/payment','PaymentController@update')->name('updatepPayment');
 Route::patch('/payment/delete','PaymentController@destroy')->name('deletePayment');
 
-Route::get('/loans','LoansController@index')->name('loans');
-Route::get('/expenses','BranchOfficeController@index')->name('expenses');
-
 //Reports
 Route::get('/reports','ReportController@index')->name('reports');
+Route::post('/routesreport','ReportController@routesReport')->name('routesReport');
 
 });

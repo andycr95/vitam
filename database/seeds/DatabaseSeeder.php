@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $user = DB::table('users')->insert([
+            'id' => 1,
             'name' => "Vitam",
             'last_name' => "Venture",
             'email' => "admin@vitamventure.com",
@@ -60,5 +64,37 @@ class DatabaseSeeder extends Seeder
             'state' => "1",
             'type' => 1,
         ]);
+
+
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // create roles and assign created permissions
+
+        // this can be done as separate statements
+        Role::create(['name' => 'Administrador']);
+        Role::create(['name' => 'Empleado']);
+        Role::create(['name' => 'Inversionista']);
+
+        DB::table('types')->insert([
+            'id' => 1,
+            'name' => "Nueva",
+            'counter' => 365,
+        ]);
+
+        DB::table('types')->insert([
+            'id' => 2,
+            'name' => "Usada",
+            'counter' => 0,
+        ]);
+
+        DB::table('types')->insert([
+            'id' => 3,
+            'name' => "Especial",
+            'counter' => 0,
+        ]);
+
+        $user = User::find(1);
+        $user->assignRole('Administrador');
     }
 }

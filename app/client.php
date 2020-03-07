@@ -11,7 +11,7 @@ use App\payment;
 class client extends Model
 {
     protected $table = 'clients';
-    protected $fillable = ['name', 'documento', 'address', 'phone', 'email', 'cellphone'];
+    protected $fillable = ['name', 'documento', 'address', 'phone', 'email', 'cellphone','photo','photo1','photo2','photo3'];
 
     public function sales()
     {
@@ -28,8 +28,4 @@ class client extends Model
         return $this->hasMany(payment::class);
     }
 
-    public function purchases()
-    {
-        return $this->hasMany(purchase::class);
-    }
 }

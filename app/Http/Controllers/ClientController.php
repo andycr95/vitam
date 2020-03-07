@@ -53,8 +53,10 @@ class ClientController extends Controller
         $client->address = $request->address;
         $client->phone = $request->phone;
         $client->celphone = $request->celphone;
-        $photo = $request->file('photo')->store('public/avatars');
-        $client->photo = str_replace('public/' , '' , $photo);
+        if ($request->file('photo')) {
+            $photo = $request->file('photo')->store('public/avatars');
+            $client->photo = str_replace('public/' , '' , $photo);
+        }
         $client->save();
         return redirect()->back()->with('success','Cliente guardado');
     }
@@ -71,7 +73,7 @@ class ClientController extends Controller
         $photos = client::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
         $photo = $this->nullableIf($photos);
         $branchoffices = branchoffice::where('status', '1')->get();
-        $vehicles = vehicle::where('state', '1')->get();
+        $vehicles = vehicle::where('state', '1')->where('status', '1')->get();
         $typeSales = typeSale::all();
         return view('pages.clients.profile', compact('client', 'photos', 'photo', 'branchoffices', 'vehicles', 'typeSales'));
     }

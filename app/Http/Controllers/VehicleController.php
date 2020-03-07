@@ -20,9 +20,9 @@ class VehicleController extends Controller
     {
         if ($request->buscar != '') {
             $buscar = $request->buscar;
-            $vehicles = vehicle::search($buscar)->paginate(10);
+            $vehicles = vehicle::where('status', '1')->where('placa', 'like', '%'.$buscar.'%')->paginate(10);
         } else {
-            $vehicles = vehicle::OrderBy('created_at', 'DESC')->paginate(10);
+            $vehicles = vehicle::where('status', '1')->OrderBy('created_at', 'DESC')->paginate(10);
         }
         $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->get();
         $types = type::all();
@@ -39,7 +39,7 @@ class VehicleController extends Controller
     public function getVehicles()
     {
         $vehicles = [];
-        $vehicles = vehicle::where('vehicles.state', '1')->join('branchoffices', 'branchoffices.id', '=', 'vehicles.branchoffice_id')->OrderBy('vehicles.created_at', 'DESC')->select('branchoffices.name', 'vehicles.id', 'vehicles.placa')->get();
+        $vehicles = vehicle::where('vehicles.state', '1')->where('vehicles.status', '1')->join('branchoffices', 'branchoffices.id', '=', 'vehicles.branchoffice_id')->OrderBy('vehicles.created_at', 'DESC')->select('branchoffices.name', 'vehicles.id', 'vehicles.placa')->get();
         return response()->json($vehicles, 200);
     }
 
@@ -167,7 +167,7 @@ class VehicleController extends Controller
     public function destroy(Request $request)
     {
         $vehicle = vehicle::find($request->id);
-        $vehicle->state = 0;
+        $vehicle->status = 0;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo eliminado');
     }
