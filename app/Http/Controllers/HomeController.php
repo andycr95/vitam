@@ -29,4 +29,5 @@ class HomeController extends Controller
         $sale = sale::orderBy('id', 'desc')->with(['client', 'vehicle'])->take(5)->get();
         return view('home', compact('payment', 'sale'));
     }
+
 }

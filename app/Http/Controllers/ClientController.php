@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\client;
 use App\vehicle;
 use App\branchoffice;
+use App\sale;
 use App\typeSale;
 use Illuminate\Http\Request;
 
@@ -148,6 +149,14 @@ class ClientController extends Controller
      */
     public function destroy(request $request)
     {
+        if ($request->sale) {
+            $sales = sale::find($request->sale);
+            $vehicle = vehicle::find($request->vehicle);
+            $vehicle->state = '1';
+            $sales->state = '0';
+            $sales->save();
+            $vehicle->save();
+        }
         $client = client::find($request->id);
         $client->state = '0';
         $client->save();

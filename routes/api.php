@@ -31,3 +31,4 @@ Route::middleware('api')->get('/validate/branchoffice','ValidateFormsController@
 Route::middleware('api')->get('/validate/client/sales','ValidateFormsController@ValidateClientSales');
 Route::middleware('api')->get('/validate/vehicle','ValidateFormsController@ValidateVehicle');
 Route::middleware('api')->get('/validate/payment','ValidateFormsController@ValidatePayment');
+Route::middleware('api')->get('/notifications','ValidateFormsController@getNotifications');

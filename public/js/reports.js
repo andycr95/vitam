@@ -3,7 +3,7 @@ $(document).on("change", "#type_report_c_i", function (e) {
     if (type == '2') {
         $.ajax({
             method: 'GET',
-            url: 'http://vitamventure.com:8000/api/investors'
+            url: 'http://127.0.0.1:8000/api/investors'
         }).done(function (params) {
             $(`<label id="name" for="amount"><strong>Inversionista</strong></label>
             <select id="select-inv" name="investor_id" placeholder="Seleccione una opción..."></select>`).appendTo('#form-control-i-c');
@@ -60,7 +60,7 @@ $(document).on("change", "#type_report_t", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://vitamventure.com:8000/api/salesvehicles'
+    url: 'http://127.0.0.1:8000/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,

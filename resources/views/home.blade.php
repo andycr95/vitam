@@ -14,7 +14,7 @@
                             <div class="col mr-2">
                                 <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
                                     <span>Ganacias (Mes)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>$4,000,000</span>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>$0</span>
                                 </div>
                             </div>
                             <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -30,7 +30,7 @@
                             <div class="col mr-2">
                                 <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
                                     <span>Ganancias (anual)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>$21,000,000</span>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>$0</span>
                                 </div>
                             </div>
                             <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -48,7 +48,7 @@
                                     <span>Vehiculos disponibles</span></div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>50</span>
+                                        <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>0</span>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                             <div class="col mr-2">
                                 <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
                                     <span>pagos pendientes</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
                             </div>
                             <div class="col-auto"><i class="far fa-calendar-times fa-2x text-gray-300"></i>
                             </div>

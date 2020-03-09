@@ -1,8 +1,3 @@
-$(document).on("click", "#deleteclient", function(e) {
-    var id = $(this).data("id");
-    document.getElementById("iddelete").value = id;
-});
-
 $(document).on("change", "#photo", function(e) {
     var id = $(this).data("id");
     document.getElementById("form").submit();
@@ -52,7 +47,7 @@ $('#clientUpdate').click(function ($event) {
 
 $(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://vitamventure.com:8000/api/validate/client/email";
+    url = "http://127.0.0.1:8000/api/validate/client/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -100,15 +95,118 @@ $(document).on("keyup", "#password", function (e) {
     }
 });
 
-$(document).on("click", "#deleteButton", function (e) {
+$(document).on("click", "#deleteclient", function (e) {
     e.preventDefault()
-    id = document.getElementById('iddelete').value
+    id = $(this).data("id")
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'http://vitamventure.com:8000/api/validate/client/sales'
+        url: 'http://127.0.0.1:8000/api/validate/client/sales'
     }).done(function(params) {
-        console.log(params);
+        var id_sale
+        var id_vehicle
+        for (let i = 0; i < params.length; i++) {
+            const e = params[i];
+            id_sale = e.sale
+            id_vehicle = e.vehicle
+        }
+
+
+        if (params) {
+            $.confirm({
+                title: 'Eliminando cliente',
+                content: 'Este cliente tiene ventas en curso, desea cancelarlas?',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    Si: {
+                        text: 'Si',
+                        btnClass: 'btn-green',
+                        action: function(){
+                            $.confirm({
+                                title: 'Eliminando cliente',
+                                content: `
+                                <form action="{{ route('deleteclient') }}" id="deleteform"  enctype="multipart/form-data"  method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <label for="phone">Este vehiculo cambiará de estado, desea cambiar su precio y dias de pago?</label>
+                                    <div class="form-group">
+                                        <label for="phone"><strong>Precio</strong></label>
+                                        <input class="form-control" id="fee" type="text" name="new_fee" placeholder=""/>
+                                    </div>
+                                    <input type="hidden" name="sale" value="${id_sale}"/>
+                                    <input type="hidden" name="vehicle" value="${id_vehicle}"/>
+                                    <input class="form-control" type="hidden" value="${id}" name="id" id="iddelete" required/>
+                                    </div><div class="form-group">
+                                        <label for="phone"><strong>Dias</strong></label>
+                                        <input class="form-control" type="text" name="new_days" placeholder=""/>
+                                    </div>
+                                </form>`,
+                                type: 'red',
+                                typeAnimated: true,
+                                buttons: {
+                                    formSubmit: {
+                                        text: 'Enviar',
+                                        btnClass: 'btn-blue',
+                                        action: function () {
+                                            var name = this.$content.find('.name').val();
+                                            if(!name){
+                                                $.alert('provide a valid name');
+                                                return false;
+                                            }
+                                            $.alert('Your name is ' + name);
+                                        }
+                                    },
+                                    cancel: function () {
+                                        //close
+                                    },
+                                    Si: {
+                                        text: 'Enviar',
+                                        btnClass: 'btn-green',
+                                        action: function(){
+                                            var fee = this.$content.find('#fee').val();
+                                            var sale = this.$content.find('#sale').val();
+                                            var fee = this.$content.find('#fee').val();
+                                            var fee = this.$content.find('#fee').val();
+                                            console.log(name);
+
+                                        }
+                                    },
+                                    No: {
+                                        text: 'No',
+                                        btnClass: 'btn-red',
+                                        action: function(){
+                                            $('#deleteform').submit()
+                                        }
+                                    }
+                                },
+                                onContentReady: function () {
+                                    // bind to events
+                                    var jc = this;
+                                    this.$content.find('form').on('submit', function (e) {
+                                        // if the user submits the form by pressing enter in the field.
+                                        e.preventDefault();
+                                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                                    });
+                                }
+                            });
+
+                        }
+                    },
+                    No: {
+                        text: 'No',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            toastr.info('Cliente no eliminado')
+                        }
+                    },
+                    close: function () {
+                    }
+                }
+            });
+        } else {
+            $("#deleteform ").submit();
+        }
 
     })
 })

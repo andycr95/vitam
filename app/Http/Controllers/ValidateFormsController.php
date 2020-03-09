@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\employee;
 use App\branchoffice;
 use App\investor;
 use App\client;
 use App\payment;
+use App\User;
+use App\Notifications\PaymentsLates;
 
 class ValidateFormsController extends Controller
 {
@@ -90,7 +93,7 @@ class ValidateFormsController extends Controller
 
     public function ValidateClientSales(Request $request)
     {
-        $client = client::where('clients.id', $request->id)->where('sales.state','1')->join('sales', 'sales.client_id', '=', 'clients.id')->get();
+        $client = client::where('clients.id', $request->id)->where('sales.state','1')->join('sales', 'sales.client_id', '=', 'clients.id')->select('sales.id as sale', 'sales.vehicle_id as vehicle')->get();
         return response()->json($client, 200);
     }
 
@@ -101,4 +104,43 @@ class ValidateFormsController extends Controller
         ->latest('payments.created_at')->first();
         return response()->json($last_pay, 200);
     }
+
+    public function getNotifications()
+    {
+        define('SECONDS_PER_DAY', 86400);
+        $notifications = array();
+        $days_ago = date('Y-m-d', time() - 3 * SECONDS_PER_DAY);
+        $clients = client::where('state','1')->get();
+        for ($i=0; $i < $clients->count(); $i++) {
+            $pago = payment::where('sales.state','1')->where('payments.type','pago')->where('clients.id',$clients[$i]->id)->where('payments.created_at', '<',$days_ago)
+            ->join('sales', 'sales.id','payments.sale_id')->join('vehicles', 'vehicles.id','payments.vehicle_id')
+            ->join('clients', 'clients.id','sales.client_id')->orderBy('payments.created_at', 'desc')->select('payments.created_at', 'payments.id as payment','vehicles.id as vehicle', 'clients.id as client')->limit(1)->get();
+            if (!empty($pago)) {
+                foreach ($pago as $pago) {
+                    $p = payment::find($pago['payment']);
+                    $user = User::find(1);
+                    if (count($user->notifications) > 0) {
+                        foreach ($user->notifications as $notification) {
+                            if ($notification->data['payment']['sale_id'] != $p->sale_id) {
+                                $user->notify(new PaymentsLates($p));
+                            } else {
+                            }
+
+                            array_push($notifications, $notification);
+                            break;
+                        }
+                    } else {
+                        $p = payment::find($pago['payment']);
+                        $user = User::find(1);
+                        $user->notify(new PaymentsLates($p));
+                        foreach ($user->notifications as $notification) {
+                            array_push($notifications, $notification);
+                        }
+                    }
+                }
+            }
+        }
+        return response()->json($notifications, 200);
+    }
+
 }

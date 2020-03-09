@@ -48,7 +48,7 @@ $(document).on("click", '#investorDelete', function(e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'http://vitamventure.com:8000/api/validate/investor/vehicles'
+        url: 'http://127.0.0.1:8000/api/validate/investor/vehicles'
     }).done(function(params) {
         for (let i = 0; i < params.length; i++) {
             const e = params[i];
@@ -63,7 +63,7 @@ $(document).on("click", '#investorDelete', function(e) {
 
 $(document).on("change", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://vitamventure.com:8000/api/validate/email";
+    url = "http://127.0.0.1:8000/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -95,7 +95,7 @@ $(document).on("change", "#type", function (e) {
     if (e.target.value == 1) {
         $.ajax({
             method: 'GET',
-            url: 'http://vitamventure.com:8000/api/titulares'
+            url: 'http://127.0.0.1:8000/api/titulares'
         }).done(function (params) {
             $(`
         <div class="form-group">
