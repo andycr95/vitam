@@ -11,7 +11,7 @@ for (let i = 0; i < document.getElementsByClassName('precio').length; i++) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8000/api/clients'
+    url: 'http://Vitamventure.com/api/clients'
 }).done(function (params) {
     clients = []
     for (let i = 0; i < params.length; i++) {
@@ -32,7 +32,7 @@ $.ajax({
 
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8000/api/vehicles'
+    url: 'http://Vitamventure.com/api/vehicles'
 }).done(function (params) {
     vehicles = []
     for (let i = 0; i < params.length; i++) {

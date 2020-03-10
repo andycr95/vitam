@@ -121,26 +121,38 @@ class ValidateFormsController extends Controller
                     $user = User::find(1);
                     if (count($user->notifications) > 0) {
                         foreach ($user->notifications as $notification) {
-                            if ($notification->data['payment']['sale_id'] != $p->sale_id) {
+                            if ($this->inArrayField($p->sale_id, 'sale_id', $notification->data['payment']) === 'false') {
                                 $user->notify(new PaymentsLates($p));
+                                array_push($notifications, $notification);
                             } else {
                             }
-
-                            array_push($notifications, $notification);
-                            break;
                         }
                     } else {
-                        $p = payment::find($pago['payment']);
-                        $user = User::find(1);
-                        $user->notify(new PaymentsLates($p));
-                        foreach ($user->notifications as $notification) {
-                            array_push($notifications, $notification);
-                        }
+                    $p = payment::find($pago['payment']);
+                    $user = User::find(1);
+                    $user->notify(new PaymentsLates($p));
+                    foreach ($user->notifications as $notification) {
+                        array_push($notifications, $notification);
                     }
                 }
             }
         }
-        return response()->json($notifications, 200);
     }
+    return response()->json($notifications, 200);
+}
 
+
+public function inArrayField($needle, $needle_field, $haystack, $strict = true) {
+    if ($strict) {
+        foreach ($haystack as $item)
+            if (isset($item->$needle_field) && $item->$needle_field === $needle)
+                return 'true';
+    }
+    else {
+        foreach ($haystack as $item)
+            if (isset($item->$needle_field) && $item->$needle_field == $needle)
+                return 'true';
+    }
+    return 'false';
+}
 }

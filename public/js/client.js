@@ -47,7 +47,7 @@ $('#clientUpdate').click(function ($event) {
 
 $(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://127.0.0.1:8000/api/validate/client/email";
+    url = "http://vitamventure.com/api/validate/client/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -101,7 +101,7 @@ $(document).on("click", "#deleteclient", function (e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'http://127.0.0.1:8000/api/validate/client/sales'
+        url: 'http://vitamventure.com/api/validate/client/sales'
     }).done(function(params) {
         var id_sale
         var id_vehicle

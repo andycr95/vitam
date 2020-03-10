@@ -5,7 +5,7 @@ $(document).on("change", "#type", function (e) {
         $.ajax({
             method: 'GET',
             data: {'id':id},
-            url: 'http://127.0.0.1:8000/api/validate/payment'
+            url: 'http://vitamventure.com/api/validate/payment'
         }).done(function (params) {
             if (params.type == 'abono') {
                 val = params.fee - params.amount
@@ -27,7 +27,7 @@ $(document).on("change", "#type", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://127.0.0.1:8000/api/salesvehicles'
+    url: 'http://vitamventure.com/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,
@@ -54,7 +54,7 @@ $(document).on("click", "#saveButton", function(e) {
         $.ajax({
             method: 'GET',
             data: {'id':id},
-            url: 'http://127.0.0.1:8000/api/validate/payment'
+            url: 'http://vitamventure.com/api/validate/payment'
         }).done(function (params) {
             if (document.getElementById('type').value == 'pago') {
                 val = params.fee - params.amount

@@ -54,8 +54,10 @@ class ClientController extends Controller
         $client->address = $request->address;
         $client->phone = $request->phone;
         $client->celphone = $request->celphone;
-        $photo = $request->file('photo')->store('public/avatars');
-        $client->photo = str_replace('public/' , '' , $photo);
+        if ($request->file('photo')) {
+            $photo = $request->file('photo')->store('public/avatars');
+            $client->photo = str_replace('public/' , '' , $photo);
+        }
         $client->save();
         return redirect()->back()->with('success','Cliente guardado');
     }
