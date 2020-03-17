@@ -4,8 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "394e9eff3d92cd87a003b2a702a8ed3b",
+    "content-hash": "912e9e41f8b0a533238922e6177e903f",
     "packages": [
+        {
+            "name": "akaunting/money",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akaunting/money.git",
+                "reference": "1bab074aa71ed994eff140b26fb6ce9aecf82430"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akaunting/money/zipball/1bab074aa71ed994eff140b26fb6ce9aecf82430",
+                "reference": "1bab074aa71ed994eff140b26fb6ce9aecf82430",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.4",
+                "illuminate/view": ">=5.4",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": ">=1.0",
+                "phpunit/phpunit": ">=5.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Akaunting\\Money\\Provider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Akaunting\\Money\\": "./src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Duliçi",
+                    "email": "info@akaunting.com",
+                    "homepage": "https://akaunting.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Currency formatting and conversion package for Laravel.",
+            "keywords": [
+                "convert",
+                "currency",
+                "format",
+                "laravel",
+                "money"
+            ],
+            "time": "2020-03-09T15:01:03+00:00"
+        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v0.8.6",

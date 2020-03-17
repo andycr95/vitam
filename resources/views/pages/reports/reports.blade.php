@@ -4,7 +4,6 @@
     <div class="container-fluid">
         <div class="d-sm-flex justify-content-between align-items-center mb-4">
             <h3 class="text-dark mb-0">Reportes</h3>
-            <button class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generar reporte</button>
         </div>
         {{ Breadcrumbs::render('reports') }}
         <div class="card shadow">
@@ -12,29 +11,46 @@
                 <p class="text-primary m-0 font-weight-bold">Reportes</p>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-8 text-nowrap">
-                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                            <button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#payModal">
-                                <i class="fa fa-plus"></i> Registrar pago
-                            </button>
-                        </div>
-                    </div>
-                </div>
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                    <table class="table dataTable my-0" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Fecha</th>
-                                <th>Monto</th>
-                                <th>Tipo</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <form action="{{ route('routesReport') }}"  enctype="multipart/form-data"  method="POST">
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header  primary">
+                                <h5 class="modal-title" id="exampleModalLabel">Generar reporte</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Tipo de reporte - Interesado</label>
+                                        <select class="form-control" name="type_report_c_i" id="type_report_c_i">
+                                            <option value="#">Seleccione una opcion</option>
+                                            <option value="1">Clientes</option>
+                                            <option value="2">Inversionista</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="form_type_report_c_i">
+                                        <label id="name_type_report">Tipo de reporte - Tiempo</label>
+                                        <select class="form-control" name="type_report_t" id="type_report_t">
+                                            <option value="#">Seleccione una opcion</option>
+                                            <option value="1">Semanal</option>
+                                            <option value="2">Mensual</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="form-control-i-t">
+                                        <div class="form-group" id="form-control-i-c"></div>
+                                        <div class="form-group" id="form-control-t"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary btn-sm d-none d-sm-inline-block" role="submit">
+                                    <i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generar reporte</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="row">
 
@@ -42,49 +58,6 @@
             </div>
         </div>
     </div>
-        <!-- MODAL PHOTO -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form action="{{ route('routesReport') }}"  enctype="multipart/form-data"  method="POST">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header  primary">
-                        <h5 class="modal-title" id="exampleModalLabel">Generar reporte</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label>Tipo de reporte - Interesado</label>
-                                <select class="form-control" name="type_report_c_i" id="type_report_c_i">
-                                    <option value="#">Seleccione una opcion</option>
-                                    <option value="1">Clientes</option>
-                                    <option value="2">Inversionista</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo de reporte - Tiempo</label>
-                                <select class="form-control" name="type_report_t" id="type_report_t">
-                                    <option value="#">Seleccione una opcion</option>
-                                    <option value="1">Semanal</option>
-                                    <option value="2">Mensual</option>
-                                </select>
-                            </div>
-                            <div class="form-group" id="form-control-i-c"></div>
-                            <div class="form-group" id="form-control-t"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Guardar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
 @endsection
 @push('scripts')
     <script src="/js/reports.js"></script>

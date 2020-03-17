@@ -14,7 +14,9 @@
                             <div class="col mr-2">
                                 <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
                                     <span>Ganacias (Mes)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>$0</span>
+                                    @foreach ($salesMonth as $salesMonth)
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{$salesMonth->total_sales}}</span>                                    
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -30,7 +32,9 @@
                             <div class="col mr-2">
                                 <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
                                     <span>Ganancias (anual)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>$0</span>
+                                    @foreach ($sales as $sales)
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{$sales->total_sales}}</span>                                    
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -48,7 +52,7 @@
                                     <span>Vehiculos disponibles</span></div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>0</span>
+                                    <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>{{$vehicles->count()}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +70,7 @@
                             <div class="col mr-2">
                                 <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
                                     <span>pagos pendientes</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>{{count($late_pays)}}</span></div>
                             </div>
                             <div class="col-auto"><i class="far fa-calendar-times fa-2x text-gray-300"></i>
                             </div>
@@ -100,7 +104,7 @@
                                         <div><img class="rounded-circle mr-3" src="/img/user-photo4.jpg"
                                                 width="50" height="50"></div>
                                         <div class="media-body">
-                                            <h4><a href="#" style="font-size: 18px;">{{$pay->sale->client->name}}</a><span
+                                            <h4 style="font-size:14px">{{$pay->sale->client->name}}<span
                                                     class="badge badge-success"
                                                     style="font-size: 14px;">Activo</span></h4>
                                             <p class="text-muted" style="font-size: 12px;">&nbsp;{{($pay->created_at)->diffForhumans()}}
@@ -108,11 +112,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <p><span class="h3"
-                                            style="font-size: 20px;">${{$pay->amount}}</span><br /><strong></strong><a
-                                            href="#" style="font-size: 12px;">Ver detalles</a></p>
-                                    <p></p>
+                                <div class="col-md-4" id="{{$pay->id}}">
+                                    <p>
+                                        <span class="h3" style="font-size: 14px;">${{$pay->amount}}</span>
+                                        <br />
+                                    </p>
                                 </div>
                             </div>
                         @endforeach
@@ -144,7 +148,7 @@
                                             <div><img class="rounded-circle mr-3" src="/img/user-photo4.jpg"
                                                     width="50" height="50"></div>
                                             <div class="media-body">
-                                                <h4><a href="#" style="font-size: 18px;">{{$sale->client->name}}</a><span
+                                                <h4 style="font-size:14px">{{$sale->client->name}}<span
                                                         class="badge badge-success"
                                                         style="font-size: 14px;">Activo</span></h4>
                                                 <p class="text-muted" style="font-size: 12px;">&nbsp;{{($sale->created_at)->diffForhumans()}}
@@ -154,8 +158,8 @@
                                     </div>
                                     <div class="col-md-4">
                                         <p><span class="h3"
-                                                style="font-size: 20px;">{{$sale->vehicle->placa}}</span><br /><strong></strong><a
-                                                href="#" style="font-size: 12px;">Ver detalles</a></p>
+                                                style="font-size: 14px;">{{$sale->vehicle->placa}}</span><br /><strong></strong><a
+                                                href="{{ route('sale', $sale->id )}}" style="font-size: 12px;">Ver detalles</a></p>
                                         <p></p>
                                     </div>
                                 </div>

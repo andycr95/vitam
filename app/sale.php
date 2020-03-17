@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\branchoffice;
 use App\vehicle;
+use App\payment;
 use App\client;
 use App\typeSale;
 
@@ -31,5 +32,10 @@ class sale extends Model
     public function vehicle()
     {
         return $this->belongsTo(vehicle::class);
+    }
+
+    public function payments()
+    {
+        return $this->belongsTo(payment::class);
     }
 }

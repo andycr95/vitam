@@ -44,6 +44,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="address"><strong>Cedula</strong></label>
+                                    <input class="form-control" type="text" disabled name="document" value="{{$employee->user->documento}}"/>
+                                    <div id="form-group-document"></div>
+                                </div>
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">

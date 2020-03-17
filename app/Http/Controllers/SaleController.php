@@ -79,9 +79,11 @@ class SaleController extends Controller
         for ($i=0; $i < $typeSale->count(); $i++) {
             for ($j=0; $j < $vehicle->count() ; $j++) {
                 if ($vehicle[$j]->amount == 0) {
-                    return round($vehicle[$j]->type->counter / $typeSale[$i]->amount, 0, PHP_ROUND_HALF_UP);
+                    $t = $vehicle[$j]->type->counter / $typeSale[$i]->amount;
+                    return $t;
                 } else {
-                    return round($vehicle[$j]->amount / $typeSale[$i]->amount, 0, PHP_ROUND_HALF_UP);
+                    $t =$vehicle[$j]->amount / $typeSale[$i]->amount;
+                    return $t;
                 }
             }
         }
@@ -131,8 +133,19 @@ class SaleController extends Controller
      * @param  \App\sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function destroy(sale $sale)
+    public function destroy(request $request)
     {
-        //
+        $sales = sale::where('id',$request->id)->with('payments')->get();
+        if ($sales[0]->payments == null) {
+            sale::destroy($request->id);
+        } else {
+            $sales[0]->state = '0';
+            $sales->save();
+        }
+        $vehicle = vehicle::find($sales[0]->vehicle_id);
+        $vehicle->state = '1';
+        $vehicle->save();
+
+        return redirect()->back()->with('success','Venta terminar');
     }
 }

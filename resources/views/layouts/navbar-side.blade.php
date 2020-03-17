@@ -54,6 +54,8 @@
                             <i class="fas fa-users"></i><span>Clientes</span>
                         </a>
                     @endif
+                    @endhasanyrole
+                    @hasanyrole('Administrador')
                     @if (strpos(url()->current(), "sales"))
                         <a class="nav-link active" href="{{ route('sales') }}">
                             <i class="fas fa-motorcycle"></i><span>Ventas</span>
@@ -86,7 +88,7 @@
                         </a>
                     @endif
                     @endhasanyrole
-                    @hasanyrole('Empleado|Administrador|Inversionista')
+                    @hasanyrole('Administrador')
                     @if (strpos(url()->current(), "reports"))
                     <a class="nav-link active" href="{{ route('reports') }}">
                         <i class="far fa-chart-bar"></i><span>Reportes</span>

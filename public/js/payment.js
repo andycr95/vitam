@@ -2,10 +2,18 @@ $(document).on("change", "#type", function (e) {
     type = document.getElementById("type").value;
     id = document.getElementById('select-tools').value
     if (type == 'abono') {
+        if (document.getElementById('name')) {
+            $(".modal-body #amount #value").remove();
+            $(".modal-body #amount #name").remove();            
+        }
+        if (document.getElementById('pays')) {
+            $(".modal-body #amount #_pay").remove();
+            $(".modal-body #amount #pays").remove();            
+        }
         $.ajax({
             method: 'GET',
             data: {'id':id},
-            url: 'http://vitamventure.com/api/validate/payment'
+            url: 'https://vitamventure.com/api/validate/payment'
         }).done(function (params) {
             if (params.type == 'abono') {
                 val = params.fee - params.amount
@@ -17,17 +25,29 @@ $(document).on("change", "#type", function (e) {
             }
         })
     } else if (type == 'pago') {
-        $(".modal-body #amount #name").remove();
+        $(".modal-body #amount #pays").remove();
+        $(".modal-body #amount #_pay").remove();
         $(".modal-body #amount #value").remove();
+        $(".modal-body #amount #name").remove();
+    } else if (type == 'pagos') {
+        if (document.getElementById('name')) {
+            $(".modal-body #amount #value").remove();
+            $(".modal-body #amount #name").remove();            
+        }
+        $(`<label id="_pay" for="pays"><strong>Pagos a realizar</strong></label>
+                <input id="pays" class="form-control" type="number" name="pays" value="1" required/>`).appendTo('#amount');
     } else {
         $(".modal-body #amount #name").remove();
+        $(".modal-body #amount #pays").remove();
+        $(".modal-body #amount #_pay").remove();
         $(".modal-body #amount #value").remove();
+        $(".modal-body #amount #name").remove();
     }
 });
 
 $.ajax({
     method: 'GET',
-    url: 'http://vitamventure.com/api/salesvehicles'
+    url: 'https://vitamventure.com/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,
@@ -54,21 +74,100 @@ $(document).on("click", "#saveButton", function(e) {
         $.ajax({
             method: 'GET',
             data: {'id':id},
-            url: 'http://vitamventure.com/api/validate/payment'
+            url: 'https://vitamventure.com/api/validate/payment'
         }).done(function (params) {
+            val = params.fee - params.amount
             if (document.getElementById('type').value == 'pago') {
-                val = params.fee - params.amount
                 if (params.type == "abono") {
                     toastr.error(`Tiene un pago de ${val} pendiente por saldar`)
                 } else {
-                    $('#paymentForm').submit()
+                    $.confirm({
+                        title: `Registrando pago a ${params.placa}`,
+                        content: 'Está seguro de realizar este pago',
+                        type: 'green',
+                        typeAnimated: true,
+                        buttons: {
+                            Si: {
+                                text: 'Si',
+                                btnClass: 'btn-green',
+                                action: function(){
+                                    $('#paymentForm').submit()
+                                }
+                            },
+                            No: {
+                                text: 'No',
+                                btnClass: 'btn-red',
+                                action: function(){
+                                    toastr.info('pago cancelado')
+                                }
+                            },
+                            close: function () {
+                            }
+                        }
+                    });
                 }
-            } if (document.getElementById('type').value == 'abono') {
-                $('#paymentForm').submit()
+            } else if (document.getElementById('type').value == 'abono') {
+                value = document.getElementById('value').value
+                if (params.type == "abono") {
+                    if (value > val) {
+                        toastr.error(`Tiene un pago de ${val} primero saldelo`)
+                    } else {
+                        $.confirm({
+                            title: `Registrando abono a ${params.placa}`,
+                            content: 'Está seguro de realizar este abono',
+                            type: 'green',
+                            typeAnimated: true,
+                            buttons: {
+                                Si: {
+                                    text: 'Si',
+                                    btnClass: 'btn-green',
+                                    action: function(){
+                                        $('#paymentForm').submit()
+                                    }
+                                },
+                                No: {
+                                    text: 'No',
+                                    btnClass: 'btn-red',
+                                    action: function(){
+                                        toastr.info('pago cancelado')
+                                    }
+                                },
+                                close: function () {
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    $.confirm({
+                        title: `Registrando abono a ${params.placa}`,
+                        content: 'Está seguro de realizar este abono',
+                        type: 'green',
+                        typeAnimated: true,
+                        buttons: {
+                            Si: {
+                                text: 'Si',
+                                btnClass: 'btn-green',
+                                action: function(){
+                                    $('#paymentForm').submit()
+                                }
+                            },
+                            No: {
+                                text: 'No',
+                                btnClass: 'btn-red',
+                                action: function(){
+                                    toastr.info('pago cancelado')
+                                }
+                            },
+                            close: function () {
+                            }
+                        }
+                    });
+                }
             }
         })
     }
 });
+
 
 const formatterPeso = new Intl.NumberFormat('es-CO', {
     style: 'currency',

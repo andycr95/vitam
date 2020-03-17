@@ -25,9 +25,9 @@
                         @foreach ($client->sales as $sale)
                             <h4 class="small font-weight-bold">{{$sale->vehicle->placa}}<span class="float-right">{{$sale->vehicle->payments->count()}} pagos</span></h4>
                             <div class="progress progress-sm mb-3">
-                                @if (($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 <= 20)
-                                    <div class="progress-bar bg-danger" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">
-                                        <span class="sr-only">{{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}</span>
+                                @if ($sale->vehicle->payments->count() <= 20)
+                                    <div class="progress-bar bg-danger" aria-valuenow="{{$sale->vehicle->payments->count()}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $sale->vehicle->payments->count()}}%;">
+                                        <span class="sr-only">{{ $sale->vehicle->payments->count() }}</span>
                                     </div>
                                 @elseif(($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 > 20 && ($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100 < 50)
                                     <div class="progress-bar bg-warning" aria-valuenow="{{($sale->vehicle->payments->count()/$sale->vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($sale->vehicle->payments->count())/$sale->vehicle->type->counter)*100 }}%;">

@@ -5,6 +5,7 @@ $('#investorUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = true;
         document.getElementsByName("last_name")[0].disabled = true;
         document.getElementsByName("password")[0].disabled = true;
+        document.getElementsByName("documento")[0].disabled = true;
         document.getElementsByName("address")[0].disabled = true;
         $('#pass').attr('type', 'password')
         document.getElementsByName("email")[0].disabled = true;
@@ -17,6 +18,7 @@ $('#investorUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = false;
         document.getElementsByName("last_name")[0].disabled = false;
         document.getElementsByName("password")[0].disabled = false;
+        document.getElementsByName("documento")[0].disabled = false;
         document.getElementsByName("address")[0].disabled = false;
         $("#investorSave").attr({disabled: false});
         $('#pass').attr('type', 'text')
@@ -31,6 +33,30 @@ $('#investorUpdate').click(function ($event) {
 $(document).on("click", "#deleteinvestor", function(e) {
     var id = $(this).data("id");
     document.getElementById("iddelete").value = id;
+});
+
+$(document).on("blur", "#doc", function (e) {
+    let doc = document.getElementById("doc").value;
+    url = "https://vitamventure.com/api/validate/document";
+    if (doc.length > 6) {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: { 'document': doc },
+            success: function (res) {
+                if (res != true) {
+                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-document');
+                    var i = 0;
+                    setInterval(function () {
+                        i++
+                        if (i > 2) {
+                            $("#form-group-document .alert ").remove();
+                        }
+                    }, 1000)
+                }
+            }
+        })
+    }
 });
 
 $(document).on("click", "#investorSave", function(e) {
@@ -48,14 +74,14 @@ $(document).on("click", '#investorDelete', function(e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'http://vitamventure.com/api/validate/investor/vehicles'
+        url: 'https://vitamventure.com/api/validate/investor/vehicles'
     }).done(function(params) {
         for (let i = 0; i < params.length; i++) {
             const e = params[i];
             if (e.vehicles.length > 0) {
                 toastr.error('Este inversionista tiene vehiculos asociados')
             } else {
-                $('#deleteinvestor').submit()
+                $('#deleteinvestorForm').submit()
             }
         }
     })
@@ -63,7 +89,7 @@ $(document).on("click", '#investorDelete', function(e) {
 
 $(document).on("change", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://vitamventure.com/api/validate/email";
+    url = "https://vitamventure.com/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -95,7 +121,7 @@ $(document).on("change", "#type", function (e) {
     if (e.target.value == 1) {
         $.ajax({
             method: 'GET',
-            url: 'http://vitamventure.com/api/titulares'
+            url: 'https://vitamventure.com/api/titulares'
         }).done(function (params) {
             $(`
         <div class="form-group">

@@ -12,8 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect('/home');
+    } else {
+        return view('welcome');
+    }
 })->name('login');
+
 
 //Auth
 Auth::routes();
@@ -40,6 +45,7 @@ Route::get('/sales','SaleController@index')->name('sales');
 Route::get('/sale/{id}','SaleController@show')->name('sale');
 Route::put('/sale','SaleController@update')->name('updatesale');
 Route::post('/sale','SaleController@store')->name('salevehicleclient');
+Route::patch('/sale/delete','SaleController@destroy')->name('deleteSale');
 
 //Investors
 Route::get('/investors','InvestorController@index')->name('investors');
@@ -75,6 +81,7 @@ Route::patch('/employee/asignBranch','EmployeeController@asign')->name('asignBrE
 
 //Payments
 Route::get('/payments','PaymentController@index')->name('payments');
+Route::get('/late-payments','PaymentController@index_late')->name('late-payments');
 Route::post('/payment','PaymentController@store')->name('createPayment');
 Route::get('/payment/{id}','PaymentController@show')->name('payment');
 Route::put('/payment','PaymentController@update')->name('updatepPayment');

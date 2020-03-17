@@ -46,7 +46,7 @@ $(document).on("click", "#asignBranch", function (e) {
 
 $(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://vitamventure.com/api/validate/email";
+    url = "https://vitamventure.com/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -60,6 +60,30 @@ $(document).on("blur", "#email", function (e) {
                         i++
                         if (i > 2) {
                             $("#form-group-email .alert ").remove();
+                        }
+                    }, 1000)
+                }
+            }
+        })
+    }
+});
+
+$(document).on("blur", "#doc", function (e) {
+    let doc = document.getElementById("doc").value;
+    url = "https://vitamventure.com/api/validate/document";
+    if (doc.length > 6) {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: { 'document': doc },
+            success: function (res) {
+                if (res != true) {
+                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-document');
+                    var i = 0;
+                    setInterval(function () {
+                        i++
+                        if (i > 2) {
+                            $("#form-group-document .alert ").remove();
                         }
                     }, 1000)
                 }
@@ -94,7 +118,7 @@ $(document).on("click", "#deleteButton", function (e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'http://vitamventure.com/api/validate/employee/branchs'
+        url: 'https://vitamventure.com/api/validate/employee/branchs'
     }).done(function(params) {
         for (let i = 0; i < params.length; i++) {
             const e = params[i];
@@ -110,7 +134,7 @@ $(document).on("click", "#deleteButton", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'http://vitamventure.com/api/branchoffices'
+    url: 'https://vitamventure.com/api/branchoffices'
 }).done(function (params) {
     $('#select-bran').selectize({
         maxItems: null,

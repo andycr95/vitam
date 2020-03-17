@@ -47,7 +47,7 @@ $('#clientUpdate').click(function ($event) {
 
 $(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "http://vitamventure.com/api/validate/client/email";
+    url = "https://vitamventure.com/api/validate/client/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -95,13 +95,18 @@ $(document).on("keyup", "#password", function (e) {
     }
 });
 
-$(document).on("click", "#deleteclient", function (e) {
+$(document).on("click", "#deleteclient", function(e) {
+    var id = $(this).data("id");
+    document.getElementById("iddelete").value = id;
+});
+
+$(document).on("click", "#deleteButton", function (e) {
     e.preventDefault()
-    id = $(this).data("id")
+    id = document.getElementById("iddelete").value
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'http://vitamventure.com/api/validate/client/sales'
+        url: 'https://vitamventure.com/api/validate/client/sales'
     }).done(function(params) {
         var id_sale
         var id_vehicle
@@ -111,8 +116,7 @@ $(document).on("click", "#deleteclient", function (e) {
             id_vehicle = e.vehicle
         }
 
-
-        if (params) {
+        if (params.length >= 1) {
             $.confirm({
                 title: 'Eliminando cliente',
                 content: 'Este cliente tiene ventas en curso, desea cancelarlas?',
@@ -123,74 +127,9 @@ $(document).on("click", "#deleteclient", function (e) {
                         text: 'Si',
                         btnClass: 'btn-green',
                         action: function(){
-                            $.confirm({
-                                title: 'Eliminando cliente',
-                                content: `
-                                <form action="{{ route('deleteclient') }}" id="deleteform"  enctype="multipart/form-data"  method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <label for="phone">Este vehiculo cambiará de estado, desea cambiar su precio y dias de pago?</label>
-                                    <div class="form-group">
-                                        <label for="phone"><strong>Precio</strong></label>
-                                        <input class="form-control" id="fee" type="text" name="new_fee" placeholder=""/>
-                                    </div>
-                                    <input type="hidden" name="sale" value="${id_sale}"/>
-                                    <input type="hidden" name="vehicle" value="${id_vehicle}"/>
-                                    <input class="form-control" type="hidden" value="${id}" name="id" id="iddelete" required/>
-                                    </div><div class="form-group">
-                                        <label for="phone"><strong>Dias</strong></label>
-                                        <input class="form-control" type="text" name="new_days" placeholder=""/>
-                                    </div>
-                                </form>`,
-                                type: 'red',
-                                typeAnimated: true,
-                                buttons: {
-                                    formSubmit: {
-                                        text: 'Enviar',
-                                        btnClass: 'btn-blue',
-                                        action: function () {
-                                            var name = this.$content.find('.name').val();
-                                            if(!name){
-                                                $.alert('provide a valid name');
-                                                return false;
-                                            }
-                                            $.alert('Your name is ' + name);
-                                        }
-                                    },
-                                    cancel: function () {
-                                        //close
-                                    },
-                                    Si: {
-                                        text: 'Enviar',
-                                        btnClass: 'btn-green',
-                                        action: function(){
-                                            var fee = this.$content.find('#fee').val();
-                                            var sale = this.$content.find('#sale').val();
-                                            var fee = this.$content.find('#fee').val();
-                                            var fee = this.$content.find('#fee').val();
-                                            console.log(name);
-
-                                        }
-                                    },
-                                    No: {
-                                        text: 'No',
-                                        btnClass: 'btn-red',
-                                        action: function(){
-                                            $('#deleteform').submit()
-                                        }
-                                    }
-                                },
-                                onContentReady: function () {
-                                    // bind to events
-                                    var jc = this;
-                                    this.$content.find('form').on('submit', function (e) {
-                                        // if the user submits the form by pressing enter in the field.
-                                        e.preventDefault();
-                                        jc.$$formSubmit.trigger('click'); // reference the button and click it
-                                    });
-                                }
-                            });
-
+                            $(`<input type="hidden" name="sale" value="${id_sale}"/>
+                            <input type="hidden" name="vehicle" value="${id_vehicle}"/>`).appendTo('#deleteform');
+                            $("#deleteform ").submit();
                         }
                     },
                     No: {

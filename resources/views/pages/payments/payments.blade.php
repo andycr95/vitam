@@ -5,7 +5,16 @@
         {{ Breadcrumbs::render('payments') }}
         <div class="card shadow">
             <div class="card-header py-3">
-                <p class="text-primary m-0 font-weight-bold">Recaudos</p>
+                <div class="row">
+                    <div class="col-md-8 text-nowrap">
+                        <p class="text-primary m-0 font-weight-bold">Recaudos</p>
+                    </div>
+                    <div class="col-md-4" style="text-align: end;">
+                        <a class="btn btn-danger btn-sm d-none d-sm-inline-block" role="button" href="{{route('late-payments')}}">
+                            <i class="fa fa-clock-o text-white-50"></i>&nbsp;Recuados retrasados
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">

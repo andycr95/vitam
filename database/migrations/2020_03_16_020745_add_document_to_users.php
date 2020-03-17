@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTitToInvestors extends Migration
+class AddDocumentToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddTitToInvestors extends Migration
      */
     public function up()
     {
-        Schema::table('investors', function (Blueprint $table) {
-            $table->unsignedBigInteger('titular_id')->nullable();
-
-            $table->foreign('titular_id')->references('id')->on('investors');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('documento', 15)->nullable();
         });
     }
 
@@ -27,7 +25,7 @@ class AddTitToInvestors extends Migration
      */
     public function down()
     {
-        Schema::table('investors', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

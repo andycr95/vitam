@@ -89,7 +89,7 @@ class InvestorController extends Controller
             ->join('investors as superior', 'superior.id', '=', 'investors.titular_id')
             ->join('users as titu', 'titu.id', '=', 'superior.user_id')
             ->join('users as invest', 'invest.id', '=', 'investors.user_id')->with(['vehicles'])
-            ->select('invest.photo as i_photo','invest.id as i_id', 'investors.id','investors.type','invest.address as i_address', 'invest.email as i_email','invest.name as i_name', 'invest.last_name as i_lastN','titu.name as t_name', 'titu.last_name as t_lastN')->get();
+            ->select('invest.photo as i_photo','invest.documento','invest.id as i_id', 'investors.id','investors.type','invest.address as i_address', 'invest.email as i_email','invest.name as i_name', 'invest.last_name as i_lastN','titu.name as t_name', 'titu.last_name as t_lastN')->get();
         }
 
         return view('pages.investors.profile', compact('investor', 'in'));
@@ -118,6 +118,7 @@ class InvestorController extends Controller
         $user = User::find($request->id);
         $user->name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->documento = $request->documento;
         if ($request->password != null) {
             $user->password = Hash::make($request->password);
         }

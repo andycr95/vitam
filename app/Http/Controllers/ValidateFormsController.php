@@ -29,6 +29,20 @@ class ValidateFormsController extends Controller
         }
     }
 
+    public function ValidateDocument(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'documento' => 'unique:users'
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json("Ya existe un usuario con este documento.", 200);
+        } else {
+            return response()->json(true, 200);
+        }
+    }
+
     public function ValidateEmployeeBranchs(Request $request)
     {
         $branchs = employee::where('id', $request->id)->with('branch')->get();
@@ -100,46 +114,35 @@ class ValidateFormsController extends Controller
     public function ValidatePayment(Request $request)
     {
         $last_pay = payment::where('payments.vehicle_id',$request->id)->join('sales', 'sales.vehicle_id', 'payments.vehicle_id')
-        ->select('payments.amount', 'payments.type','sales.fee')
+        ->join('vehicles', 'vehicles.id', 'payments.vehicle_id')
+        ->select('payments.amount', 'payments.type','sales.fee', 'vehicles.placa')
         ->latest('payments.created_at')->first();
         return response()->json($last_pay, 200);
     }
 
-    public function getNotifications()
+    public function getLatePays()
     {
         define('SECONDS_PER_DAY', 86400);
-        $notifications = array();
+        $payments = array();
         $days_ago = date('Y-m-d', time() - 3 * SECONDS_PER_DAY);
         $clients = client::where('state','1')->get();
         for ($i=0; $i < $clients->count(); $i++) {
+            DB::statement('SET lc_time_names = "es_CO"');
             $pago = payment::where('sales.state','1')->where('payments.type','pago')->where('clients.id',$clients[$i]->id)->where('payments.created_at', '<',$days_ago)
             ->join('sales', 'sales.id','payments.sale_id')->join('vehicles', 'vehicles.id','payments.vehicle_id')
-            ->join('clients', 'clients.id','sales.client_id')->orderBy('payments.created_at', 'desc')->select('payments.created_at', 'payments.id as payment','vehicles.id as vehicle', 'clients.id as client')->limit(1)->get();
+            ->join('clients', 'clients.id','sales.client_id')->orderBy('payments.created_at', 'desc')
+            ->select('payments.created_at', 'payments.id as payment','vehicles.id as vehicle', 'clients.id as client')->limit(1)->get();
             if (!empty($pago)) {
                 foreach ($pago as $pago) {
                     $p = payment::find($pago['payment']);
-                    $user = User::find(1);
-                    if (count($user->notifications) > 0) {
-                        foreach ($user->notifications as $notification) {
-                            if ($this->inArrayField($p->sale_id, 'sale_id', $notification->data['payment']) === 'false') {
-                                $user->notify(new PaymentsLates($p));
-                                array_push($notifications, $notification);
-                            } else {
-                            }
-                        }
-                    } else {
-                    $p = payment::find($pago['payment']);
-                    $user = User::find(1);
-                    $user->notify(new PaymentsLates($p));
-                    foreach ($user->notifications as $notification) {
-                        array_push($notifications, $notification);
-                    }
+                    $client = client::find($pago['client']);
+                    $p->client = $client;
+                    array_push($payments, $p);
                 }
             }
         }
+        return response()->json($payments, 200);
     }
-    return response()->json($notifications, 200);
-}
 
 
 public function inArrayField($needle, $needle_field, $haystack, $strict = true) {
@@ -156,3 +159,4 @@ public function inArrayField($needle, $needle_field, $haystack, $strict = true) 
     return 'false';
 }
 }
+ 

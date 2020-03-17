@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://vitamventure.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -68,7 +68,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Bogota',
 
     /*
     |--------------------------------------------------------------------------
@@ -165,6 +165,7 @@ return [
         Laraveles\Spanish\SpanishServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Akaunting\Money\Provider::class,
         /*
          * Package Service Providers...
          */

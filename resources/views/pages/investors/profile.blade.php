@@ -4,7 +4,7 @@
     @foreach ($investor as $investor)
         @if ($investor->type != 2)
             <div class="container-fluid">
-                {{ Breadcrumbs::render('investor', $investor) }}
+                {{ Breadcrumbs::render('investor', $in) }}
                 <div class="row mb-3">
                     <div class="col-lg-4">
                         <div class="card mb-3">
@@ -60,6 +60,11 @@
                                                         <input disabled class="form-control" type="text" value="{{$investor->i_lastN}}" name="last_name">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address"><strong>Cedula</strong></label>
+                                                <input class="form-control" type="text" disabled name="documento" value="{{$investor->documento}}"/>
+                                                <div id="form-group-document"></div>
                                             </div>
                                             <div class="form-row">
                                                 <div class="col">
@@ -205,6 +210,11 @@
                                                         <input disabled class="form-control" type="text" value="{{$investor->user->last_name}}" name="last_name">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address"><strong>Cedula</strong></label>
+                                                <input class="form-control" type="text" disabled name="documento" value="{{$investor->user->documento}}"/>
+                                                <div id="form-group-document"></div>
                                             </div>
                                             <div class="form-row">
                                                 <div class="col">

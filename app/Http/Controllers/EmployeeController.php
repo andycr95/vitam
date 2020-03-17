@@ -57,8 +57,12 @@ class EmployeeController extends Controller
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
         $user->last_name = $request->last_name;
-        $photo = $request->file('photo')->store('public/avatars');
-        $user->photo = str_replace('public/', '', $photo);
+        if ($request->file('photo')) {
+            $photo = $request->file('photo')->store('public/avatars');
+            $user->photo = str_replace('public/', '', $photo);
+        } else {
+            $user->photo = "avatars/user.png";
+        }
         $user->save();
         $user->assignRole('Empleado');
         $employee = new employee();

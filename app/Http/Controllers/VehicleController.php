@@ -132,6 +132,7 @@ class VehicleController extends Controller
         $vehicle->color = $request->color;
         $vehicle->chasis = $request->chasis;
         $vehicle->motor = $request->motor;
+        $vehicle->amount = $request->amount;
         $vehicle->fee = $request->fee;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo actualizado');

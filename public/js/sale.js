@@ -9,9 +9,14 @@ for (let i = 0; i < document.getElementsByClassName('precio').length; i++) {
     e.innerHTML = formatterPeso.format(e.innerHTML)
 }
 
+$(document).on("click", "#deleteSale", function (e) {
+    var id = $(this).data("id");
+    document.getElementById("iddelete").value = id;
+});
+
 $.ajax({
     method: 'GET',
-    url: 'http://Vitamventure.com/api/clients'
+    url: 'https://Vitamventure.com/api/clients'
 }).done(function (params) {
     clients = []
     for (let i = 0; i < params.length; i++) {
@@ -32,7 +37,7 @@ $.ajax({
 
 $.ajax({
     method: 'GET',
-    url: 'http://Vitamventure.com/api/vehicles'
+    url: 'https://Vitamventure.com/api/vehicles'
 }).done(function (params) {
     vehicles = []
     for (let i = 0; i < params.length; i++) {

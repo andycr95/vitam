@@ -13,25 +13,25 @@
                     </div>
                     <div class="card-body">
                         <div class="progress progress-sm mb-3">
-                            @if (($vehicle->payments->count()/$vehicle->type->counter)*100 <= 20)
-                                <div class="progress-bar bg-danger" aria-valuenow="{{($vehicle->payments->count()/$vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}</span>
+                            @if (($vehicle->payments->count()/$vehicle->amount)*100 <= 20)
+                                <div class="progress-bar bg-danger" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->type->counter)*100 > 20 && ($vehicle->payments->count()/$vehicle->type->counter)*100 < 50)
-                                <div class="progress-bar bg-warning" aria-valuenow="{{($vehicle->payments->count()/$vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}</span>
+                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 > 20 && ($vehicle->payments->count()/$vehicle->amount)*100 < 50)
+                                <div class="progress-bar bg-warning" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->type->counter)*100 > 50 && ($vehicle->payments->count()/$vehicle->type->counter)*100 < 70)
-                                <div class="progress-bar bg-primary" aria-valuenow="{{($vehicle->payments->count()/$vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}</span>
+                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 > 50 && ($vehicle->payments->count()/$vehicle->amount)*100 < 70)
+                                <div class="progress-bar bg-primary" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->type->counter)*100 > 70 && ($vehicle->payments->count()/$vehicle->type->counter)*100 < 100)
-                                <div class="progress-bar bg-info" aria-valuenow="{{($vehicle->payments->count()/$vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}</span>
+                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 > 70 && ($vehicle->payments->count()/$vehicle->amount)*100 < 100)
+                                <div class="progress-bar bg-info" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->type->counter)*100 == 100)
-                                <div class="progress-bar bg-success" aria-valuenow="{{($vehicle->payments->count()/$vehicle->type->counter)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->type->counter)*100 }}</span>
+                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 == 100)
+                                <div class="progress-bar bg-success" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
                             @endif
                         </div>
@@ -139,6 +139,12 @@
                                             <input disabled class="form-control" id="fee" type="text" value="{{$vehicle->fee}}" name="fee" required>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="amount"><strong>Dias</strong></label>
+                                            <input disabled class="form-control" id="amount" type="number" value="{{$vehicle->amount}}" name="amount" required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
@@ -151,6 +157,18 @@
                                         <div class="form-group">
                                             <label for="chasis"><strong>Chasis</strong></label>
                                         <input class="form-control" type="text" value="{{$vehicle->chasis}}" id="chasis" disabled name="chasis" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="investor"><strong>Propietario</strong></label>
+                                            <select class="form-control" type="text" id="investor" disabled name="investor" required>
+                                                <option>{{$vehicle->investor->user->name}} {{$vehicle->investor->user->last_name}}</option>
+                                                <option></option>
+                                                <option></option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

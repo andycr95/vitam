@@ -105,6 +105,11 @@
                                 <input class="form-control" placeholder="Ingrese Apellido Inversionista" autocomplete="nope" type="text" name="lname"  required/>
                             </div>
                             <div class="form-group">
+                                <label for="address"><strong>Cedula</strong></label>
+                                <input class="form-control"  type="text" id="doc" name="document" placeholder="1.111.1111" required/>
+                                <div id="form-group-document"></div>
+                            </div>
+                            <div class="form-group">
                                 <label for="email"><strong>Correo</strong></label>
                                 <input class="form-control" type="email" name="email" id="email" autocomplete="nope" placeholder="ejemplo@vitamventure.com" required/>
                                 <div id="form-group-email"></div>
@@ -151,7 +156,7 @@
         <!-- MODAL DELETE -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('deleteinvestor') }}" id="deleteinvestor"  enctype="multipart/form-data"  method="POST">
+                <form action="{{ route('deleteinvestor') }}" id="deleteinvestorForm"  enctype="multipart/form-data"  method="POST">
                     @csrf
                     @method('PATCH')
                     <div class="modal-content">

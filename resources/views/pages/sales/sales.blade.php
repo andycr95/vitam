@@ -62,6 +62,11 @@
                                     <td><span class="badge badge-success">Terminada</span></td>
                                 @endif
                                 <td class="precio">{{$sale->fee}}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-id="{{$sale->id}}" id="deleteSale" data-toggle="modal" data-target="#deleteModal">
+                                        <i style="color: white;" class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
 
                             @endforeach
@@ -130,6 +135,33 @@
             </div>
         </div>
     </div>
+            <!-- MODAL Delete -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form action="{{ route('deleteSale') }}"  enctype="multipart/form-data"  method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-content">
+                            <div class="modal-header  primary">
+                                <h5 class="modal-title" id="deleteModalLabel">Terminar venta</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <h3>¿Seguro de terminar esta venta?<h3>
+                                    <input class="form-control" type="hidden" name="id" id="iddelete" required/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Eliminar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 @endsection
 @push('scripts')
     <script src="/js/sale.js"></script>

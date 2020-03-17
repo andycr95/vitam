@@ -52,7 +52,7 @@
                                     <td>{{$client->sales->count()}}</td>
                                 @endif
                                 <td>
-                                    <a class="btn btn-sm btn-danger" data-id="{{$client->id}}" id="deleteclient">
+                                    <a class="btn btn-sm btn-danger" data-id="{{$client->id}}" id="deleteclient" data-toggle="modal" data-target="#deleteModal">
                                         <i style="color: white;" class="fas fa-trash"></i>
                                     </a>
                                 </td>
