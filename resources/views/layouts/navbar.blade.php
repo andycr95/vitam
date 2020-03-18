@@ -5,14 +5,7 @@
             </button>
             <ul class="nav navbar-nav flex-nowrap ml-auto">
                 @hasanyrole('Empleado|Administrador|Inversionista')
-                <li class="nav-item dropdown no-arrow mx-1" role="presentation">
-                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" id="drop" data-toggle="dropdown" aria-expanded="false" href="#">
-                        <span class="badge badge-danger badge-counter" id="badge"></span><i class="fas fa-bell fa-fw"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
-                            role="menu" id="notifications">
-                            <h6 class="dropdown-header">alerts center</h6>
-                    </div>
-                </li>
+                <notifications-component></notifications-component>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow" role="presentation">
                     <div class="nav-item dropdown no-arrow">
