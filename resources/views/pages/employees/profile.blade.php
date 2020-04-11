@@ -53,7 +53,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="password"><strong>Contraseña</strong></label>
-                                        <input class="form-control" type="password" id="pass" disabled name="password">
+                                        <input class="form-control" type="password" id="pass"  value="" disabled name="password">
                                         </div>
                                     </div>
                                     <div class="col">

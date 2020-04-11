@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDocumentToUsers extends Migration
+class AddBranchofficeIdToClients extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddDocumentToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('documento', 15)->nullable();
+        Schema::table('clients', function (Blueprint $table) {
+            $table->unsignedBigInteger('branchoffice_id')->nullable()->default('1');
+            $table->foreign('branchoffice_id')->references('id')->on('branchoffices');
         });
     }
 
@@ -25,7 +26,7 @@ class AddDocumentToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             //
         });
     }

@@ -88,7 +88,7 @@
                         </a>
                     @endif
                     @endhasanyrole
-                    @hasanyrole('Administrador')
+                    @hasanyrole('Administrador|Empleado')
                     @if (strpos(url()->current(), "reports"))
                     <a class="nav-link active" href="{{ route('reports') }}">
                         <i class="far fa-chart-bar"></i><span>Reportes</span>

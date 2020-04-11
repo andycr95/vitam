@@ -7,11 +7,17 @@ use App\employee;
 use App\vehicle;
 use App\sale;
 use App\city;
+use App\client;
 
 class branchoffice extends Model
 {
     protected $table = 'branchoffices';
     protected $fillable = ['state','id', 'name', 'address', 'city_id', 'employee_id'];
+
+    public function clients()
+    {
+        return $this->hasMany(client::class);
+    }
 
     public function employees()
     {

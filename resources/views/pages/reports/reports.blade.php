@@ -24,19 +24,29 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label>Tipo de reporte - Interesado</label>
-                                        <select class="form-control" name="type_report_c_i" id="type_report_c_i">
-                                            <option value="#">Seleccione una opcion</option>
-                                            <option value="1">Clientes</option>
-                                            <option value="2">Inversionista</option>
-                                        </select>
+                                        @hasanyrole('Empleado')
+                                            <label>Tipo de reporte - Interesado</label>
+                                            <select class="form-control" name="type_report_c_i" id="type_report_c_i">
+                                                <option value="#">Seleccione una opcion</option>
+                                                <option value="1">Clientes</option>
+                                            </select>
+                                        @endhasanyrole
+                                        @hasanyrole('Administrador')
+                                            <label>Tipo de reporte - Interesado</label>
+                                            <select class="form-control" name="type_report_c_i" id="type_report_c_i">
+                                                <option value="#">Seleccione una opcion</option>
+                                                <option value="1">Clientes</option>
+                                                <option value="2">Inversionista</option>
+                                            </select>
+                                        @endhasanyrole
                                     </div>
                                     <div class="form-group" id="form_type_report_c_i">
                                         <label id="name_type_report">Tipo de reporte - Tiempo</label>
                                         <select class="form-control" name="type_report_t" id="type_report_t">
                                             <option value="#">Seleccione una opcion</option>
-                                            <option value="1">Semanal</option>
-                                            <option value="2">Mensual</option>
+                                            <option value="1">Diario</option>
+                                            <option value="2">Semanal</option>
+                                            <option value="3">Mensual</option>
                                         </select>
                                     </div>
                                     <div class="form-group" id="form-control-i-t">

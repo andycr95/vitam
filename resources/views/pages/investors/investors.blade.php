@@ -96,53 +96,59 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="name"><strong>Nombre</strong></label>
-                                <input class="form-control" placeholder="Ingrese Nombre Inversionista" autocomplete="nope" type="text" name="name"  required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="name"><strong>Apellido</strong></label>
-                                <input class="form-control" placeholder="Ingrese Apellido Inversionista" autocomplete="nope" type="text" name="lname"  required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="address"><strong>Cedula</strong></label>
-                                <input class="form-control"  type="text" id="doc" name="document" placeholder="1.111.1111" required/>
-                                <div id="form-group-document"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email"><strong>Correo</strong></label>
-                                <input class="form-control" type="email" name="email" id="email" autocomplete="nope" placeholder="ejemplo@vitamventure.com" required/>
-                                <div id="form-group-email"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="address"><strong>Direccion</strong></label>
-                                <input class="form-control" type="text" name="address" autocomplete="nope" placeholder="Cr 64 #2-54" required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone"><strong>Tipo</strong></label>
-                                  <select class="form-control" name="type" id="type">
-                                    <option value="#">Selecione una opción</option>
-                                    <option value="2">Titular</option>
-                                    <option value="1">Participante</option>
-                                    <option value="0">Invercionista</option>
-                                  </select>
-                            </div>
-                            <div id="form-group-tit"></div>
-                            <div class="form-group">
-                                <label for="phone"><strong>Telefono</strong></label>
-                                <input class="form-control" type="number" name="phone" placeholder="312569888" required/>
-                            </div>
-                            <div class="form-group">
-                                        <label for="photo"><strong>Foto de perfil</strong></label>
-                                        <div class="custom-file">
-                                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                                            <input type="file" name="photo" class="custom-file-input" id="customFileLang" lang="es">
-                                        </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="name"><strong>Nombre</strong></label>
+                                        <input class="form-control" placeholder="Ingrese Nombre" autocomplete="nope" type="text" name="name" required/>
                                     </div>
-                            <div class="form-group">
-                                <label for="address"><strong>Contraseña</strong></label>
-                                <input class="form-control"  type="password" id="password" name="password" placeholder="******" required/>
-                                <div id="form-group-password"></div>
+                                    <div class="form-group">
+                                        <label for="name"><strong>Apellido</strong></label>
+                                        <input class="form-control" placeholder="Ingrese Apellido" autocomplete="nope" type="text" name="lname" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address"><strong>Cedula</strong></label>
+                                        <input class="form-control"  type="text" id="doc" name="document" placeholder="1.111.1111" required/>
+                                        <div id="form-group-document"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email"><strong>Correo</strong></label>
+                                        <input class="form-control" type="email" name="email" id="email" autocomplete="nope" placeholder="ejemplo@vitamventure.com" required/>
+                                        <div id="form-group-email"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address"><strong>Direccion</strong></label>
+                                        <input class="form-control" type="text" name="address" autocomplete="nope" placeholder="Cr 64 #2-54" required/>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="phone"><strong>Tipo</strong></label>
+                                        <select class="form-control" name="type" id="type">
+                                            <option value="#">Selecione una opción</option>
+                                            <option value="2">Titular</option>
+                                            <option value="1">Participante</option>
+                                            <option value="0">Invercionista</option>
+                                        </select>
+                                    </div>
+                                    <div id="form-group-tit"></div>
+                                    <div class="form-group">
+                                        <label for="phone"><strong>Telefono</strong></label>
+                                        <input class="form-control" type="number" name="phone" placeholder="312569888" required/>
+                                    </div>
+                                    <div class="form-group">
+                                                <label for="photo"><strong>Foto de perfil</strong></label>
+                                                <div class="custom-file">
+                                                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                                    <input type="file" name="photo" class="custom-file-input" id="customFileLang" lang="es">
+                                                </div>
+                                            </div>
+                                    <div class="form-group">
+                                        <label for="password"><strong>Contraseña</strong></label>
+                                        <input class="form-control"  type="password" id="password" name="password" placeholder="******" required/>
+                                        <div id="form-group-password"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

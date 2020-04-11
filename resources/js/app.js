@@ -19,6 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('notifications-component', require('./components/NotificationsComponent.vue').default);
 
 /**
@@ -30,22 +31,3 @@ Vue.component('notifications-component', require('./components/NotificationsComp
 const app = new Vue({
     el: '#wrapper',
 });
-
-window.toastr = require('toastr');
-window.toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": true,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }

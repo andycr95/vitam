@@ -16,7 +16,7 @@
 <body>
     <header class="text-center" style="margin-bottom: 40px;"><img src="https://vitamventure.com/img/logv.png" style="width: 430px;margin: 0px;margin-top: -30px;">
         <h1 style="font-size: 35px;">Reporte de clientes</h1>
-        <p>Tipo (Semanal), Fecha ({{$date}})</p>
+        <p>Tipo (Diario), Fecha ({{$date}})</p>
     </header>
     <section>
         <div class="container">
@@ -25,7 +25,7 @@
                     <tr>
                         <th>VALOR DE CIERRE</th>
                         <th>NOMBRES Y APELLIDOS</th>
-                        <th>FECHAS</th>
+                        <th>ULTIMO PAGO</th>
                     </tr>
                 </thead>
                 <tbody>

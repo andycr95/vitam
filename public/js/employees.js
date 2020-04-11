@@ -32,7 +32,7 @@ $('#employeeUpdate').click(function ($event) {
             class: 'btn btn-danger btn-sm'
         }).append('<span>Cancelar</span>');
     }
-})
+}) 
 
 $(document).on("click", "#deleteemployee", function (e) {
     var id = $(this).data("id");
@@ -42,6 +42,30 @@ $(document).on("click", "#deleteemployee", function (e) {
 $(document).on("click", "#asignBranch", function (e) {
     var id = $(this).data("id");
     document.getElementById("idasign").value = id;
+});
+
+$(document).on("blur", "#doc", function (e) {
+    let doc = document.getElementById("doc").value;
+    url = "https://vitamventure.com/api/validate/document";
+    if (doc.length > 6) {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: { 'documento': doc },
+            success: function (res) {
+                if (res != true) {
+                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-document');
+                    var i = 0;
+                    setInterval(function () {
+                        i++
+                        if (i > 2) {
+                            $("#form-group-document .alert ").remove();
+                        }
+                    }, 1000)
+                }
+            }
+        })
+    }
 });
 
 $(document).on("blur", "#email", function (e) {
@@ -61,31 +85,7 @@ $(document).on("blur", "#email", function (e) {
                         if (i > 2) {
                             $("#form-group-email .alert ").remove();
                         }
-                    }, 1000)
-                }
-            }
-        })
-    }
-});
-
-$(document).on("blur", "#doc", function (e) {
-    let doc = document.getElementById("doc").value;
-    url = "https://vitamventure.com/api/validate/document";
-    if (doc.length > 6) {
-        $.ajax({
-            method: "POST",
-            url: url,
-            data: { 'document': doc },
-            success: function (res) {
-                if (res != true) {
-                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-document');
-                    var i = 0;
-                    setInterval(function () {
-                        i++
-                        if (i > 2) {
-                            $("#form-group-document .alert ").remove();
-                        }
-                    }, 1000)
+                    }, 4000)
                 }
             }
         })

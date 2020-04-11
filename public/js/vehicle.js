@@ -14,6 +14,7 @@ $('#vehicleUpdate').click(function ($event) {
         document.getElementsByName("color")[0].disabled = true;
         document.getElementsByName("motor")[0].disabled = true;
         document.getElementsByName("fee")[0].disabled = true;
+        document.getElementsByName("branchoffice")[0].disabled = true;
         document.getElementsByName("amount")[0].disabled = true;
         document.getElementsByName("investor")[0].disabled = true;
         document.getElementsByName("chasis")[0].disabled = true;
@@ -27,6 +28,7 @@ $('#vehicleUpdate').click(function ($event) {
         document.getElementsByName("model")[0].disabled = false;
         document.getElementsByName("color")[0].disabled = false;
         document.getElementsByName("investor")[0].disabled = false;
+        document.getElementsByName("branchoffice")[0].disabled = false;
         document.getElementsByName("motor")[0].disabled = false;
         document.getElementsByName("amount")[0].disabled = false;
         document.getElementsByName("fee")[0].disabled = false;

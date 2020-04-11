@@ -13,6 +13,21 @@ $(document).on("change", "#photo2", function(e) {
     document.getElementById("form2").submit();
 });
 
+$.ajax({
+    method: 'GET',
+    url: 'https://vitamventure.com/api/branchoffices'
+}).done(function (params) {
+    $('#select-branch').selectize({
+        maxItems: null,
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        options: params,
+        create: false,
+        maxItems: 1
+    });
+})
+
 $('#clientUpdate').click(function ($event) {
     $event.preventDefault();
 
@@ -20,6 +35,7 @@ $('#clientUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = true;
         document.getElementsByName("last_name")[0].disabled = true;
         document.getElementsByName("documento")[0].disabled = true;
+        document.getElementsByName("branchoffice")[0].disabled = true;
         document.getElementsByName("address")[0].disabled = true;
         document.getElementsByName("celphone")[0].disabled = true;
         document.getElementsByName("phone")[0].disabled = true;
@@ -33,6 +49,7 @@ $('#clientUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = false;
         document.getElementsByName("last_name")[0].disabled = false;
         document.getElementsByName("documento")[0].disabled = false;
+        document.getElementsByName("branchoffice")[0].disabled = false;
         document.getElementsByName("address")[0].disabled = false;
         document.getElementsByName("phone")[0].disabled = false;
         document.getElementsByName("celphone")[0].disabled = false;

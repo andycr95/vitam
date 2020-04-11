@@ -23,6 +23,11 @@ class client extends Model
         return $this->hasOne(recomended::class);
     }
 
+    public function branchoffice()
+    {
+        return $this->belongsTo(branchoffice::class);
+    }
+
     public function payments()
     {
         return $this->hasMany(payment::class);

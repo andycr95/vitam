@@ -107,12 +107,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Cedula</strong></label>
-                                        <input class="form-control"  type="text" id="doc" name="document" placeholder="1.111.1111" required/>
+                                        <input class="form-control"  type="text" id="doc" name="documento" placeholder="1.111.1111" required/>
                                         <div id="form-group-document"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="email"><strong>Correo</strong></label>
-                                        <input class="form-control"  type="email" id="email" name="email" autocomplete="nope"  placeholder="ejemplo@vitamventure.com" required/>
+                                        <input class="form-control"  type="email" id="email" name="email" autocomplete="off"  placeholder="ejemplo@vitamventure.com" required/>
                                         <div id="form-group-email"></div>
                                     </div>
                                     <div class="form-group">

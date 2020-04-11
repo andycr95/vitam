@@ -101,7 +101,8 @@ class SaleController extends Controller
     {
         $sale = sale::where("id", $id->id)->with(['vehicle', 'client', 'branchoffice'])->get();
         $payment = payment::where('sale_id',$id->id)->latest()->first();
-        return view('pages.sales.profile', compact('sale', 'payment'));
+        $payments = payment::where('sale_id',$id->id)->get();
+        return view('pages.sales.profile', compact('sale', 'payment', 'payments'));
     }
 
     /**
@@ -135,14 +136,15 @@ class SaleController extends Controller
      */
     public function destroy(request $request)
     {
-        $sales = sale::where('id',$request->id)->with('payments')->get();
-        if ($sales[0]->payments == null) {
-            sale::destroy($request->id);
+        $sale = sale::find($request->id);
+        $pays = payment::where('sale_id', $sale->id)->get();
+        if ($pays->count() == 0) {
+            $sale->delete();
         } else {
-            $sales[0]->state = '0';
-            $sales->save();
+            $sale->state = '0';
+            $sale->save();
         }
-        $vehicle = vehicle::find($sales[0]->vehicle_id);
+        $vehicle = vehicle::find($sale->vehicle_id);
         $vehicle->state = '1';
         $vehicle->save();
 

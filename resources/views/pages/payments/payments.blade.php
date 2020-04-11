@@ -46,6 +46,9 @@
                                 <th>Tipo</th>
                                 <th>Faltantes</th>
                                 <th></th>
+                                @hasrole('Administrador')
+                                    <th>Acciones</th>
+                                @endhasrole
                             </tr>
                         </thead>
                         <tbody>
@@ -57,6 +60,13 @@
                                 <td>{{$payment->type}}</td>
                                 <td>{{$payment->counter}}</td>
                                 <td>{{($payment->created_at)->diffForhumans()}}</td>
+                                @hasrole('Administrador')
+                                    <td>
+                                        <a class="btn btn-sm btn-danger" data-id="{{$payment->id}}" data-placa="{{$payment->sale->vehicle->placa}}" id="deletepayment">
+                                            <i style="color: white;" class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                @endhasrole
                             </tr>
                             @endforeach
                         </tbody>
@@ -112,6 +122,10 @@
             </form>
         </div>
     </div>
+    <form action="{{ route('deletePayment') }}" id="deletepaymentForm" enctype="multipart/form-data"  method="POST">
+        @csrf
+          <input type="hidden" name="id" id="iddelete">
+    </form>
 @endsection
 @push('scripts')
     <script src="/js/payment.js"></script>

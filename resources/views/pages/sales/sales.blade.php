@@ -140,7 +140,7 @@
                 <div class="modal-dialog" role="document">
                     <form action="{{ route('deleteSale') }}"  enctype="multipart/form-data"  method="POST">
                         @csrf
-                        @method('PATCH')
+                        @method('PUT')
                         <div class="modal-content">
                             <div class="modal-header  primary">
                                 <h5 class="modal-title" id="deleteModalLabel">Terminar venta</h5>

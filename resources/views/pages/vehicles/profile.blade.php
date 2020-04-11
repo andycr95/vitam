@@ -165,9 +165,21 @@
                                         <div class="form-group">
                                             <label for="investor"><strong>Propietario</strong></label>
                                             <select class="form-control" type="text" id="investor" disabled name="investor" required>
-                                                <option>{{$vehicle->investor->user->name}} {{$vehicle->investor->user->last_name}}</option>
-                                                <option></option>
-                                                <option></option>
+                                                <option value="{{$vehicle->investor->id}}">{{$vehicle->investor->user->name}} {{$vehicle->investor->user->last_name}}</option>
+                                                @foreach ($investors as $iv)
+                                                    <option value="{{$iv->id}}">{{$iv->user->name}} {{$iv->user->last_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="branchoffice"><strong>Sucursal</strong></label>
+                                            <select class="form-control" type="text" id="branchoffice" disabled name="branchoffice" required>
+                                                <option value="{{$vehicle->branchoffice->id}}">{{$vehicle->branchoffice->name}}</option>
+                                                @foreach ($branchoffices as $bc)
+                                                    <option value="{{$bc->id}}">{{$bc->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

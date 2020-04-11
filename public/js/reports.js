@@ -44,8 +44,9 @@ $(document).on("change", "#type_report_c_i", function (e) {
         $(`<label id="name_type_report">Tipo de reporte - Tiempo</label>
         <select class="form-control" name="type_report_t" id="type_report_t">
             <option value="#">Seleccione una opcion</option>
-            <option value="1">Semanal</option>
-            <option value="2">Mensual</option>
+            <option value="1">Diario</option>
+            <option value="2">Semanal</option>
+            <option value="3">Mensual</option>
         </select>`).appendTo('#form_type_report_c_i');
     }
 });
@@ -54,7 +55,7 @@ $(document).on("change", "#type_report_t", function (e) {
     type = e.target.value;
     $('#form-control-t').remove();
     $(`<div class="form-group" id="form-control-t"></div>`).appendTo('#form-control-i-t');
-    if (type == 1) {
+    if (type == 2) {
         $(`
         <div class="form-row">
         <div class="col">
@@ -87,12 +88,12 @@ $(document).on("change", "#type_report_t", function (e) {
             $.datepicker.setDefaults($.datepicker.regional['es']);
         $("#datepicker").datepicker();
         $("#datepicker2").datepicker();
-    } else {
+    } else if(type == 3) {
         $(`
         <div class="form-row">
             <div class="col">
                 <label id="name" for="amount"><strong>Mes</strong></label>
-                <input id="datepicker" autocomplete="off" name="month" class="form-control" placeholder="Seleccione una fecha..." />
+                <input id="datepicker" autocomplete="off" name="month" class="form-control" placeholder="Seleccione un mes..." />
             </div>
         </div>`
         ).appendTo('#form-control-t');
@@ -105,6 +106,31 @@ $(document).on("change", "#type_report_t", function (e) {
             'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             weekHeader: 'Sm',
             dateFormat: 'mm',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+            };
+            $.datepicker.setDefaults($.datepicker.regional['es']);
+        $("#datepicker").datepicker();
+    } else {
+        $(`
+        <div class="form-row">
+            <div class="col">
+                <label id="name" for="amount"><strong>Dia</strong></label>
+                <input id="datepicker" autocomplete="off" name="day" class="form-control" placeholder="Seleccione un dia..." />
+            </div>
+        </div>`
+        ).appendTo('#form-control-t');
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            weekHeader: 'Sm',
+            dateFormat: 'yy-mm-dd',
             firstDay: 1,
             isRTL: false,
             showMonthAfterYear: false,

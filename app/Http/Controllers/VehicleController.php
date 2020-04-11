@@ -8,6 +8,7 @@ use App\type;
 use App\sale;
 use App\branchoffice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -18,12 +19,23 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->buscar != '') {
-            $buscar = $request->buscar;
-            $vehicles = vehicle::where('status', '1')->where('placa', 'like', '%'.$buscar.'%')->paginate(10);
+        if (Auth::user()->employee == null) {
+            if ($request->buscar != '') {
+                $buscar = $request->buscar;
+                $vehicles = vehicle::where('status', '1')->where('placa', 'like', '%'.$buscar.'%')->paginate(10);
+            } else {
+                $vehicles = vehicle::where('status', '1')->OrderBy('created_at', 'DESC')->paginate(10);
+            }
         } else {
-            $vehicles = vehicle::where('status', '1')->OrderBy('created_at', 'DESC')->paginate(10);
+            $auth = Auth::user()->employee->branchoffice_id;
+            if ($request->buscar != '') {
+                $buscar = $request->buscar;
+                $vehicles = vehicle::where('status', '1')->where('branchoffice_id',$auth)->where('placa', 'like', '%'.$buscar.'%')->paginate(10);
+            } else {
+                $vehicles = vehicle::where('status', '1')->where('branchoffice_id',$auth)->OrderBy('created_at', 'DESC')->paginate(10);
+            }
         }
+        
         $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->get();
         $types = type::all();
         $listVehicles = sale::where('state', '1')->with("vehicle")->get();
@@ -93,7 +105,9 @@ class VehicleController extends Controller
         $photos = vehicle::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
         $photo = $this->nullableIf($photos);
         $vehicle = vehicle::where('id',$id->id)->with(['investor', 'type', 'payments', 'branchoffice'])->get();
-        return  view('pages.vehicles.profile', compact('vehicle', 'photos', 'photo'));
+        $investors = investor::where('state','1')->where('id','!=',$vehicle[0]->investor_id)->get();
+        $branchoffices = branchoffice::where('status','1')->where('id','!=',$vehicle[0]->branchoffice_id)->get();
+        return  view('pages.vehicles.profile', compact('vehicle', 'photos', 'photo', 'investors', 'branchoffices'));
     }
 
     public function nullableIf($photos)
@@ -133,6 +147,8 @@ class VehicleController extends Controller
         $vehicle->chasis = $request->chasis;
         $vehicle->motor = $request->motor;
         $vehicle->amount = $request->amount;
+        $vehicle->branchoffice_id = $request->branchoffice;
+        $vehicle->investor_id = $request->investor;
         $vehicle->fee = $request->fee;
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo actualizado');

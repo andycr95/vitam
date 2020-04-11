@@ -15,14 +15,12 @@ import axios from "axios";
 import moment from "moment";
     export default {
         mounted() {
-            axios.get('https://vitamventure.com/api/notifications').then((res) => {
+            axios.get('/api/notifications',{headers: {'Accept':'application/json'}}).then((res) => {
                 if (res.data.length > 0) {
                         document.getElementById('badge').innerHTML = res.data.length
                         for (let i = 0; i < res.data.length; i++) {
                             const e = res.data[i];
-                            console.log(e);
-
-                            $(`<a class="d-flex align-items-center dropdown-item" href="#">
+                            $(`<a class="d-flex align-items-center dropdown-item" href="https://vitamventure.com/late-payments">
                             <div class="mr-3">
                                 <div class="bg-danger icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
                             </div>

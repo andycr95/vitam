@@ -57,7 +57,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="fee"><strong>Coutas faltantes</strong></label>
-                                            <input class="form-control" type="text" disabled value="{{$sale->amount - $sale->vehicle->payments->count()}}" name="fee">
+                                            <input class="form-control" type="text" disabled value="{{$sale->amount - $payments->count()}}" name="fee">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -74,11 +74,11 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    @if ($sale->vehicle->payments->count() > 0)
+                                    @if ($payments->count() > 0)
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="fee"><strong>Ultimo pago</strong></label>
-                                            <input class="form-control" type="text" disabled value="{{($payment->created_at)->diffForhumans()}}" name="fee">
+                                                <input class="form-control" type="text" disabled value="{{($payment->created_at)->diffForhumans()}}" name="fee">
                                             </div>
                                         </div>
                                     @endif

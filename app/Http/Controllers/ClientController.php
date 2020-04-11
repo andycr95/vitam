@@ -8,6 +8,7 @@ use App\branchoffice;
 use App\sale;
 use App\typeSale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
 
 class ClientController extends Controller
 {
@@ -18,13 +19,26 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->buscar != '') {
-            $buscar = $request->buscar;
-            $clients = client::where('name', 'like', '%'.$buscar.'%')->where('state', '1')->with('sales.vehicle')->paginate(10);
+        if (Auth::user()->employee == null) {
+            if ($request->buscar != '') {
+                $buscar = $request->buscar;
+                $clients = client::where('name', 'like', '%'.$buscar.'%')->where('state', '1')->with('sales.vehicle')->paginate(10);
+            } else {
+                $clients = client::where('state', '1')->with('sales.vehicle')->paginate(10);
+            }
+            $branchoffices = branchoffice::all();
+            return view('pages.clients.clients', compact('clients'));
         } else {
-            $clients = client::where('state', '1')->with('sales.vehicle')->paginate(10);
+            $auth = Auth::user()->employee->branchoffice_id;
+            if ($request->buscar != '') {
+                $buscar = $request->buscar;
+                $clients = client::where('name', 'like', '%'.$buscar.'%')->where('branchoffice_id',$auth)->where('state', '1')->with('sales.vehicle')->paginate(10);
+            } else {
+                $clients = client::where('state', '1')->where('branchoffice_id',$auth)->with('sales.vehicle')->paginate(10);
+            }
+            $branchoffices = branchoffice::all();
+            return view('pages.clients.clients', compact('clients','branchoffices'));
         }
-        return view('pages.clients.clients', compact('clients'));
     }
 
     /**
@@ -60,6 +74,7 @@ class ClientController extends Controller
         $client->address = $request->address;
         $client->phone = $request->phone;
         $client->celphone = $request->celphone;
+        $client->branchoffice_id = $request->branchoffice;
         if ($request->file('photo')) {
             $photo = $request->file('photo')->store('public/avatars');
             $client->photo = str_replace('public/' , '' , $photo);
@@ -124,6 +139,7 @@ class ClientController extends Controller
         $client->celphone = $request->celphone;
         $client->email = $request->email;
         $client->address = $request->address;
+        $client->branchoffice_id = $request->branchoffice;
         $client->save();
         return redirect()->back()->with('success','Cliente actualizado');
     }

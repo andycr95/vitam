@@ -212,9 +212,10 @@ class PaymentController extends Controller
      * @param  \App\payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(payment $payment)
-    {
-        //
+    public function destroy(Request $request)
+    {  
+        payment::where('id', $request->id)->delete();
+        return redirect()->back()->with('info', 'Pago eliminado');
     }
 }
 

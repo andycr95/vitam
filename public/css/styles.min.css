@@ -8,4 +8,16 @@
   }
 
 
-  .dropdown:hover .dropdown-menu {display: block;}
+.dropdown:hover .dropdown-menu {
+    display: block;}
+
+#notifications {
+  height: 500px;
+  overflow-y: scroll; 
+}
+
+
+.scroll_s {
+  height: 350px;
+  overflow-y: scroll;
+}

@@ -45,7 +45,7 @@ Route::get('/sales','SaleController@index')->name('sales');
 Route::get('/sale/{id}','SaleController@show')->name('sale');
 Route::put('/sale','SaleController@update')->name('updatesale');
 Route::post('/sale','SaleController@store')->name('salevehicleclient');
-Route::patch('/sale/delete','SaleController@destroy')->name('deleteSale');
+Route::put('/sale/delete','SaleController@destroy')->name('deleteSale');
 
 //Investors
 Route::get('/investors','InvestorController@index')->name('investors');
@@ -85,7 +85,7 @@ Route::get('/late-payments','PaymentController@index_late')->name('late-payments
 Route::post('/payment','PaymentController@store')->name('createPayment');
 Route::get('/payment/{id}','PaymentController@show')->name('payment');
 Route::put('/payment','PaymentController@update')->name('updatepPayment');
-Route::patch('/payment/delete','PaymentController@destroy')->name('deletePayment');
+Route::post('/payment/delete','PaymentController@destroy')->name('deletePayment');
 
 //Reports
 Route::get('/reports','ReportController@index')->name('reports');

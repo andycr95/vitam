@@ -131,12 +131,13 @@ class ValidateFormsController extends Controller
             $pago = payment::where('sales.state','1')->where('payments.type','pago')->where('clients.id',$clients[$i]->id)->where('payments.created_at', '<',$days_ago)
             ->join('sales', 'sales.id','payments.sale_id')->join('vehicles', 'vehicles.id','payments.vehicle_id')
             ->join('clients', 'clients.id','sales.client_id')->orderBy('payments.created_at', 'desc')
-            ->select('payments.created_at', 'payments.id as payment','vehicles.id as vehicle', 'clients.id as client')->limit(1)->get();
+            ->select('payments.created_at', 'vehicles.placa as placa', 'payments.id as payment','vehicles.id as vehicle', 'clients.id as client')->limit(1)->get();
             if (!empty($pago)) {
                 foreach ($pago as $pago) {
                     $p = payment::find($pago['payment']);
                     $client = client::find($pago['client']);
                     $p->client = $client;
+                    $p->placa = $pago['placa'];
                     array_push($payments, $p);
                 }
             }

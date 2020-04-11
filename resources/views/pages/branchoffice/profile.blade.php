@@ -12,7 +12,7 @@
                 <div class="card-header py-3">
                     <h6 class="text-primary font-weight-bold m-0">Vehiculos</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body scroll_s">
                     @foreach ($branchoffice->vehicles as $vehicle)
                         <h4 class="small font-weight-bold">{{$vehicle->placa}}
                         @if ($vehicle->state == 0)
@@ -31,7 +31,7 @@
                         <h6 class="text-primary font-weight-bold m-0">Empleados</h6>
                     </div>
                     <div class="card-body">
-                        <table class="table dataTable my-0" id="dataTable">
+                        <table class="table dataTable my-0 scroll_s" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>

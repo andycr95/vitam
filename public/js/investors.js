@@ -29,7 +29,7 @@ $('#investorUpdate').click(function ($event) {
         }).append('<span>Cancelar</span>');
     }
 })
-
+ 
 $(document).on("click", "#deleteinvestor", function(e) {
     var id = $(this).data("id");
     document.getElementById("iddelete").value = id;
@@ -42,10 +42,11 @@ $(document).on("blur", "#doc", function (e) {
         $.ajax({
             method: "POST",
             url: url,
-            data: { 'document': doc },
+            data: { 'documento': doc },
             success: function (res) {
                 if (res != true) {
-                    $(`<div class="alert alert-danger">${res}</div>`).appendTo('#form-group-document');
+                    $(`<div class="alert alert-danger">${res}</div> <input id="vali" value="true" type="hidden"/>`).appendTo('#form-group-document');
+                    $('#investorSave').attr({disabled: true});
                     var i = 0;
                     setInterval(function () {
                         i++
@@ -53,6 +54,10 @@ $(document).on("blur", "#doc", function (e) {
                             $("#form-group-document .alert ").remove();
                         }
                     }, 1000)
+                } else {
+                    $(`<input id="vali" value="false" type="hidden"/>`).appendTo('#form-group-document');
+                    document.getElementById('vali').value = false
+                    $('#investorSave').attr({disabled: false});
                 }
             }
         })
@@ -64,7 +69,19 @@ $(document).on("click", "#investorSave", function(e) {
     if (vali == true) {
         toastr.error('Verifica la información digitada.', 'Registro de invesionista')
     } else {
-        $('#createinvestorFrom').submit()
+        if (document.getElementsByName("name")[0].value == '') {
+            toastr.error('El campo nombre es requerido.', 'Registro de invesionista')
+        } else if(document.getElementsByName("lname")[0].value == '') {
+            toastr.error('El campo apellido es requerido.', 'Registro de invesionista')
+        } else if(document.getElementsByName("doc")[0].value == '') {
+            toastr.error('El campo documento es requerido.', 'Registro de invesionista')
+        } else if(document.getElementsByName("email")[0].value == '') {
+            toastr.error('El campo correo es requerido.', 'Registro de invesionista')
+        } else if(document.getElementsByName("password")[0].value == '') {
+            toastr.error('El campo contraseña es requerido.', 'Registro de invesionista')
+        } else {
+            $('#createinvestorFrom').submit()
+        }
     }
 });
 

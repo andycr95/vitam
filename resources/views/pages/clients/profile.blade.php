@@ -148,6 +148,15 @@
                                     <label for="address"><strong>Dirección</strong></label>
                                     <input class="form-control" type="text" disabled value="{{$client->address}}" name="address" required>
                                 </div>
+                                <div class="form-group">
+                                    <label for="branchoffice"><strong>Sucursal</strong></label>
+                                    <select class="form-control" type="text" id="branchoffice" disabled name="branchoffice" required>
+                                        <option value="{{$client->branchoffice_id}}">{{$client->branchoffice->name}}</option>
+                                        @foreach ($branchoffices as $bc)
+                                            <option value="{{$bc->id}}">{{$bc->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div id="modal-buttons" class="form-group">
                                     <button disabled id="clientSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
                                     <button class="btn btn-info btn-sm" id="clientUpdate" type="button"><span>Actualizar</span></button>

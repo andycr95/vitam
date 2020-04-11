@@ -19,9 +19,9 @@
                         </div>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="text-primary font-weight-bold m-0">Vehiculos</h6>
+                                <h6 class="text-primary font-weight-bold m-0">Vehiculos     --     {{$investor->vehicles->count()}}</h6>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body scroll_s">
                                 @foreach ($investor->vehicles as $vehicle)
                                 <h3 class="small font-weight-bold">{{$vehicle->placa}}
                                 @if ($vehicle->state == 0)
@@ -169,9 +169,9 @@
                         </div>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="text-primary font-weight-bold m-0">Vehiculos vendidos</h6>
+                                <h6 class="text-primary font-weight-bold m-0">Vehiculos     --     {{$investor->vehicles->count()}}</h6>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body scroll_s">
                                 @foreach ($investor->vehicles as $vehicle)
                                 <h3 class="small font-weight-bold">{{$vehicle->placa}}
                                 @if ($vehicle->state == 0)

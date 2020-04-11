@@ -168,6 +168,36 @@ $(document).on("click", "#saveButton", function(e) {
     }
 });
 
+$(document).on("click", "#deletepayment", function(e) {
+    var id = $(this).data("id");
+    var placa = $(this).data("placa");
+    document.getElementById('iddelete').value = id;
+    $.confirm({
+        title: `Eliminando pago de ${placa}`,
+        content: 'Está seguro de eliminar este pago',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+            Si: {
+                text: 'Si',
+                btnClass: 'btn-green',
+                action: function(){
+                    $('#deletepaymentForm').submit()
+                }
+            },
+            No: {
+                text: 'No',
+                btnClass: 'btn-red',
+                action: function(){
+                    toastr.info('Cancelado')
+                }
+            },
+            close: function () {
+            }
+        }
+    });
+});
+
 
 const formatterPeso = new Intl.NumberFormat('es-CO', {
     style: 'currency',
