@@ -9,7 +9,7 @@ $(document).on("change", "#type", function (e) {
         if (document.getElementById('pays')) {
             $(".modal-body #amount #_pay").remove();
             $(".modal-body #amount #pays").remove();            
-        }
+        } 
         $.ajax({
             method: 'GET',
             data: {'id':id},
@@ -65,7 +65,7 @@ $.ajax({
 $(document).on("change", "#select-tools", function(e) {
     document.getElementsByName("type")[0].disabled = false;
 });
-
+ 
 $(document).on("click", "#saveButton", function(e) {
     id = document.getElementById('select-tools').value
     if (document.getElementById('type').value == '#') {

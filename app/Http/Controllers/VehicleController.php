@@ -7,6 +7,7 @@ use App\investor;
 use App\type;
 use App\sale;
 use App\branchoffice;
+use App\payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -105,9 +106,18 @@ class VehicleController extends Controller
         $photos = vehicle::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
         $photo = $this->nullableIf($photos);
         $vehicle = vehicle::where('id',$id->id)->with(['investor', 'type', 'payments', 'branchoffice'])->get();
+        $sale = sale::where("vehicle_id", $id->id)->where('state', '1')->with(['vehicle', 'client', 'branchoffice', 'payments'])->get();
         $investors = investor::where('state','1')->where('id','!=',$vehicle[0]->investor_id)->get();
         $branchoffices = branchoffice::where('status','1')->where('id','!=',$vehicle[0]->branchoffice_id)->get();
-        return  view('pages.vehicles.profile', compact('vehicle', 'photos', 'photo', 'investors', 'branchoffices'));
+        $payments = [];
+        $allPayments = [];
+        if (count($sale) > 0) {
+            $okp = payment::where('sale_id',$sale[0]->id)->where('type', 'pago')->orderBy('created_at','DESC')->get();
+            $okallp = payment::where('sale_id',$sale[0]->id)->orderBy('created_at','DESC')->get();
+            $payments = $okp;
+            $allPayments = $okallp;
+        }
+        return  view('pages.vehicles.profile', compact('vehicle', 'photos', 'photo', 'investors', 'branchoffices', 'payments', 'allPayments'));
     }
 
     public function nullableIf($photos)
@@ -184,7 +194,11 @@ class VehicleController extends Controller
     public function destroy(Request $request)
     {
         $vehicle = vehicle::find($request->id);
-        $vehicle->status = 0;
+        if ($vehicle->sales == null) {
+            $vehicle->delete();
+            return redirect()->back()->with('success','Vehiculo eliminado');
+        }
+        $vehicle->status = "0";
         $vehicle->save();
         return redirect()->back()->with('success','Vehiculo eliminado');
     }

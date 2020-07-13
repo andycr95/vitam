@@ -99,10 +99,11 @@ class SaleController extends Controller
      */
     public function show(sale $id)
     {
-        $sale = sale::where("id", $id->id)->with(['vehicle', 'client', 'branchoffice'])->get();
+        $sale = sale::where("id", $id->id)->with(['vehicle', 'client', 'branchoffice', 'payments'])->get();
         $payment = payment::where('sale_id',$id->id)->latest()->first();
-        $payments = payment::where('sale_id',$id->id)->get();
-        return view('pages.sales.profile', compact('sale', 'payment', 'payments'));
+        $payments = payment::where('sale_id',$id->id)->where('type', 'pago')->orderBy('created_at','DESC')->get();
+        $allPayments = payment::where('sale_id',$id->id)->orderBy('created_at','DESC')->get();
+        return view('pages.sales.profile', compact('sale', 'payment', 'payments', 'allPayments'));
     }
 
     /**

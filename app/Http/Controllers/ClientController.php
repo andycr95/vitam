@@ -91,7 +91,7 @@ class ClientController extends Controller
      */
     public function show(client $id)
     {
-        $client = client::where('id', $id->id)->with(['sales.vehicle'])->get();
+        $client = client::where('id', $id->id)->with(['sales.vehicle.payments'])->get();
         $photos = client::where('id', $id->id)->select('photo1', 'photo2', 'photo3')->get();
         $photo = $this->nullableIf($photos);
         $branchoffices = branchoffice::where('status', '1')->get();

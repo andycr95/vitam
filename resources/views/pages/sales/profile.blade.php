@@ -5,7 +5,43 @@
     @foreach ($sale as $sale)
     {{ Breadcrumbs::render('sale', $sale) }}
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-5">
+            @if (count($allPayments) > 0)
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="text-primary font-weight-bold m-0"><span class="float-right">{{$payments->count()}} pagos</span></h6>
+                    </div>
+                    <div class="card-body">
+                        <div style="max-height: 350px; overflow-y: auto;">
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Monto</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($allPayments as $pay)
+                                    <tr>
+                                        <td>
+                                            @if ($pay->type == 'pago')
+                                                <h4 style="font-size: 14px;"><span class="badge badge-success">Pago</span></h4></td>
+                                            @else
+                                                <h4 style="font-size: 14px;"><span class="badge badge-info">Abono</span></h4></td>
+                                            @endif
+                                        <td><span class="h3" style="font-size: 14px;">${{$pay->amount}}</span><br /><strong></strong></td>
+                                        <td><p class="text-muted" style="font-size: 12px;">&nbsp;{{($pay->created_at)->diffForhumans()}}</p></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+        <div class="col-lg-7">
             <div class="row">
                 <div class="col">
                     <div class="card shadow mb-12">
@@ -29,7 +65,7 @@
                                             <input disabled class="form-control" type="text" value="{{$sale->client->name}} {{$sale->client->last_name}}" name="first_name">
                                             <input type="hidden" value="{{$sale->id}}" name="id">
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="branchoffice_id"><strong>Sucursal</strong></label>
@@ -74,7 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    @if ($payments->count() > 0)
+                                    @if ($allPayments->count() > 0)
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="fee"><strong>Ultimo pago</strong></label>

@@ -181,7 +181,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="button" id="deleteButton" class="btn btn-success">Guardar</button>
+                                <button type="button" id="deleteButton" class="btn btn-success">Eliminar</button>
                             </div>
                         </div>
                     </form>

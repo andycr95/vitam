@@ -6,32 +6,32 @@
     {{ Breadcrumbs::render('vehicle', $vehicle) }}
     <div class="row mb-3">
         <div class="col-lg-5">
-            @if (count($vehicle->payments) > 0)
+            @if (count($payments) > 0)
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="text-primary font-weight-bold m-0">{{$vehicle->placa}}<span class="float-right">{{$vehicle->payments->count()}} pagos</span></h6>
+                        <h6 class="text-primary font-weight-bold m-0">{{$vehicle->placa}}<span class="float-right">{{$payments->count()}} pagos</span></h6>
                     </div>
                     <div class="card-body">
                         <div class="progress progress-sm mb-3">
-                            @if (($vehicle->payments->count()/$vehicle->amount)*100 <= 20)
-                                <div class="progress-bar bg-danger" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
+                            @if (($payments->count()/$vehicle->amount)*100 <= 20)
+                                <div class="progress-bar bg-danger" aria-valuenow="{{($payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 > 20 && ($vehicle->payments->count()/$vehicle->amount)*100 < 50)
-                                <div class="progress-bar bg-warning" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
+                            @elseif(($payments->count()/$vehicle->amount)*100 > 20 && ($payments->count()/$vehicle->amount)*100 < 50)
+                                <div class="progress-bar bg-warning" aria-valuenow="{{($payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 > 50 && ($vehicle->payments->count()/$vehicle->amount)*100 < 70)
-                                <div class="progress-bar bg-primary" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
+                            @elseif(($payments->count()/$vehicle->amount)*100 > 50 && ($payments->count()/$vehicle->amount)*100 < 70)
+                                <div class="progress-bar bg-primary" aria-valuenow="{{($payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 > 70 && ($vehicle->payments->count()/$vehicle->amount)*100 < 100)
-                                <div class="progress-bar bg-info" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
+                            @elseif(($payments->count()/$vehicle->amount)*100 > 70 && ($payments->count()/$vehicle->amount)*100 < 100)
+                                <div class="progress-bar bg-info" aria-valuenow="{{($payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
-                            @elseif(($vehicle->payments->count()/$vehicle->amount)*100 == 100)
-                                <div class="progress-bar bg-success" aria-valuenow="{{($vehicle->payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($vehicle->payments->count())/$vehicle->amount)*100 }}%;">
-                                    <span class="sr-only">{{ (($vehicle->payments->count())/$vehicle->amount)*100 }}</span>
+                            @elseif(($payments->count()/$vehicle->amount)*100 == 100)
+                                <div class="progress-bar bg-success" aria-valuenow="{{($payments->count()/$vehicle->amount)*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (($payments->count())/$vehicle->amount)*100 }}%;">
+                                    <span class="sr-only">{{ (($payments->count())/$vehicle->amount)*100 }}</span>
                                 </div>
                             @endif
                         </div>
@@ -45,9 +45,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vehicle->payments as $pay)
+                                    @foreach ($allPayments as $pay)
                                     <tr>
-                                        <td><h4 style="font-size: 14px;">{{$pay->sale->client->name}}<span class="badge badge-success">Activo</span></h4></td>
+                                        <td>
+                                            @if ($pay->type == 'pago')
+                                                <h4 style="font-size: 14px;"><span class="badge badge-success">Pago</span></h4></td>
+                                            @else
+                                                <h4 style="font-size: 14px;"><span class="badge badge-info">Abono</span></h4></td>
+                                            @endif
                                         <td><span class="h3" style="font-size: 14px;">${{$pay->amount}}</span><br /><strong></strong></td>
                                         <td><p class="text-muted" style="font-size: 12px;">&nbsp;{{($pay->created_at)->diffForhumans()}}</p></td>
                                     </tr>

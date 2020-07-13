@@ -11,6 +11,7 @@ use App\investor;
 use App\client;
 use App\payment;
 use App\User;
+use App\sale;
 use App\Notifications\PaymentsLates;
 
 class ValidateFormsController extends Controller
@@ -110,10 +111,11 @@ class ValidateFormsController extends Controller
         $client = client::where('clients.id', $request->id)->where('sales.state','1')->join('sales', 'sales.client_id', '=', 'clients.id')->select('sales.id as sale', 'sales.vehicle_id as vehicle')->get();
         return response()->json($client, 200);
     }
-
+ 
     public function ValidatePayment(Request $request)
     {
-        $last_pay = payment::where('payments.vehicle_id',$request->id)->join('sales', 'sales.vehicle_id', 'payments.vehicle_id')
+        $sale = sale::where('vehicle_id',$request->id)->where('state', '1')->orderBy('id', 'desc')->limit(1)->get();
+        $last_pay = payment::where('payments.sale_id',$sale[0]->id)->join('sales', 'sales.id', 'payments.sale_id')
         ->join('vehicles', 'vehicles.id', 'payments.vehicle_id')
         ->select('payments.amount', 'payments.type','sales.fee', 'vehicles.placa')
         ->latest('payments.created_at')->first();
@@ -146,18 +148,18 @@ class ValidateFormsController extends Controller
     }
 
 
-public function inArrayField($needle, $needle_field, $haystack, $strict = true) {
-    if ($strict) {
-        foreach ($haystack as $item)
-            if (isset($item->$needle_field) && $item->$needle_field === $needle)
-                return 'true';
+    public function inArrayField($needle, $needle_field, $haystack, $strict = true) {
+        if ($strict) {
+            foreach ($haystack as $item)
+                if (isset($item->$needle_field) && $item->$needle_field === $needle)
+                    return 'true';
+        }
+        else {
+            foreach ($haystack as $item)
+                if (isset($item->$needle_field) && $item->$needle_field == $needle)
+                    return 'true';
+        }
+        return 'false';
     }
-    else {
-        foreach ($haystack as $item)
-            if (isset($item->$needle_field) && $item->$needle_field == $needle)
-                return 'true';
-    }
-    return 'false';
-}
 }
  

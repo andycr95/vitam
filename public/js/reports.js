@@ -19,6 +19,8 @@ $(document).on("change", "#type_report_c_i", function (e) {
             dateFormat: 'mm',
             firstDay: 1,
             isRTL: false,
+            maxDate: "0",
+            minDate: new Date(2020, 2, 10),
             showMonthAfterYear: false,
             yearSuffix: ''
             };
@@ -81,6 +83,8 @@ $(document).on("change", "#type_report_t", function (e) {
             weekHeader: 'Sm',
             dateFormat: 'yy-mm-dd',
             firstDay: 1,
+            maxDate: "0",
+            minDate: new Date(2020, 2, 10),
             isRTL: false,
             showMonthAfterYear: false,
             yearSuffix: ''
@@ -105,9 +109,11 @@ $(document).on("change", "#type_report_t", function (e) {
             monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
             'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             weekHeader: 'Sm',
-            dateFormat: 'mm',
+            dateFormat: 'mm-yy',
             firstDay: 1,
             isRTL: false,
+            maxDate: "0",
+            minDate: new Date(2020, 2, 10),
             showMonthAfterYear: false,
             yearSuffix: ''
             };
@@ -133,6 +139,8 @@ $(document).on("change", "#type_report_t", function (e) {
             dateFormat: 'yy-mm-dd',
             firstDay: 1,
             isRTL: false,
+            maxDate: "0",
+            minDate: new Date(2020, 2, 10),
             showMonthAfterYear: false,
             yearSuffix: ''
             };

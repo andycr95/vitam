@@ -66,7 +66,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $sale = sale::where('vehicle_id', $request->vehicle_id)->get();
+        $sale = sale::where('vehicle_id', $request->vehicle_id)->orderBy('id','DESC')->limit(1)->get();
         for ($i=0; $i < $sale->count(); $i++) {
             $pays = payment::where('sale_id', $sale[0]->id)->count();
         }

@@ -18,12 +18,12 @@ class InvestorController extends Controller
     {
         if ($request->buscar != '') {
             $buscar = $request->buscar;
-            $investors = investor::where('state', '1')->where('id', '!=', '1')->join('users', function ($join) use ($buscar) {
+            $investors = investor::where('state', '1')->join('users', function ($join) use ($buscar) {
                 $join->on('users.id', '=', 'investors.user_id')
                     ->where('users.name', 'like', '%'.$buscar.'%');
             })->with(['vehicles'])->paginate(10);
         } else {
-            $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->paginate(10);
+            $investors = investor::where('state', '1')->with(['vehicles', 'user'])->paginate(10);
         }
         return view('pages.investors.investors', compact('investors'));
     }

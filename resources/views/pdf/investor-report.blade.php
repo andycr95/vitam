@@ -45,13 +45,19 @@
                             <td class="total">{{$vehicle->active}}</td>
                         </tr>
                         @endforeach
-                        <tr>
-                            <td></td>
-                            <td class="total">{{$t}}</td>
-                            <td class="total">{{$tp}}</td>
-                            <td class="total">{{$ta}}</td>
-                        </tr>
                 </tbody>
+            </table>
+        </div>
+        <div class="container" style="width: 440px;margin-top: 60px;">
+            <table id="example" class="table-bordered" style="border:1px solid #000000 !important;" cellspacing="0" width="100%">
+                <tr>
+                    <th style="background-color:#94CE58; text-align:center;font-size:20px;">Total</th>
+                <td style="text-align:center;" id="total">{{$ta}}</td>
+                </tr>
+                <tr>
+                    <th  style="background-color:#94CE58; text-align:center; font-size:20px;">Vitam venture</th>
+                    <td style="text-align:center;" id="totalv">{{$tp}}</td>
+                </tr>
             </table>
         </div>
     </section>

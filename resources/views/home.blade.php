@@ -15,7 +15,7 @@
                                 <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
                                     <span>Ganacias (Mes)</span></div>
                                     @foreach ($salesMonth as $salesMonth)
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{$salesMonth->total_sales}}</span>                                    
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{$t}}</span>                                    
                                     @endforeach
                                 </div>
                             </div>
