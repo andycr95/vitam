@@ -1,6 +1,7 @@
+var id
 $('#investorUpdate').click(function ($event) {
     $event.preventDefault();
-
+    id = $(this).data("type");
     if (document.getElementsByName("first_name")[0].disabled== false) {
         document.getElementsByName("first_name")[0].disabled = true;
         document.getElementsByName("last_name")[0].disabled = true;
@@ -9,6 +10,16 @@ $('#investorUpdate').click(function ($event) {
         document.getElementsByName("address")[0].disabled = true;
         $('#pass').attr('type', 'password')
         document.getElementsByName("email")[0].disabled = true;
+        $("#type_invest #type_inv").remove();
+        $("#type_invest input").attr({
+            type: "text"
+        });
+        if (id == 1) {
+            $("#invest_tit input").attr({
+                type: "text"
+            });
+        } 
+        $("#invest_tit .selectize-control").remove();
         $("#investorSave").attr({disabled: true});
         $("#investorUpdate span").remove();
         $("#investorUpdate").attr({
@@ -20,6 +31,17 @@ $('#investorUpdate').click(function ($event) {
         document.getElementsByName("password")[0].disabled = false;
         document.getElementsByName("documento")[0].disabled = false;
         document.getElementsByName("address")[0].disabled = false;
+        $("#type_invest input").attr({
+            type: "hidden"
+        });
+        $("#type_invest").append(`
+            <select class="form-control" name="type" id="type_inv">
+                <option value="#">Selecione una opción</option>
+                <option value="0">Invercionista</option>
+                <option value="1">Participante</option>
+                <option value="2">Titular</option>
+            </select>
+        `);
         $("#investorSave").attr({disabled: false});
         $('#pass').attr('type', 'text')
         document.getElementsByName("email")[0].disabled = false;
@@ -131,6 +153,51 @@ $(document).on("change", "#email", function (e) {
                 }
             }
         })
+    }
+});
+
+$(document).on("change", "#type_inv", function (e) {
+    if (e.target.value == 1) {
+        $.ajax({
+            method: 'GET',
+            url: 'https://vitamventure.com/api/titulares'
+        }).done(function (params) {
+            if (id == 2 || id == 0) {
+                $(`
+                    <label for="address"><strong>Titular</strong></label>
+                    <select id="select-tit" name="titular_id" placeholder="Seleccione una opción..."></select>`).appendTo('#invest_tit');
+                $('#select-tit').selectize({
+                    maxItems: null,
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    options: params,
+                    create: false,
+                    maxItems: 1
+                });
+            } else {
+                $("#invest_tit input").attr({
+                    type: "hidden"
+                });
+                $(`
+                    <select id="select-tit" name="titular_id" placeholder="Seleccione una opción..."></select>
+                `).appendTo('#invest_tit');
+                $('#select-tit').selectize({
+                    maxItems: null,
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    options: params,
+                    create: false,
+                    maxItems: 1
+                });
+            }
+        })
+    } else {
+        if (document.getElementById('select-tit')) {
+            $("#invest_tit .selectize-control").remove();
+            $("#invest_tit label").remove();
+        }
     }
 });
 

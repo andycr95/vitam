@@ -198,6 +198,11 @@ $(document).on("click", "#deletepayment", function(e) {
     });
 });
 
+$(document).on("click", "#ticketpayment", function(e) {
+    var id = $(this).data("id");
+    document.getElementById('idticket').value = id;
+     $('#ticketpaymentForm').submit()
+});
 
 const formatterPeso = new Intl.NumberFormat('es-CO', {
     style: 'currency',

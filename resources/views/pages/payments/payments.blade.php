@@ -60,13 +60,16 @@
                                 <td>{{$payment->type}}</td>
                                 <td>{{$payment->counter}}</td>
                                 <td>{{($payment->created_at)->diffForhumans()}}</td>
-                                @hasrole('Administrador')
-                                    <td>
+                                <td>
+                                    @hasrole('Administrador')
                                         <a class="btn btn-sm btn-danger" data-id="{{$payment->id}}" data-placa="{{$payment->sale->vehicle->placa}}" id="deletepayment">
                                             <i style="color: white;" class="fas fa-trash"></i>
                                         </a>
-                                    </td>
-                                @endhasrole
+                                    @endhasrole
+                                    <a class="btn btn-sm btn-success" data-id="{{$payment->id}}" data-placa="{{$payment->sale->vehicle->placa}}" id="ticketpayment">
+                                        <i style="color: white;" class="fas fa-hand-holding-usd"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -125,6 +128,10 @@
     <form action="{{ route('deletePayment') }}" id="deletepaymentForm" enctype="multipart/form-data"  method="POST">
         @csrf
           <input type="hidden" name="id" id="iddelete">
+    </form>
+    <form action="{{ route('ticketPayment') }}" id="ticketpaymentForm" enctype="multipart/form-data"  method="POST">
+        @csrf
+          <input type="hidden" name="id" id="idticket">
     </form>
 @endsection
 @push('scripts')

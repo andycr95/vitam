@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\sale;
 use App\vehicle;
+use App\User;
 
 class payment extends Model
 {
@@ -19,5 +20,10 @@ class payment extends Model
     public function vehicle()
     {
         return $this->belongsTo(vehicle::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

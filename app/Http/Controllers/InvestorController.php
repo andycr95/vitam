@@ -129,6 +129,10 @@ class InvestorController extends Controller
         if ($request->branchoffice_id != '') {
             $investor->branchoffice_id = $request->branch;
         }
+        if ($request->titular_id != null) {
+            $investor->titular_id = $request->titular_id;
+        }
+        $investor->type = $request->type;
         $investor->save();
         return redirect()->back()->with('success','Inversionista actualizado');
     }

@@ -90,9 +90,9 @@
                     @endhasanyrole
                     @hasanyrole('Administrador|Empleado')
                     @if (strpos(url()->current(), "reports"))
-                    <a class="nav-link active" href="{{ route('reports') }}">
-                        <i class="far fa-chart-bar"></i><span>Reportes</span>
-                    </a>
+                        <a class="nav-link active" href="{{ route('reports') }}">
+                            <i class="far fa-chart-bar"></i><span>Reportes</span>
+                        </a>
                     @else
                     <a class="nav-link" href="{{ route('reports') }}">
                         <i class="far fa-chart-bar"></i><span>Reportes</span>

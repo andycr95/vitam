@@ -36,5 +36,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::middleware('api')->get('/validate/payment','ValidateFormsController@ValidatePayment');
     Route::middleware('api')->get('/notifications','ValidateFormsController@getLatePays');
     Route::middleware('api')->post('/clientdelete','ValidateFormsController@clientDelete');
+    Route::middleware('api')->post('/payment/ticketTest','PaymentController@storeTest');
 });
 

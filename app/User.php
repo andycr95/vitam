@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use App\employee;
 use App\investor;
+use App\payment;
 
 class User extends Authenticatable
 {
@@ -48,5 +49,10 @@ class User extends Authenticatable
     public function investor()
     {
         return $this->hasOne(investor::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(payment::class);
     }
 }

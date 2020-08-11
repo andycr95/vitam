@@ -2,7 +2,7 @@
 
 @section('content')
     @foreach ($investor as $investor)
-        @if ($investor->type != 2)
+        @if ($investor->type != 2 && $investor->type != 0)
             <div class="container-fluid">
                 {{ Breadcrumbs::render('investor', $in) }}
                 <div class="row mb-3">
@@ -84,21 +84,20 @@
                                                 <label for="address"><strong>Dirección</strong></label>
                                                 <input class="form-control" type="text" disabled value="{{$investor->i_address}}" name="address">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id="type_invest">
                                                 <label for="address"><strong>Tipo</strong></label>
                                                 @if ($investor->type == 1)
-                                                    <input class="form-control" type="text" disabled value="Participante">
+                                                    <input class="form-control" name="type_investor" type="text" disabled value="Participante">
                                                 @elseif($investor->type == 2)
-                                                    <input class="form-control" type="text" disabled value="Titular">
+                                                    <input class="form-control" name="type_investor" type="text" disabled value="Titular">
                                                 @else
-                                                    <input class="form-control" type="text" disabled value="Inversionista simple">
-
+                                                    <input class="form-control" name="type_investor" type="text" disabled value="Inversionista simple">
                                                 @endif
                                             </div>
-                                            @if ($investor->type != 2)
-                                                <div class="form-group">
+                                            @if ($investor->type != 2 || $investor->type != 0)
+                                                <div class="form-group" id="invest_tit">
                                                     <label for="address"><strong>Titular</strong></label>
-                                                <input class="form-control" type="text" disabled value="{{$investor->t_name}} {{$investor->t_lastN}}">
+                                                    <input class="form-control" type="text" disabled value="{{$investor->t_name}} {{$investor->t_lastN}}">
                                                 </div>
                                             @endif
                                             <div class="form-row">
@@ -234,17 +233,17 @@
                                                 <label for="address"><strong>Dirección</strong></label>
                                                 <input class="form-control" type="text" disabled value="{{$investor->user->address}}" name="address">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id="type_invest">
                                                 <label for="address"><strong>Tipo</strong></label>
                                                 @if ($investor->type == 1)
-                                                    <input class="form-control" type="text" disabled value="Participante">
+                                                    <input class="form-control" name="type_investor" type="text" disabled value="Participante">
                                                 @elseif($investor->type == 2)
-                                                    <input class="form-control" type="text" disabled value="Titular">
+                                                    <input class="form-control" name="type_investor" type="text" disabled value="Titular">
                                                 @else
-                                                    <input class="form-control" type="text" disabled value="Inversionista simple">
-
+                                                    <input class="form-control" name="type_investor" type="text" disabled value="Inversionista simple">
                                                 @endif
                                             </div>
+                                            <div class="form-group" id="invest_tit"></div>
                                             <div class="form-row">
                                                 <div class="col">
 
@@ -255,7 +254,7 @@
                                             </div>
                                             <div id="modal-buttons" class="form-group">
                                                 <button disabled id="investorSave" class="btn btn-primary btn-sm" type="submit">Guardar</button>
-                                                <button class="btn btn-info btn-sm" id="investorUpdate" type="button"><span>Actualizar</span></button>
+                                            <button class="btn btn-info btn-sm" data-type="{{$investor->type}}" id="investorUpdate" type="button"><span>Actualizar</span></button>
                                             </div>
 
                                         </form>
