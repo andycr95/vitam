@@ -22,7 +22,7 @@ const options = { path: "/my-app/" };
 
 Vue.use(new VueSocketIO({
     debug: true,
-    connection: SocketIO("http://192.241.155.75:5005", options),
+    connection: SocketIO("https://solinter.tech", options),
     vuex: {
         store,
         actionPrefix: 'SOCKET_',
