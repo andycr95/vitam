@@ -93,5 +93,7 @@ Route::get('/ticket/test','PaymentController@storeTest')->name('ticketPaymentTes
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/routesreport','ReportController@routesReport')->name('routesReport');
 
+//Maps
+Route::get('/maps','MapsController@index')->name('maps');
 });
 

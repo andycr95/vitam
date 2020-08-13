@@ -98,6 +98,15 @@
                         <i class="far fa-chart-bar"></i><span>Reportes</span>
                     </a>
                     @endif
+                    @if (strpos(url()->current(), "maps"))
+                        <a class="nav-link active" href="{{ route('maps') }}">
+                            <i class="far fa-chart-bar"></i><span>Mapas</span>
+                        </a>
+                    @else
+                    <a class="nav-link" href="{{ route('maps') }}">
+                        <i class="far fa-chart-bar"></i><span>Mapas</span>
+                    </a>
+                    @endif
                     @endhasanyrole
                 </li>
             </ul>

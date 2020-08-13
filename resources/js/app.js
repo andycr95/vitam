@@ -1,33 +1,38 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+require("./bootstrap");
+import * as VueGoogleMaps from "vue2-google-maps";
+import GmapCluster from "vue2-google-maps/dist/components/cluster";
+import VueSocketIO from "vue-socket.io";
+import SocketIO from 'socket.io-client'
+import store from "./store"
+window.Vue = require("vue");
 
-require('./bootstrap');
+Vue.component("example-component", require("./components/ExampleComponent.vue").default);
+Vue.component("notifications-component", require("./components/NotificationsComponent.vue").default);
+Vue.component("maps-component", require("./components/MapsComponent.vue").default);
+Vue.component("map-view-component", require("./components/MapView.vue").default);
 
-window.Vue = require('vue');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "AIzaSyC40Clev1ycrQdtwqme8y6U_WC472aSmJI",
+    }
+});
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const options = { path: "/my-app/" };
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('notifications-component', require('./components/NotificationsComponent.vue').default);
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: SocketIO("http://192.241.155.75:5005", options),
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_'
+    }
+}))
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.component("GmapCluster", GmapCluster)
 
 const app = new Vue({
-    el: '#wrapper',
+    store,
+    el: "#wrapper",
 });
