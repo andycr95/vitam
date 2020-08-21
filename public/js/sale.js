@@ -16,7 +16,7 @@ $(document).on("click", "#deleteSale", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://Vitamventure.com/api/clients'
+    url: '/api/clients'
 }).done(function (params) {
     clients = []
     for (let i = 0; i < params.length; i++) {
@@ -37,7 +37,7 @@ $.ajax({
 
 $.ajax({
     method: 'GET',
-    url: 'https://Vitamventure.com/api/vehicles'
+    url: '/api/vehicles'
 }).done(function (params) {
     vehicles = []
     for (let i = 0; i < params.length; i++) {

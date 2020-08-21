@@ -32,7 +32,7 @@ $('#employeeUpdate').click(function ($event) {
             class: 'btn btn-danger btn-sm'
         }).append('<span>Cancelar</span>');
     }
-}) 
+})
 
 $(document).on("click", "#deleteemployee", function (e) {
     var id = $(this).data("id");
@@ -46,7 +46,7 @@ $(document).on("click", "#asignBranch", function (e) {
 
 $(document).on("blur", "#doc", function (e) {
     let doc = document.getElementById("doc").value;
-    url = "https://vitamventure.com/api/validate/document";
+    url = "/api/validate/document";
     if (doc.length > 6) {
         $.ajax({
             method: "POST",
@@ -70,7 +70,7 @@ $(document).on("blur", "#doc", function (e) {
 
 $(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "https://vitamventure.com/api/validate/email";
+    url = "/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -118,7 +118,7 @@ $(document).on("click", "#deleteButton", function (e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'https://vitamventure.com/api/validate/employee/branchs'
+        url: '/api/validate/employee/branchs'
     }).done(function(params) {
         for (let i = 0; i < params.length; i++) {
             const e = params[i];
@@ -134,7 +134,7 @@ $(document).on("click", "#deleteButton", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://vitamventure.com/api/branchoffices'
+    url: '/api/branchoffices'
 }).done(function (params) {
     $('#select-bran').selectize({
         maxItems: null,

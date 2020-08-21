@@ -36,7 +36,7 @@ class VehicleController extends Controller
                 $vehicles = vehicle::where('status', '1')->where('branchoffice_id',$auth)->OrderBy('created_at', 'DESC')->paginate(10);
             }
         }
-        
+
         $investors = investor::where('state', '1')->where('id', '!=', '1')->with(['vehicles', 'user'])->get();
         $types = type::all();
         $listVehicles = sale::where('state', '1')->with("vehicle")->get();
@@ -54,6 +54,12 @@ class VehicleController extends Controller
         $vehicles = [];
         $vehicles = vehicle::where('vehicles.state', '1')->where('vehicles.status', '1')->join('branchoffices', 'branchoffices.id', '=', 'vehicles.branchoffice_id')->OrderBy('vehicles.created_at', 'DESC')->select('branchoffices.name', 'vehicles.id', 'vehicles.placa')->get();
         return response()->json($vehicles, 200);
+    }
+
+    public function getVehicle($placa)
+    {
+        $vehicle = vehicle::where('vehicles.placa',$placa)->with(["sales.client","branchoffice"])->get();
+        return response()->json($vehicle, 200);
     }
 
     public function getsalesVehicles()

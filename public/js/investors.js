@@ -18,7 +18,7 @@ $('#investorUpdate').click(function ($event) {
             $("#invest_tit input").attr({
                 type: "text"
             });
-        } 
+        }
         $("#invest_tit .selectize-control").remove();
         $("#investorSave").attr({disabled: true});
         $("#investorUpdate span").remove();
@@ -51,7 +51,7 @@ $('#investorUpdate').click(function ($event) {
         }).append('<span>Cancelar</span>');
     }
 })
- 
+
 $(document).on("click", "#deleteinvestor", function(e) {
     var id = $(this).data("id");
     document.getElementById("iddelete").value = id;
@@ -59,7 +59,7 @@ $(document).on("click", "#deleteinvestor", function(e) {
 
 $(document).on("blur", "#doc", function (e) {
     let doc = document.getElementById("doc").value;
-    url = "https://vitamventure.com/api/validate/document";
+    url = "/api/validate/document";
     if (doc.length > 6) {
         $.ajax({
             method: "POST",
@@ -113,7 +113,7 @@ $(document).on("click", '#investorDelete', function(e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'https://vitamventure.com/api/validate/investor/vehicles'
+        url: '/api/validate/investor/vehicles'
     }).done(function(params) {
         for (let i = 0; i < params.length; i++) {
             const e = params[i];
@@ -128,7 +128,7 @@ $(document).on("click", '#investorDelete', function(e) {
 
 $(document).on("change", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "https://vitamventure.com/api/validate/email";
+    url = "/api/validate/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -160,7 +160,7 @@ $(document).on("change", "#type_inv", function (e) {
     if (e.target.value == 1) {
         $.ajax({
             method: 'GET',
-            url: 'https://vitamventure.com/api/titulares'
+            url: '/api/titulares'
         }).done(function (params) {
             if (id == 2 || id == 0) {
                 $(`
@@ -205,7 +205,7 @@ $(document).on("change", "#type", function (e) {
     if (e.target.value == 1) {
         $.ajax({
             method: 'GET',
-            url: 'https://vitamventure.com/api/titulares'
+            url: '/api/titulares'
         }).done(function (params) {
             $(`
         <div class="form-group">
