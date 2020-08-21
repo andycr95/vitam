@@ -1,8 +1,6 @@
 require("./bootstrap");
 import * as VueGoogleMaps from "vue2-google-maps";
 import GmapCluster from "vue2-google-maps/dist/components/cluster";
-import VueSocketIO from "vue-socket.io";
-import SocketIO from 'socket.io-client'
 import store from "./store"
 window.Vue = require("vue");
 
@@ -17,18 +15,6 @@ Vue.use(VueGoogleMaps, {
         key: "AIzaSyC40Clev1ycrQdtwqme8y6U_WC472aSmJI",
     }
 });
-
-const options = { path: "/my-app/" };
-
-Vue.use(new VueSocketIO({
-    debug: true,
-    connection: SocketIO("https://solinter.tech", options),
-    vuex: {
-        store,
-        actionPrefix: 'SOCKET_',
-        mutationPrefix: 'SOCKET_'
-    }
-}))
 
 Vue.component("GmapCluster", GmapCluster)
 
