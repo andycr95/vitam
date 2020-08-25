@@ -26,7 +26,7 @@ Vue.use(VueGoogleMaps, {
 
 Vue.use(new VueSocketIO({
     debug: false,
-    connection: SocketIO("http://192.241.155.75:5005", {
+    connection: SocketIO("https://192.241.155.75:5005", {
         autoConnect: true
     }),
     vuex: {

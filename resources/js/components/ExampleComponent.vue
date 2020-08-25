@@ -25,14 +25,8 @@
             <ul class="list-group" >
                 <li v-for="item in markers" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center">
                     <label @click="onCenter(item)" >{{ item.title }}</label>
-                       <el-popover
-                            placement="bottom"
-                            title="Title"
-                            width="200"
-                            trigger="click"
-                            content="this is content, this is content, this is content">
-                        <el-button type="text" slot="reference"><i class="fas fa-ellipsis-v"></i></el-button>
-                      </el-popover>
+                    <span v-if="item.state=='active'" class="badge badge-success">Activo</span>
+                    <span v-else class="badge badge-danger">Inactivo</span>
                 </li>
             </ul>
         </div>
