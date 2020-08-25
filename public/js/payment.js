@@ -4,16 +4,16 @@ $(document).on("change", "#type", function (e) {
     if (type == 'abono') {
         if (document.getElementById('name')) {
             $(".modal-body #amount #value").remove();
-            $(".modal-body #amount #name").remove();            
+            $(".modal-body #amount #name").remove();
         }
         if (document.getElementById('pays')) {
             $(".modal-body #amount #_pay").remove();
-            $(".modal-body #amount #pays").remove();            
-        } 
+            $(".modal-body #amount #pays").remove();
+        }
         $.ajax({
             method: 'GET',
             data: {'id':id},
-            url: 'https://vitamventure.com/api/validate/payment'
+            url: '/api/validate/payment'
         }).done(function (params) {
             if (params.type == 'abono') {
                 val = params.fee - params.amount
@@ -32,7 +32,7 @@ $(document).on("change", "#type", function (e) {
     } else if (type == 'pagos') {
         if (document.getElementById('name')) {
             $(".modal-body #amount #value").remove();
-            $(".modal-body #amount #name").remove();            
+            $(".modal-body #amount #name").remove();
         }
         $(`<label id="_pay" for="pays"><strong>Pagos a realizar</strong></label>
                 <input id="pays" class="form-control" type="number" name="pays" value="1" required/>`).appendTo('#amount');
@@ -47,7 +47,7 @@ $(document).on("change", "#type", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://vitamventure.com/api/salesvehicles'
+    url: '/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,
@@ -65,7 +65,7 @@ $.ajax({
 $(document).on("change", "#select-tools", function(e) {
     document.getElementsByName("type")[0].disabled = false;
 });
- 
+
 $(document).on("click", "#saveButton", function(e) {
     id = document.getElementById('select-tools').value
     if (document.getElementById('type').value == '#') {
@@ -74,7 +74,7 @@ $(document).on("click", "#saveButton", function(e) {
         $.ajax({
             method: 'GET',
             data: {'id':id},
-            url: 'https://vitamventure.com/api/validate/payment'
+            url: '/api/validate/payment'
         }).done(function (params) {
             val = params.fee - params.amount
             if (document.getElementById('type').value == 'pago') {

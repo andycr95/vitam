@@ -28,7 +28,7 @@ $(document).on("change", "#type_report_c_i", function (e) {
         $("#datepicker").datepicker();
         $.ajax({
             method: 'GET',
-            url: 'https://vitamventure.com/api/investors'
+            url: '/api/investors'
         }).done(function (params) {
             $(`<label id="name" for="amount"><strong>Inversionista</strong></label>
             <select id="investor_id" name="investor_id" placeholder="Seleccione una opción..."></select>`).appendTo('#form-control-i-c');
@@ -151,7 +151,7 @@ $(document).on("change", "#type_report_t", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://vitamventure.com/api/salesvehicles'
+    url: '/api/salesvehicles'
 }).done(function (params) {
     $('#select-tools').selectize({
         maxItems: null,

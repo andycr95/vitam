@@ -50,9 +50,9 @@
                                 <td>{{$vehicle->motor}}</td>
                                 <td>{{$vehicle->chasis}}</td>
                                 @if ($vehicle->state == 0)
-                                <td><span class="badge badge-success">Vendida</span></td>
+                                    <td><span class="badge badge-success">Vendida</span></td>
                                 @else
-                                <td><span class="badge badge-primary">Por vender</span></td>
+                                    <td><span class="badge badge-primary">Por vender</span></td>
                                 @endif
                                 <td>{{$vehicle->type->name}}</td>
                                 <td>

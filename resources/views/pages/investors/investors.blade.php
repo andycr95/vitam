@@ -126,9 +126,9 @@
                                         <label for="phone"><strong>Tipo</strong></label>
                                         <select class="form-control" name="type" id="type">
                                             <option value="#">Selecione una opción</option>
-                                            <option value="2">Titular</option>
                                             <option value="1">Participante</option>
-                                            <option value="0">Invercionista</option>
+                                            <option value="2">Titular</option>
+                                            <option value="3">Invercionista</option>
                                         </select>
                                     </div>
                                     <div id="form-group-tit"></div>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="investorDelete" class="btn btn-success">Guardar</button>
+                            <button type="button" id="investorDelete" class="btn btn-success">Eliminar</button>
                         </div>
                     </div>
                 </form>

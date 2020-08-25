@@ -272,13 +272,13 @@ class ReportController extends Controller
                 }
             }
             if ($vehicles[$i]->investor_type == 1) {
-                $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.12);
+                $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.16);
                 $vehicles[$i]->active = ($vehicles[$i]->payment - $vehicles[$i]->pasive);
             } elseif ($vehicles[$i]->investor_type == 2) {
-                $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.1);
+                $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.13);
                 $vehicles[$i]->active = ($vehicles[$i]->payment - $vehicles[$i]->pasive);
             } elseif ($vehicles[$i]->investor_type == 3) {
-                $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.15);
+                $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.20);
                 $vehicles[$i]->active = ($vehicles[$i]->payment - $vehicles[$i]->pasive);
             }
             $total += $vehicles[$i]->payment;

@@ -32,7 +32,7 @@ class HomeController extends Controller
         $date = Carbon::now();
         $payment = payment::orderBy('id', 'desc')->with('sale.client')->take(5)->get();
         $sale = sale::orderBy('id', 'desc')->with(['client', 'vehicle'])->take(5)->get();
-        $vehicles = vehicle::where('state','1')->get();
+        $vehicles = vehicle::where('state','1')->where('status','1')->get();
         $sales = DB::table('payments')->select(DB::raw('SUM(amount) as total_sales'))->where('type','pago')->get();
         $sales[0]->total_sales = "$ ".number_format($sales[0]->total_sales);
         $late_pays = $this->getLatePays();

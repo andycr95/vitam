@@ -15,7 +15,7 @@ $(document).on("change", "#photo2", function(e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://vitamventure.com/api/branchoffices'
+    url: '/api/branchoffices'
 }).done(function (params) {
     $('#select-branch').selectize({
         maxItems: null,
@@ -64,7 +64,7 @@ $('#clientUpdate').click(function ($event) {
 
 $(document).on("blur", "#email", function (e) {
     email = document.getElementById("email").value;
-    url = "https://vitamventure.com/api/validate/client/email";
+    url = "/api/validate/client/email";
     if (email.indexOf(".com") > 0) {
         $.ajax({
             method: "POST",
@@ -123,7 +123,7 @@ $(document).on("click", "#deleteButton", function (e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'https://vitamventure.com/api/validate/client/sales'
+        url: '/api/validate/client/sales'
     }).done(function(params) {
         var id_sale
         var id_vehicle

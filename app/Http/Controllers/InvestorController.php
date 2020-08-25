@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\investor;
 use App\User;
+use App\vehicle;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -83,7 +84,7 @@ class InvestorController extends Controller
     {
         $in = investor::find($id->id);
         if ($in->titular_id == null) {
-            $investor = investor::where("id", $id->id)->with(['vehicles','user'])->get();
+            $investor = investor::where("id", $id->id)->with(['user'])->get();
         } else {
             $investor = investor::where("investors.id", $id->id)
             ->join('investors as superior', 'superior.id', '=', 'investors.titular_id')
@@ -91,8 +92,9 @@ class InvestorController extends Controller
             ->join('users as invest', 'invest.id', '=', 'investors.user_id')->with(['vehicles'])
             ->select('invest.photo as i_photo','invest.documento','invest.id as i_id', 'investors.id','investors.type','invest.address as i_address', 'invest.email as i_email','invest.name as i_name', 'invest.last_name as i_lastN','titu.name as t_name', 'titu.last_name as t_lastN')->get();
         }
+        $vehicles = vehicle::where("investor_id", $id->id)->where("status", "1")->get();
 
-        return view('pages.investors.profile', compact('investor', 'in'));
+        return view('pages.investors.profile', compact('investor', 'in', 'vehicles'));
     }
 
     /**

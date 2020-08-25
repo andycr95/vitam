@@ -2,7 +2,7 @@
 
 @section('content')
     @foreach ($investor as $investor)
-        @if ($investor->type != 2 && $investor->type != 0)
+        @if ($investor->type != 2 && $investor->type != 3)
             <div class="container-fluid">
                 {{ Breadcrumbs::render('investor', $in) }}
                 <div class="row mb-3">
@@ -19,10 +19,10 @@
                         </div>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="text-primary font-weight-bold m-0">Vehiculos     --     {{$investor->vehicles->count()}}</h6>
+                                <h6 class="text-primary font-weight-bold m-0">Vehiculos     --     {{$vehicles->count()}}</h6>
                             </div>
                             <div class="card-body scroll_s">
-                                @foreach ($investor->vehicles as $vehicle)
+                                @foreach ($vehicles as $vehicle)
                                 <h3 class="small font-weight-bold">{{$vehicle->placa}}
                                 @if ($vehicle->state == 0)
                                     <span class="badge badge-success float-right">Vendida</span>
@@ -94,7 +94,7 @@
                                                     <input class="form-control" name="type_investor" type="text" disabled value="Inversionista simple">
                                                 @endif
                                             </div>
-                                            @if ($investor->type != 2 || $investor->type != 0)
+                                            @if ($investor->type != 2 || $investor->type != 3)
                                                 <div class="form-group" id="invest_tit">
                                                     <label for="address"><strong>Titular</strong></label>
                                                     <input class="form-control" type="text" disabled value="{{$investor->t_name}} {{$investor->t_lastN}}">
@@ -168,11 +168,11 @@
                         </div>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="text-primary font-weight-bold m-0">Vehiculos     --     {{$investor->vehicles->count()}}</h6>
+                                <h6 class="text-primary font-weight-bold m-0">Vehiculos     --     {{$vehicles->count()}}</h6>
                             </div>
                             <div class="card-body scroll_s">
-                                @foreach ($investor->vehicles as $vehicle)
-                                <h3 class="small font-weight-bold">{{$vehicle->placa}}
+                                @foreach ($vehicles as $vehicle)
+                                    <h3 class="small font-weight-bold">{{$vehicle->placa}}
                                 @if ($vehicle->state == 0)
                                     <span class="badge badge-success float-right">Vendida</span>
                                 @else

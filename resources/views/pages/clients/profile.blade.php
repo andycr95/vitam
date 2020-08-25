@@ -61,7 +61,7 @@
                             @if ($photo->photo1 == null)
 
                             @else
-                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo1}}" id="photo1" alt="{{$client->name}} {{$client->last_name}}" width="160" height="160">
+                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo1}}" id="photo1" alt="Foto client {{$client->id}}" width="160" height="160">
                             @endif
                             @if ($photo->photo2 == null)
                                 <form action="{{ route('updatePhotoClient') }}" id="form1" enctype="multipart/form-data"  method="POST">
@@ -71,7 +71,7 @@
                                         <input type="hidden" name="id" value="{{$client->id}}"/>
                                 </form><br>
                             @else
-                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo2}}" id="photo2" alt="{{$client->name}} {{$client->last_name}}" width="160" height="160">
+                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo2}}" id="photo2" alt="Foto client {{$client->id}}" width="160" height="160">
                             @endif
                             @if ($photo->photo3 == null)
                                 <form action="{{ route('updatePhotoClient') }}" id="form2" enctype="multipart/form-data"  method="POST">
@@ -81,7 +81,7 @@
                                         <input type="hidden" name="id" value="{{$client->id}}"/>
                                 </form>
                             @else
-                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo3}}" id="photo3" alt="{{$client->name}} {{$client->last_name}}" width="160" height="160">
+                                <img class="mb-3 mt-4" src="/storage/{{$photo->photo3}}" id="photo3" alt="Foto client {{$client->id}}" width="160" height="160">
                             @endif
                         @endforeach
                     @else

@@ -10,6 +10,7 @@ use App\branchoffice;
 use App\investor;
 use App\client;
 use App\payment;
+use App\vehicle;
 use App\User;
 use App\sale;
 use App\Notifications\PaymentsLates;
@@ -58,8 +59,9 @@ class ValidateFormsController extends Controller
 
     public function ValidateInvestorVehicles(Request $request)
     {
-        $investor = investor::where('id', $request->id)->with('vehicles')->get();
-        return response()->json($investor, 200);
+        $investor = investor::where('id', $request->id)->get();
+        $vehicles = vehicle::where('investor_id',$request->id)->where('status','1');
+        return response()->json($vehicles, 200);
     }
 
     public function ValidateClientEmail(Request $request)

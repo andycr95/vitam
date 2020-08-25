@@ -93,7 +93,7 @@ $(document).on("change", "#type_id", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://vitamventure.com/api/branchoffices'
+    url: '/api/branchoffices'
 }).done(function (params) {
     $('#select-branch').selectize({
         maxItems: null,
@@ -108,7 +108,7 @@ $.ajax({
 
 $(document).on("blur", "#placa", function (e) {
     placa = document.getElementById("placa").value;
-    url = "https://vitamventure.com/api/validate/vehicle";
+    url = "/api/validate/vehicle";
         $.ajax({
             method: "GET",
             url: url,
@@ -126,7 +126,7 @@ $(document).on("blur", "#placa", function (e) {
 
 $(document).on("blur", "#chasis", function (e) {
     chasis = document.getElementById("chasis").value;
-    url = "https://vitamventure.com/api/validate/vehicle";
+    url = "/api/validate/vehicle";
         $.ajax({
             method: "GET",
             url: url,
@@ -144,7 +144,7 @@ $(document).on("blur", "#chasis", function (e) {
 
 $(document).on("blur", "#motor", function (e) {
     motor = document.getElementById("motor").value;
-    url = "https://vitamventure.com/api/validate/vehicle";
+    url = "/api/validate/vehicle";
         $.ajax({
             method: "GET",
             url: url,
@@ -162,7 +162,7 @@ $(document).on("blur", "#motor", function (e) {
 
 $.ajax({
     method: 'GET',
-    url: 'https://vitamventure.com/api/investors'
+    url: '/api/investors'
 }).done(function (params) {
     investors = []
     for (let i = 0; i < params.length; i++) {

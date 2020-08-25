@@ -72,7 +72,7 @@ $(document).on("click", "#deleteButton", function (e) {
     $.ajax({
         method: 'GET',
         data: {'id':id},
-        url: 'https://vitamventure.com/api/validate/branchoffice'
+        url: '/api/validate/branchoffice'
     }).done(function(params) {
         for (let i = 0; i < params.length; i++) {
             const e = params[i];
