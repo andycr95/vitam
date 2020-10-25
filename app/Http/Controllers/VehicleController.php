@@ -56,6 +56,13 @@ class VehicleController extends Controller
         return response()->json($vehicles, 200);
     }
 
+    public function getVehiclesGps()
+    {
+        $vehicles = [];
+        $vehicles = vehicle::where('vehicles.state', '0')->where('vehicles.status', '1')->join('branchoffices', 'branchoffices.id', '=', 'vehicles.branchoffice_id')->OrderBy('vehicles.created_at', 'DESC')->select('branchoffices.name', 'vehicles.id', 'vehicles.placa')->get();
+        return response()->json($vehicles, 200);
+    }
+
     public function getVehicle($placa)
     {
         $vehicle = vehicle::where('vehicles.placa',$placa)->with(["sales.client","branchoffice"])->get();

@@ -26,7 +26,7 @@ Vue.use(VueGoogleMaps, {
 
 Vue.use(new VueSocketIO({
     debug: false,
-    connection: SocketIO("https://solinter.tech", {
+    connection: SocketIO("https://192.241.155.75:5005", {
         autoConnect: true
     }),
     vuex: {

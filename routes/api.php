@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
     Route::middleware('api')->get('/vehicles', 'VehicleController@getVehicles');
+    Route::middleware('api')->get('/gps/vehicles', 'VehicleController@getVehiclesGps');
     Route::middleware('api')->get('/vehicles/{placa}', 'VehicleController@getVehicle');
     Route::middleware('api')->get('/branchoffices', 'BranchofficeController@getBranchs');
     Route::middleware('api')->get('/clients', 'ClientController@getClients');

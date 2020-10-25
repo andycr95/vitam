@@ -21,7 +21,7 @@
                                     </li>
                                     <li>
                                         <span v-if="marker.device_state=='active'" class="badge badge-success">Activo</span>
-                                        <span v-else class="badge badge-success">Inactivo</span>
+                                        <span v-else class="badge badge-danger">Inactivo</span>
                                     </li>
                                 </ul>
                             </span>
@@ -37,11 +37,11 @@
                               <div class="card-body">
                                 <h5 class="card-title" style="color:black">Cliente: {{marker.sale.client.name}} {{marker.sale.client.last_name}}</h5>
                                     <el-row>
-                                        <el-col :span="12">
+                                        <el-col :span="8">
                                             <div class="grid-content bg-purple">
                                                 <el-row>
                                                     <el-col :span="24" class="d-flex justify-content-center">
-                                                        <el-button type="primary" icon="el-icon-location-information" circle></el-button>
+                                                        <el-button type="primary" @click="directions" icon="el-icon-location-information" circle></el-button>
                                                     </el-col>
                                                     <el-col :span="24" class="d-flex justify-content-center">
                                                         <span>Como llegar</span>
@@ -49,13 +49,27 @@
                                                 </el-row>
                                             </div>
                                         </el-col>
-                                        <el-col :span="12">
+                                        <el-col :span="8">
                                             <el-row>
                                                     <el-col :span="24" class="d-flex justify-content-center">
-                                                        <el-button type="danger" icon="fas fa-cut" @click="directions" circle></el-button>
+                                                        <el-button v-if="marker.device_status == 'active'" @click="toggleAcc(marker)" type="danger" icon="fas fa-times" circle></el-button>
+                                                        <el-button v-if="marker.device_status == 'inactive'" @click="toggleAcc(marker)" type="success" icon="fas fa-check" circle></el-button>
                                                     </el-col>
                                                     <el-col :span="24" class="d-flex justify-content-center">
-                                                        <span>Apagar vehiculo</span>
+                                                        <span v-if="marker.device_status == 'active'">Apagar</span>
+                                                        <span v-if="marker.device_status == 'inactive'">Encender</span>
+                                                    </el-col>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="8">
+                                            <el-row>
+                                                    <el-col :span="24" class="d-flex justify-content-center">
+                                                        <el-button v-if="marker.acc == 0" type="danger" icon="fas fa-times" circle></el-button>
+                                                        <el-button v-if="marker.acc == 1" type="success" icon="fas fa-check" circle></el-button>
+                                                    </el-col>
+                                                    <el-col :span="24" class="d-flex justify-content-center">
+                                                        <span v-if="marker.acc == 1">Conectado</span>
+                                                        <span v-if="marker.acc == 0">Desconectado</span>
                                                     </el-col>
                                             </el-row>
                                         </el-col>
@@ -69,7 +83,7 @@
         </el-drawer>
         <div class="d-flex flex-column" style="width:100%;  height: 100%;" id="content-wrapper">
             <div id="content" style="width:100%;  height: 100%;">
-                <maps-component ref="gmapComp" :drawerD="drawerCh" :zoom="zoom" :markers="markers" :center="center" :onCenter="onCenter"></maps-component>
+                <maps-component :actual="actual" ref="gmapComp" :drawerD="drawerCh" :zoom="zoom" :markers="markers" :center="center" :onCenter="onCenter"></maps-component>
             </div>
         </div>
         <a @click="drawer = true" class="fab-gps"><i class="fa fa-arrow-right" style="color:#ffffff; margin-top: 10px;margin-right: 10px;width: 20px;" aria-hidden="true"></i></a>
@@ -110,11 +124,11 @@ import { gmapApi } from 'vue2-google-maps'
 export default {
     data() {
         return {
-            center: { lat: 3.882815, lng: -77.022750 },
+            center: {lat: 3.882815, lng: -77.022750 },
             markers: [],
-            actual: {lat:3.877698, lng: -77.021617},
+            actual: {},
             vehicles: [],
-            zoom: 13,
+            zoom: 15,
             form: {
                 id: '',
                 vehicle: ''
@@ -135,6 +149,8 @@ export default {
                 position:{lat: 0,lng: 0},
                 title: '',
                 state:'',
+                status:'',
+                acc:'',
                 device_id:'',
                 amount:null,
                 branchoffice: null,
@@ -157,14 +173,16 @@ export default {
                 status: null,
                 type_id: null,
                 updated_at:null
-            }
+            },
+            acc_state:0
         };
     },
     mounted() {
-        axios.get('/api/vehicles',{headers: {'Accept':'application/json'}}).then((res) => {
+        this.geolocate();
+        this.getDevices();
+        axios.get('/api/gps/vehicles',{headers: {'Accept':'application/json'}}).then((res) => {
             this.vehicles = res.data;
         });
-        this.getDevices();
     },
     computed: {
         google: gmapApi
@@ -182,20 +200,33 @@ export default {
                             lng = f.coordinates[0].longitude;
                             lat = f.coordinates[0].latitude;
                         }
+                        e.device_state = f.state;
+                        e.device_status = f.status;
                         e.position = {lat,lng};
                     }
                 }
             }
-            console.log(data);
         },
-        add_device: function(data) {
-            var lng = 0;
-            var lat = 0;
-            if (data.state == "active") {
-                lng = data.coordinates[0].longitude;
-                lat = data.coordinates[0].latitude;
+        set_acc: function(data) {
+            const h = this.$createElement;
+            for (let i = 0; i < this.markers.length; i++) {
+                const e = this.markers[i];
+                if (e.title.toLowerCase() == data.placa) {
+                    e.acc = data.acc;
+                    this.marker.acc = data.acc;
+                    if (data.acc == "0") {
+                        this.$notify({
+                            title: 'Vehiculo desconectado',
+                            message: h('i', { style: 'color: red' }, `Vehiculo ${data.placa} ha sido desconectado`)
+                        });
+                    } else {
+                        this.$notify({
+                            title: 'Vehiculo conectado',
+                            message: h('i', { style: 'color: teal' }, `Vehiculo ${data.placa} ha sido conectado`)
+                        });
+                    }
+                }
             }
-            this.markers.push({position:{lat: lat,lng: lng},title: data.placa, state:data.state, device_id:data.device_id});
         }
     },
     methods: {
@@ -213,7 +244,7 @@ export default {
             this.drawer = false;
         },
         getDevices(){
-            axios.get('https://solinter.tech/device',{headers: {'Accept':'application/json'}}).then((res) => {
+            axios.get('https://192.241.155.75:5005/device',{headers: {'Accept':'application/json'}}).then((res) => {
                 const marks = [];
                 for (let i = 0; i < res.data.devices.length; i++) {
                     const e = res.data.devices[i];
@@ -223,14 +254,21 @@ export default {
                         lng = e.coordinates[0].longitude;
                         lat = e.coordinates[0].latitude;
                     }
-                    marks.push({position:{lat: lat,lng: lng},title: e.placa, state:e.state, device_id:e.device_id});
+                    marks.push({
+                        position:{lat: 3.880457,lng: -77.029096},
+                        title: e.placa, 
+                        state:e.state,
+                        acc:e.acc, 
+                        device_id:e.device_id,
+                        status:e.status,
+                    });
                 }
                 this.markers = marks;
             });
         },
         onSearch(value){
             if (value.length > 0) {
-                axios.get(`https://solinter.tech/device/search?query=${value}`,{headers: {'Accept':'application/json'}}).then((res) => {
+                axios.get(`https://192.241.155.75:5005/device/search?query=${value}`,{headers: {'Accept':'application/json'}}).then((res) => {
                     const marks = [];
                     for (let i = 0; i < res.data.devices.length; i++) {
                         const e = res.data.devices[i];
@@ -255,9 +293,26 @@ export default {
             }
             this.$refs["formDevice"].validate((valid) => {
                 if (valid) {
-                    this.$socket.emit('add_device', device);
+                    axios.post('https://192.241.155.75:5005/device',device,{headers: {'Accept':'application/json'}}).then((res) => {
+                        var lng = 0;
+                        var lat = 0;
+                        var pl = res.data.device.placa.toUpperCase();
+                        this.markers.push({position:{lat: lat,lng: lng},title: pl, state:res.data.device.state, device_id:res.data.device.device_id});
+                    }).catch((err) => {
+                        console.error(err);
+                    });
                     this.$modal.hide('example');
                 }
+            });
+        },
+        toggleAcc(value){
+            var cmd = 0
+            console.log(value);
+            if (value.device_status == 'active') {
+                cmd = 1
+            }
+            axios.get(`https://192.241.155.75:5005/device/cmd?query=${cmd}&device_id=${value.device_id}`,{headers: {'Accept':'application/json'}}).then((res) => {
+                console.log(res);
             });
         },
         async drawerCh(value){
@@ -268,9 +323,10 @@ export default {
                         lng:value.position.lng
                     },
                     title: value.title,
+                    acc: value.acc,
+                    device_status: value.status,
                     device_state:value.state,
                     device_id:value.device_id,
-                    amount:res.data[0].amount,
                     branchoffice: res.data[0].branchoffice,
                     branchoffice_id: res.data[0].branchoffice_id,
                     chasis: res.data[0].chasis,
@@ -294,10 +350,10 @@ export default {
                 }
             });
             this.drawerD = !this.drawerD;
-            console.log(this.marker);
         },
         directions(){
             var google = this.google;
+            this.watch();
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer;
             directionsDisplay.setMap(this.$refs.gmapComp.$refs.map.$mapObject, {
@@ -311,7 +367,6 @@ export default {
                     origin: start,
                     destination: destination,
                     travelMode: google.maps.TravelMode.DRIVING,
-
                 }, function(response, status) {
                 if (status === 'OK') {
                     directionsDisplay.setDirections(response);
@@ -321,8 +376,32 @@ export default {
                 });
             }
             calculateAndDisplayRoute(directionsService, directionsDisplay, this.actual, this.marker.position);
+        },
+        geolocate: function() {
+            navigator.geolocation.getCurrentPosition(position => {
+                this.center = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                this.actual = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+            });
+        },
+        watch: function() {
+            navigator.geolocation.watchPosition(wp =>{
+                this.center = {
+                    lat: wp.coords.latitude,
+                    lng: wp.coords.longitude
+                };
+                this.actual = {
+                    lat: wp.coords.latitude,
+                    lng: wp.coords.longitude
+                };
+            })
         }
-    }
+    },
 }
 </script>
 

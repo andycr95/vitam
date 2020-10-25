@@ -277,7 +277,7 @@ class ReportController extends Controller
             } elseif ($vehicles[$i]->investor_type == 2) {
                 $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.13);
                 $vehicles[$i]->active = ($vehicles[$i]->payment - $vehicles[$i]->pasive);
-            } elseif ($vehicles[$i]->investor_type == 3) {
+            } elseif ($vehicles[$i]->investor_type == 0) {
                 $vehicles[$i]->pasive = ($vehicles[$i]->payment * 0.20);
                 $vehicles[$i]->active = ($vehicles[$i]->payment - $vehicles[$i]->pasive);
             }
