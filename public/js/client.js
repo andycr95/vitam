@@ -35,7 +35,6 @@ $('#clientUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = true;
         document.getElementsByName("last_name")[0].disabled = true;
         document.getElementsByName("documento")[0].disabled = true;
-        document.getElementsByName("branchoffice")[0].disabled = true;
         document.getElementsByName("address")[0].disabled = true;
         document.getElementsByName("celphone")[0].disabled = true;
         document.getElementsByName("phone")[0].disabled = true;
@@ -49,7 +48,6 @@ $('#clientUpdate').click(function ($event) {
         document.getElementsByName("first_name")[0].disabled = false;
         document.getElementsByName("last_name")[0].disabled = false;
         document.getElementsByName("documento")[0].disabled = false;
-        document.getElementsByName("branchoffice")[0].disabled = false;
         document.getElementsByName("address")[0].disabled = false;
         document.getElementsByName("phone")[0].disabled = false;
         document.getElementsByName("celphone")[0].disabled = false;

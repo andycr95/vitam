@@ -54,6 +54,7 @@ class EmployeeController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->address = $request->address;
+        $user->documento = $request->documento;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
         $user->last_name = $request->last_name;
@@ -117,6 +118,7 @@ class EmployeeController extends Controller
         }
         $user->email = $request->email;
         $user->address = $request->address;
+        $user->documento = $request->documento;
         $user->save();
         $employee = employee::find($request->idemployee);
         if ($request->branchoffice_id != '') {

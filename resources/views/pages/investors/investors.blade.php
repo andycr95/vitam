@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="address"><strong>Cedula</strong></label>
-                                        <input class="form-control"  type="text" id="doc" name="document" placeholder="1.111.1111" required/>
+                                        <input class="form-control"  type="text" id="doc" name="doc" placeholder="1.111.1111" required/>
                                         <div id="form-group-document"></div>
                                     </div>
                                     <div class="form-group">

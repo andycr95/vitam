@@ -24,7 +24,7 @@ Vue.use(VueGoogleMaps, {
     }
 });
 
-Vue.use(new VueSocketIO({
+/* Vue.use(new VueSocketIO({
     debug: false,
     connection: SocketIO("https://192.241.155.75:5005", {
         autoConnect: true
@@ -34,7 +34,7 @@ Vue.use(new VueSocketIO({
         actionPrefix: 'SOCKET_',
         mutationPrefix: 'SOCKET_'
     }
-}))
+})) */
 
 Vue.component("GmapCluster", GmapCluster)
 Vue.use(ElementUI);
