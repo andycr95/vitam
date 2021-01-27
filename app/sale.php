@@ -36,6 +36,6 @@ class sale extends Model
 
     public function payments()
     {
-        return $this->belongsTo(payment::class);
+        return $this->hasMany(payment::class);
     }
 }

@@ -156,14 +156,14 @@
         </table>
         <br>
         <br>
-        <table>
+        <table> 
             <tr>
                 <td class="cantidad">
                     <strong>Cuotas faltantes:</strong>
                 </td>
                 <td>   </td>
                 <td class="precio">
-                    {{$payment->counter}}
+                    {{$sale->amount - count($paymentsTotal)}}
                 </td>
             </tr>
         </table>

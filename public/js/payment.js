@@ -61,56 +61,86 @@ $.ajax({
 
 })
 
-
 $(document).on("change", "#select-tools", function(e) {
     document.getElementsByName("type")[0].disabled = false;
 });
 
 $(document).on("click", "#saveButton", function(e) {
     id = document.getElementById('select-tools').value
+    type_if = document.getElementById('type').value
     if (document.getElementById('type').value == '#') {
         toastr.error('Debe seleccionar un tipo de pago')
     } else {
-        $.ajax({
-            method: 'GET',
-            data: {'id':id},
-            url: '/api/validate/payment'
-        }).done(function (params) {
-            val = params.fee - params.amount
-            if (document.getElementById('type').value == 'pago') {
-                if (params.type == "abono") {
-                    toastr.error(`Tiene un pago de ${val} pendiente por saldar`)
-                } else {
-                    $.confirm({
-                        title: `Registrando pago a ${params.placa}`,
-                        content: 'Está seguro de realizar este pago',
-                        type: 'green',
-                        typeAnimated: true,
-                        buttons: {
-                            Si: {
-                                text: 'Si',
-                                btnClass: 'btn-green',
-                                action: function(){
-                                    $('#paymentForm').submit()
+        if (type_if == 'abono') {
+            if (document.getElementById('value').value == '') {
+                toastr.error('Debe ingresar un monto')
+            } else {
+                $.ajax({
+                method: 'GET',
+                data: {'id':id},
+                url: '/api/validate/payment'
+            }).done(function (params) {
+                val = params.fee - params.amount
+                if (document.getElementById('type').value == 'pago') {
+                    if (params.type == "abono") {
+                        toastr.error(`Tiene un pago de ${val} pendiente por saldar`)
+                    } else {
+                        $.confirm({
+                            title: `Registrando pago a ${params.placa}`,
+                            content: 'Está seguro de realizar este pago',
+                            type: 'green',
+                            typeAnimated: true,
+                            buttons: {
+                                Si: {
+                                    text: 'Si',
+                                    btnClass: 'btn-green',
+                                    action: function(){
+                                        $('#paymentForm').submit()
+                                    }
+                                },
+                                No: {
+                                    text: 'No',
+                                    btnClass: 'btn-red',
+                                    action: function(){
+                                        toastr.info('pago cancelado')
+                                    }
+                                },
+                                close: function () {
                                 }
-                            },
-                            No: {
-                                text: 'No',
-                                btnClass: 'btn-red',
-                                action: function(){
-                                    toastr.info('pago cancelado')
-                                }
-                            },
-                            close: function () {
                             }
+                        });
+                    }
+                } else if (document.getElementById('type').value == 'abono') {
+                    value = document.getElementById('value').value
+                    if (params.type == "abono") {
+                        if (value > val) {
+                            toastr.error(`Tiene un pago de ${val} primero saldelo`)
+                        } else {
+                            $.confirm({
+                                title: `Registrando abono a ${params.placa}`,
+                                content: 'Está seguro de realizar este abono',
+                                type: 'green',
+                                typeAnimated: true,
+                                buttons: {
+                                    Si: {
+                                        text: 'Si',
+                                        btnClass: 'btn-green',
+                                        action: function(){
+                                            $('#paymentForm').submit()
+                                        }
+                                    },
+                                    No: {
+                                        text: 'No',
+                                        btnClass: 'btn-red',
+                                        action: function(){
+                                            toastr.info('pago cancelado')
+                                        }
+                                    },
+                                    close: function () {
+                                    }
+                                }
+                            });
                         }
-                    });
-                }
-            } else if (document.getElementById('type').value == 'abono') {
-                value = document.getElementById('value').value
-                if (params.type == "abono") {
-                    if (value > val) {
-                        toastr.error(`Tiene un pago de ${val} primero saldelo`)
                     } else {
                         $.confirm({
                             title: `Registrando abono a ${params.placa}`,
@@ -137,34 +167,105 @@ $(document).on("click", "#saveButton", function(e) {
                             }
                         });
                     }
-                } else {
-                    $.confirm({
-                        title: `Registrando abono a ${params.placa}`,
-                        content: 'Está seguro de realizar este abono',
-                        type: 'green',
-                        typeAnimated: true,
-                        buttons: {
-                            Si: {
-                                text: 'Si',
-                                btnClass: 'btn-green',
-                                action: function(){
-                                    $('#paymentForm').submit()
-                                }
-                            },
-                            No: {
-                                text: 'No',
-                                btnClass: 'btn-red',
-                                action: function(){
-                                    toastr.info('pago cancelado')
-                                }
-                            },
-                            close: function () {
-                            }
-                        }
-                    });
                 }
+            })
             }
-        })
+        } else {
+            $.ajax({
+                method: 'GET',
+                data: {'id':id},
+                url: '/api/validate/payment'
+            }).done(function (params) {
+                val = params.fee - params.amount
+                if (document.getElementById('type').value == 'pago') {
+                    if (params.type == "abono") {
+                        toastr.error(`Tiene un pago de ${val} pendiente por saldar`)
+                    } else {
+                        $.confirm({
+                            title: `Registrando pago a ${params.placa}`,
+                            content: 'Está seguro de realizar este pago',
+                            type: 'green',
+                            typeAnimated: true,
+                            buttons: {
+                                Si: {
+                                    text: 'Si',
+                                    btnClass: 'btn-green',
+                                    action: function(){
+                                        $('#paymentForm').submit()
+                                    }
+                                },
+                                No: {
+                                    text: 'No',
+                                    btnClass: 'btn-red',
+                                    action: function(){
+                                        toastr.info('pago cancelado')
+                                    }
+                                },
+                                close: function () {
+                                }
+                            }
+                        });
+                    }
+                } else if (document.getElementById('type').value == 'abono') {
+                    value = document.getElementById('value').value
+                    if (params.type == "abono") {
+                        if (value > val) {
+                            toastr.error(`Tiene un pago de ${val} primero saldelo`)
+                        } else {
+                            $.confirm({
+                                title: `Registrando abono a ${params.placa}`,
+                                content: 'Está seguro de realizar este abono',
+                                type: 'green',
+                                typeAnimated: true,
+                                buttons: {
+                                    Si: {
+                                        text: 'Si',
+                                        btnClass: 'btn-green',
+                                        action: function(){
+                                            $('#paymentForm').submit()
+                                        }
+                                    },
+                                    No: {
+                                        text: 'No',
+                                        btnClass: 'btn-red',
+                                        action: function(){
+                                            toastr.info('pago cancelado')
+                                        }
+                                    },
+                                    close: function () {
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        $.confirm({
+                            title: `Registrando abono a ${params.placa}`,
+                            content: 'Está seguro de realizar este abono',
+                            type: 'green',
+                            typeAnimated: true,
+                            buttons: {
+                                Si: {
+                                    text: 'Si',
+                                    btnClass: 'btn-green',
+                                    action: function(){
+                                        $('#paymentForm').submit()
+                                    }
+                                },
+                                No: {
+                                    text: 'No',
+                                    btnClass: 'btn-red',
+                                    action: function(){
+                                        toastr.info('pago cancelado')
+                                    }
+                                },
+                                close: function () {
+                                }
+                            }
+                        });
+                    }
+                }
+            })
+        }
     }
 });
 
@@ -183,6 +284,37 @@ $(document).on("click", "#deletepayment", function(e) {
                 btnClass: 'btn-green',
                 action: function(){
                     $('#deletepaymentForm').submit()
+                }
+            },
+            No: {
+                text: 'No',
+                btnClass: 'btn-red',
+                action: function(){
+                    toastr.info('Cancelado')
+                }
+            },
+            close: function () {
+            }
+        }
+    });
+});
+
+
+$(document).on("click", "#testpayment", function(e) {
+    var id = $(this).data("id");
+    var placa = $(this).data("placa");
+    document.getElementById('idtest').value = id;
+    $.confirm({
+        title: `Eliminando pago de ${placa}`,
+        content: 'Está seguro de eliminar este pago',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+            Si: {
+                text: 'Si',
+                btnClass: 'btn-green',
+                action: function(){
+                    $('#testpaymentForm').submit()
                 }
             },
             No: {

@@ -31,7 +31,7 @@
                         <div class="row align-items-center no-gutters">
                             <div class="col mr-2">
                                 <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
-                                    <span>Ganancias (anual)</span></div>
+                                    <span>Ganancias</span></div>
                                     @foreach ($sales as $sales)
                                         <div class="text-dark font-weight-bold h5 mb-0"><span>{{$sales->total_sales}}</span>                                    
                                     @endforeach

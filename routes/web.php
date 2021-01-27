@@ -87,6 +87,7 @@ Route::get('/payment/{id}','PaymentController@show')->name('payment');
 Route::put('/payment','PaymentController@update')->name('updatepPayment');
 Route::post('/payment/delete','PaymentController@destroy')->name('deletePayment');
 Route::post('/payment/ticket','PaymentController@storeTicket')->name('ticketPayment');
+Route::post('/payment/ticket/test','PaymentController@storeTicketTest')->name('testticketPayment');
 Route::get('/ticket/test','PaymentController@storeTest')->name('ticketPaymentTest');
 
 //Reports

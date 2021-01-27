@@ -44,7 +44,6 @@
                                 <th>Cliente</th>
                                 <th>Monto</th>
                                 <th>Tipo</th>
-                                <th>Faltantes</th>
                                 <th></th>
                                 @hasrole('Administrador')
                                     <th>Acciones</th>
@@ -54,11 +53,10 @@
                         <tbody>
                             @foreach ($payments as $payment)
                             <tr>
-                                <td>{{$payment->vehicle->placa}}</td>
+                                <td><a href="{{ route('sale', $payment->sale_id )}}">{{$payment->vehicle->placa}}</a></td>
                                 <td>{{$payment->sale->client->name}} {{$payment->sale->client->last_name}}</td>
                                 <td class="precio">{{$payment->amount}}</td>
                                 <td>{{$payment->type}}</td>
-                                <td>{{$payment->counter}}</td>
                                 <td>{{($payment->created_at)->diffForhumans()}}</td>
                                 <td>
                                     @hasrole('Administrador')
@@ -66,9 +64,9 @@
                                             <i style="color: white;" class="fas fa-trash"></i>
                                         </a>
                                     @endhasrole
-                                    <a class="btn btn-sm btn-success" data-id="{{$payment->id}}" data-placa="{{$payment->sale->vehicle->placa}}" id="ticketpayment">
-                                        <i style="color: white;" class="fas fa-hand-holding-usd"></i>
-                                    </a>
+                                        <a class="btn btn-sm btn-success" data-id="{{$payment->id}}" data-placa="{{$payment->sale->vehicle->placa}}" id="ticketpayment">
+                                            <i style="color: white;" class="fas fa-hand-holding-usd"></i>
+                                        </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -128,6 +126,10 @@
     <form action="{{ route('deletePayment') }}" id="deletepaymentForm" enctype="multipart/form-data"  method="POST">
         @csrf
           <input type="hidden" name="id" id="iddelete">
+    </form>
+    <form action="{{ route('testticketPayment') }}" id="testpaymentForm" enctype="multipart/form-data"  method="POST">
+        @csrf
+          <input type="hidden" name="id" id="idtest">
     </form>
     <form action="{{ route('ticketPayment') }}" id="ticketpaymentForm" enctype="multipart/form-data"  method="POST">
         @csrf
